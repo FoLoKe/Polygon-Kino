@@ -1,4 +1,6 @@
 # Default ignored files
 /workspace.xml
-/dictionaries
-/libraries
+/dictionaries/
+/libraries/
+/codeStyles/
+/dbnavigator.xml
