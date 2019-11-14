@@ -1,0 +1,19 @@
+:root
+{
+    --white: #fff;
+    background-color: #555;
+
+}
+
+    .the_best_header {
+        width: 100%;
+        height: 104px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.06);
+        background-color: white;
+        position: fixed;
+        z-index: 100;
+        top: 0;
+    }.word {
+        font-size: 16px;
+        color: #63c;
+    }
