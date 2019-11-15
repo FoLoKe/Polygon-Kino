@@ -6,5 +6,20 @@
     <body>
         <h1>Welcome!</h1>
         <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
+        <h2>List of cities</h2>
+
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Population</th>
+            </tr>
+
+            <tr th:each="city : ${cities}">
+                <td th:text="${city.id}">Id</td>
+                <td th:text="${city.name}">Name</td>
+                <td th:text="${city.population}">Population</td>
+            </tr>
+        </table>
     </body>
 </html>
