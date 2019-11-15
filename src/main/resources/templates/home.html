@@ -1,7 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
+        <!-- META SECTION -->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- END META SECTION -->
+        <!--  BEGIN STYLE -->
         <title>Spring Example</title>
+        <script src="js/jquery-2.1.3.min.js"></script>
     </head>
     <body>
         <h1>Welcome!</h1>
@@ -10,15 +20,18 @@
 
         <table>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Population</th>
+                <th>id</th>
+                <th>city</th>
             </tr>
+            <tr th:each="city : ${citiesList}">
+                    <td th:text="${city.id}"></td>
+                    <td th:text="${city.name}"></td>
+                    <td>
+                        <a th:href="@{/edit/{id}(id=${city.id})}">edit</a>
+                        <a th:href="@{/delete/{id}(id=${city.id})}">delete</a>
 
-            <tr th:each="city : ${cities}">
-                <td th:text="${city.id}">Id</td>
-                <td th:text="${city.name}">Name</td>
-                <td th:text="${city.population}">Population</td>
+
+                </td>
             </tr>
         </table>
     </body>
