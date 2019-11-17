@@ -4,35 +4,51 @@
       xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
-        <!-- META SECTION -->
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <!-- END META SECTION -->
-        <!--  BEGIN STYLE -->
-        <title>Spring Example</title>
-        <script src="js/jquery-2.1.3.min.js"></script>
+        <link rel="stylesheet" href="styles.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
     </head>
     <body>
-        <h1>Welcome!</h1>
-        <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
-        <h2>List of cities</h2>
+        <div class = "header">
+            <div class = "wrapper">
+                <div class = "upper_line">
+                    <div class="first_column">
+                        <a class="logo" th:href="@{/}">
+                            <img src="images/polygon.png">
+                        </a>
+                        <div class="geo">
+                            <a href="javascript:PopUpShow()">City</a>
+                            <div class="cities" id="geoPopup">
+                                <div class="wrapper">
+                                    <ul class="list">
+                                        <li th:each="city : ${citiesList}" th:text="${city.name}">
+                                        </li>
+                                    </ul>
+                                    <a href="javascript:PopUpHide()">Hide popup</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <table>
-            <tr>
-                <th>id</th>
-                <th>city</th>
-            </tr>
-            <tr th:each="city : ${citiesList}">
-                    <td th:text="${city.id}"></td>
-                    <td th:text="${city.name}"></td>
-                    <td>
-                        <a th:href="@{/edit/{id}(id=${city.id})}">edit</a>
-                        <a th:href="@{/delete/{id}(id=${city.id})}">delete</a>
-
-
-                </td>
-            </tr>
-        </table>
+                <div class="bottom_line">
+                    <div class="menu">
+                        <li>
+                            <a th:href="@{/hello}">PAGE 1</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/hello}">PAGE 2</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/hello}">PAGE 3</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/hello}">PAGE 4</a>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
