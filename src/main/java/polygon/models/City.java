@@ -1,11 +1,7 @@
 package polygon.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "polygon.cities")
@@ -13,10 +9,14 @@ public class City {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @Column(name = "name")
-    String name;
+    private String name;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id")
+    private Set<Building> buildings;
 
     public void setId(int id) {
         this.id = id;
@@ -33,5 +33,7 @@ public class City {
     public String getName() {
         return name;
     }
+
+
 
 }
