@@ -19,6 +19,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import static org.hibernate.cfg.AvailableSettings.*;
+
 @Configuration
 @ComponentScan(basePackages = "polygon")
 @EnableTransactionManagement
@@ -33,8 +35,10 @@ public class HibernateConfig {
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();
-        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
-        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
+        properties.put(DIALECT, environment.getRequiredProperty("hibernate.dialect"));
+        properties.put(HBM2DDL_AUTO, environment.getRequiredProperty("hibernate.ddl-auto"));
+        properties.put(SHOW_SQL, environment.getRequiredProperty("hibernate.show_sql"));
+        properties.put(HBM2DDL_IMPORT_FILES, environment.getRequiredProperty("hibernate.import"));
         properties.put("hibernate.temp.use_jdbc_metadata_defaults",false);
         return properties;
     }
@@ -67,8 +71,8 @@ public class HibernateConfig {
 
     public static void main(String[] args) {
         String url = "jdbc:postgresql://31.42.45.42:5432/postgres";
-        String username = "devteam";
-        String password = "devteam";
+        String username = "postgres";
+        String password = "1234";
         System.out.println("Connecting...");
 
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
