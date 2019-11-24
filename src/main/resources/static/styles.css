@@ -57,6 +57,16 @@
         width:250px;
         height:100%;
     }
+    .header .wrapper .upper_line  .enter {
+
+          position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 5%;
+        height: 50%;
+
+
+            }
     .wrapper img{
         display: block;
         max-width: 100%;
