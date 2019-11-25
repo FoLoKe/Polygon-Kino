@@ -9,4 +9,7 @@ public class Room {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+
+
+
 }

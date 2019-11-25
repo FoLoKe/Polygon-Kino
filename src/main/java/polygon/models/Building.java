@@ -11,9 +11,12 @@ public class Building {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @Column(name = "address")
+    String address;
+
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "building_id")
-    private Set<Room> buildings;
+    @JoinColumn(name = "room_id")
+    private Set<Room> rooms;
 
 
 }

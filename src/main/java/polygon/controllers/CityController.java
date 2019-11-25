@@ -31,8 +31,8 @@ public class CityController {
     public ModelAndView deleteCity(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
-        City film = cityService.getById(id);
-        cityService.delete(film);
+        City city = cityService.getById(id);
+        cityService.delete(city);
         return modelAndView;
     }
 }

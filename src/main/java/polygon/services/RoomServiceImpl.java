@@ -2,7 +2,7 @@ package polygon.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import polygon.daos.RoomDAO;
+import polygon.daos.RoomRepository;
 import polygon.models.Room;
 
 import java.util.List;
@@ -11,30 +11,30 @@ import java.util.List;
 public class RoomServiceImpl implements RoomService {
 
     @Autowired
-    private RoomDAO cityDAO;
+    private RoomRepository roomRepository;
 
     @Override
     public List<Room> allCities() {
-        return cityDAO.allRooms();
+        return roomRepository.findAll();
     }
 
     @Override
     public void add(Room room) {
-        cityDAO.add(room);
+
     }
 
     @Override
     public void delete(Room room) {
-        cityDAO.delete(room);
+        roomRepository.delete(room);
     }
 
     @Override
     public void edit(Room room) {
-        cityDAO.edit(room);
+
     }
 
     @Override
     public Room getById(int id) {
-        return cityDAO.getByID(id);
+        return roomRepository.getOne(id);
     }
 }
