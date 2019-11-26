@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.City;
 import polygon.services.CityService;
-import polygon.services.CityServiceImpl;
 
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,7 +21,13 @@ public class CityController {
 
     @RequestMapping(value="/", method = RequestMethod.GET)
     public ModelAndView allCities() {
-        List<City> films = cityService.allCities();
+        List<City> films = new ArrayList<>();
+        try {
+            films = cityService.allCities();
+        } catch (Exception ste) {
+            System.out.println("no connection");
+        }
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         modelAndView.addObject("citiesList", films);
@@ -31,7 +38,7 @@ public class CityController {
     public ModelAndView deleteCity(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
-        City city = cityService.getById(id);
+        City city = cityService.findById(id);
         cityService.delete(city);
         return modelAndView;
     }

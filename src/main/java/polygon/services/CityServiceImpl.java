@@ -30,7 +30,7 @@ public class CityServiceImpl implements CityService {
     @Override
     @Transactional
     public void delete(City city) {
-        cityRepository.deleteCity(city.getName());
+        cityRepository.delete(city);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class CityServiceImpl implements CityService {
 
     @Override
     @Transactional
-    public City getById(int id) {
-        return cityRepository.getOne(id);
+    public City findById(int id) {
+        return cityRepository.findById(id).orElse(null);
     }
 }

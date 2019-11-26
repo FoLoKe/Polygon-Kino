@@ -1,5 +1,6 @@
 package polygon.config;
 
+import org.omg.CORBA.TIMEOUT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -40,7 +41,7 @@ public class HibernateConfig {
         properties.put(HBM2DDL_AUTO, environment.getRequiredProperty("hibernate.ddl-auto"));
         properties.put(SHOW_SQL, environment.getRequiredProperty("hibernate.show_sql"));
         properties.put(HBM2DDL_IMPORT_FILES, environment.getRequiredProperty("hibernate.import"));
-        properties.put("hibernate.temp.use_jdbc_metadata_defaults",false);
+        properties.put("hibernate.temp.use_jdbc_metadata_defaults", false);
         return properties;
     }
 

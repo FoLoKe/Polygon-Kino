@@ -7,5 +7,6 @@ INSERT INTO polygon.cities(name) VALUES('Архангельск');
 INSERT INTO polygon.cities(name) VALUES('Красноярск');
 INSERT INTO polygon.buildings(city_id) values (1);
 INSERT INTO polygon.buildings(city_id) values (2);
+insert into polygon.performances(name, description) values('Аниме', 'параша');
 
 commit;
