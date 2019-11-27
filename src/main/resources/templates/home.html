@@ -57,5 +57,25 @@
                 </div>
             </div>
         </div>
+
+        <div class = "main_container">
+            <div class = "tabs_container">
+                <div class = "tabs_list">
+                    <h1 class = "caption">
+                        Cinema today!
+                    </h1>
+                    <div class = "tabs_scroller">
+                        <a class="last_tablet" th:each="film : ${filmsList}" >
+                            <p th:text="${film.name}">
+
+                            </p>
+                        </a>
+                        <a class = last_tablet>
+
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

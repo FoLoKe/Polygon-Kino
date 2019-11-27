@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.City;
+import polygon.models.Performance;
 import polygon.services.CityService;
+import polygon.services.PerformanceService;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -15,22 +17,32 @@ import java.util.List;
 
 
 @Controller
-public class CityController {
+public class HomeController {
     @Autowired
     private CityService cityService;
+    @Autowired
+    private PerformanceService performanceService;
 
     @RequestMapping(value="/", method = RequestMethod.GET)
     public ModelAndView allCities() {
-        List<City> films = new ArrayList<>();
+        List<City> cities = new ArrayList<>();
         try {
-            films = cityService.allCities();
+            cities = cityService.allCities();
         } catch (Exception ste) {
+            System.out.println("no connection");
+        }
+
+        List<Performance> films = new ArrayList<>();
+        try {
+            films = performanceService.allPerformances();
+        } catch (Exception e) {
             System.out.println("no connection");
         }
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
-        modelAndView.addObject("citiesList", films);
+        modelAndView.addObject("filmsList", films);
+        modelAndView.addObject("citiesList", cities);
         return modelAndView;
     }
 

@@ -18,4 +18,12 @@ public class Performance {
 
     @Column(name = "poster")
     private byte[] poster;
+
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

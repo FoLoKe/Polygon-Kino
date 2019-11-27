@@ -23,7 +23,6 @@
         background: transparent;
         overflow: inherit;
     }
-
     .wrapper * {
         font-weight: 400;
         font-family: Roboto,Arial,sans-serif;
@@ -57,30 +56,25 @@
         width:250px;
         height:100%;
     }
-    .header .wrapper .upper_line  .enter {
-
-          position: absolute;
+    .header .wrapper .upper_line .enter {
+        position: absolute;
         right: 0;
         bottom: 0;
         width: 5%;
         height: 50%;
-
-
-            }
-    .wrapper img{
+    }
+    .wrapper img {
         display: block;
         max-width: 100%;
         vertical-align: top;
         border: 0;
     }
-
     .header .wrapper .bottom_line {
         overflow-x: auto;
         margin: 8px -20px 0 -20px;
         padding: 0 0 10px 10px;
     }
-
-    .header .wrapper .bottom_line .menu{
+    .header .wrapper .bottom_line .menu {
         min-width: 700px;
         height: 34px;
         display: flex;
@@ -89,12 +83,11 @@
         list-style: none;
         padding: 0;
     }
-    .header .wrapper .bottom_line .menu li{
+    .header .wrapper .bottom_line .menu li {
         margin-right: 32px;
         margin-left: 32px;
     }
-
-    .header .wrapper .bottom_line .menu a{
+    .header .wrapper .bottom_line .menu a {
         white-space: nowrap;
         font-family: Roboto;
         font-size: 18px;
@@ -104,12 +97,10 @@
         text-decoration: none;
         transition: color .3s;
     }
-
-    .header .wrapper .bottom_line .menu a:hover{
+    .header .wrapper .bottom_line .menu a:hover {
         color: #5faf69;
     }
-
-    .upper_line .geo .cities{
+    .upper_line .geo .cities {
         cursor: initial;
         position: fixed;
         top: 60px;
@@ -121,15 +112,83 @@
         background: #fff;
         overflow-y: auto;
     }
-
-    .upper_line .geo .cities .list{
+    .upper_line .geo .cities .list {
         column-count: 5;
         max-width: 950px;
     }
-    .b-popup .b-popup-content li{
+    .b-popup .b-popup-content li {
         display: block;
         line-height: 16px;
         line-height: 32px;
         font-size: 16px;
+    }
+    .main_container {
+        margin-top: 105px;
+        background: dkgray;
+    }
+    .main_container .tabs_container {
+        padding: 35px 0 0 0;
+    }
+    @media screen and (max-width: 1139px)
+    .main_container .tabs_container .tabs_list {
+        left: 0;
+        display: block;
+        width: auto;
+        overflow: hidden;
+        position: relative;
+        align: top;
+    }
+
+    .main_container .tabs_container .tabs_list {
+        position: relative;
+        left: 25px;
+        display: inline-block;
+        width: 100%;
+        vertical-align: top;
+    }
+
+    .main_container .tabs_container .caption {
+        margin-left: 25px;
+    }
+
+    @media screen and (max-width: 1139px)
+    .main_container .tabs_container .tabs_scroller {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        display: block;
+        width: auto;
+        margin-top: 25px;
+    }
+
+    .main_container .tabs_container .tabs_scroller {
+        display: inline-block;
+        width: 100%;
+    }
+
+    @media screen and (min-width: 1140px)
+    .main_container .tabs_container .tabs_scroller {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .main_container .tabs_container .tabs_scroller .tablet {
+        float: left;
+        padding-bottom: 20px;
+        display: inline-block;
+        width: 25%;
+        vertical-align: top;
+    }
+
+    .main_container .tabs_container .tabs_scroller .last_tablet {
+            background: #20152c;
+            border-radius: 5px;
+            border: 1px solid #4c4356;
+            max-width: 160px;
+            max-height: 240px;
+            width: 100%;
+            margin-top: 38px;
+            display: inline-block;
+            vertical-align: top;
     }
 
