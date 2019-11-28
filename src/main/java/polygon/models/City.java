@@ -14,7 +14,7 @@ public class City {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
     private Set<Building> buildings;
 

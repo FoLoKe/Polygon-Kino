@@ -34,7 +34,7 @@ public class HomeController {
 
         List<Performance> films = new ArrayList<>();
         try {
-            films = performanceService.allPerformances();
+            films = performanceService.activePerformances();
         } catch (Exception e) {
             System.out.println("no connection");
         }

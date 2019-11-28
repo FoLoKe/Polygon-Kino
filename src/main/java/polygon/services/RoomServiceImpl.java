@@ -2,7 +2,7 @@ package polygon.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import polygon.daos.RoomRepository;
+import polygon.repos.RoomRepository;
 import polygon.models.Room;
 
 import java.util.List;

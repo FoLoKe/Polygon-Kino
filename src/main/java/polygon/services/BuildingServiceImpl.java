@@ -1,7 +1,7 @@
 package polygon.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import polygon.daos.BuildingRepository;
+import polygon.repos.BuildingRepository;
 import polygon.models.Building;
 
 import java.util.List;
