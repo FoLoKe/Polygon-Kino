@@ -15,9 +15,9 @@
     }
     .header .wrapper{
         width: 100%;
-        max-width: 1140px;
+
         height: 100%;
-        padding: 0 20px;
+        padding: 0 10px;
         box-sizing: border-box;
         margin: 0 auto;
         background: transparent;
@@ -56,12 +56,24 @@
         width:250px;
         height:100%;
     }
-    .header .wrapper .upper_line .enter {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 5%;
-        height: 50%;
+    .header .wrapper .upper_line .second_column {
+        padding-right: 25px;
+        margin-top: 5px;
+    }
+    .header .wrapper .upper_line .second_column .enter {
+        padding: 10px;
+        white-space: nowrap;
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.33;
+        color: #333;
+        text-decoration: none;
+        transition: color .3s;
+    }
+    .header .wrapper .upper_line .enter:hover {
+        background: #555;
+        color: #fff;
     }
     .wrapper img {
         display: block;
@@ -83,10 +95,16 @@
         list-style: none;
         padding: 0;
     }
-    .header .wrapper .bottom_line .menu li {
-        margin-right: 32px;
-        margin-left: 32px;
+    .header .wrapper .bottom_line .menu .menu_element {
+        padding-right: 32px;
+        padding-left: 32px;
+        transition: background color .3s;
     }
+    .header .wrapper .bottom_line .menu .menu_element:hover {
+        background: #555;
+        color: #fff;
+    }
+
     .header .wrapper .bottom_line .menu a {
         white-space: nowrap;
         font-family: Roboto;
@@ -98,7 +116,7 @@
         transition: color .3s;
     }
     .header .wrapper .bottom_line .menu a:hover {
-        color: #5faf69;
+        color: #555;
     }
     .upper_line .geo .cities {
         cursor: initial;
@@ -147,10 +165,6 @@
         vertical-align: top;
     }
 
-    .main_container .tabs_container .caption {
-        margin-left: 25px;
-    }
-
     @media screen and (max-width: 1139px)
     .main_container .tabs_container .tabs_scroller {
         overflow-x: scroll;
@@ -182,18 +196,19 @@
     }
 
     .main_container .tabs_container .tabs_scroller .last_tablet {
-        background: #20152c;
-        border-radius: 5px;
-        border: 1px solid #4c4356;
+        background: #aaa;
+        border: 1px solid #999;
+        box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
         max-width: 160px;
         max-height: 240px;
         width: 100%;
         margin-top: 38px;
-        margin-right: 20px;
+        margin-right: 10px;
         display: inline-block;
         vertical-align: top;
         text-decoration: none;
         transition: color .3s;
+        min-height: 100px;
     }
 
     .main_container .tabs_container .tabs_scroller .last_tablet:hover {
@@ -209,12 +224,12 @@
         font-size: 18px;
         font-weight: 500;
         line-height: 1.33;
-        color: white;
+        color: #333;
         text-decoration: none;
         transition: color .3s;
     }
     .main_container .tabs_container .tabs_scroller .last_tablet .roboto_text:hover {
-        color: #111111;
+        color: #fff;
     }
     .roboto_text {
         margin: 0px;
@@ -226,4 +241,66 @@
         line-height: 1.33;
         color: white;
         text-decoration: none;
+    }
+    .geo a {
+        margin: 0px;
+        margin-left: 12px;
+        white-space: nowrap;
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.33;
+        color: #000;
+        text-decoration: none;
+        transition: color .3s;
+    }
+    .geo a:hover{
+        color: #fff;
+    }
+    .geo .list a{
+        color: #555;
+    }
+    .geo .list a:hover{
+        color: #000;
+    }
+    .error p{
+         margin: 0px;
+         margin-left: 12px;
+         white-space: nowrap;
+         font-family: Roboto;
+         font-size: 60px;
+         font-weight: 500;
+         line-height: 1.33;
+         color: #aaa;
+         text-decoration: none;
+    }
+    .caption {
+        margin: 0px;
+        margin-left: 12px;
+        white-space: nowrap;
+        font-family: Roboto;
+        font-size: 60px;
+        font-weight: 500;
+        line-height: 1.33;
+        color: #aaa;
+        text-decoration: none;
+        text-shadow: 4px 4px 0px rgba(0,0,0,1);
+    }
+    .main_container .tabs_container .tabs_scroller .last_tablet .more .text{
+        margin: 0px;
+        margin-left: 35%;
+        white-space: nowrap;
+        font-family: Roboto;
+        font-size: 60px;
+        font-weight: 500;
+        line-height: 1.33;
+        text-decoration: none;
+        transition: color .3s
+    }
+    .main_container .tabs_container .tabs_scroller .last_tablet .more{
+        transition: color .3s;
+        color: #333;
+    }
+    .main_container .tabs_container .tabs_scroller .last_tablet .more:hover{
+        color: #fff;
     }

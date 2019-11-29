@@ -18,41 +18,36 @@
                             <img src="images/polygon.png">
                         </a>
                         <div class="geo">
-                            <a href="javascript:PopUpShow()">City</a>
+                            <a href="javascript:PopUpShow()" th:text="${geoCity}"></a>
                             <div class="cities" id="geoPopup">
                                 <div class="wrapper">
                                     <ul class="list">
-                                        <li th:each="city : ${citiesList}" th:text="${city.name}">
+                                        <li th:each="city : ${citiesList}">
+                                            <a th:href = "@{/setCity(id = ${city.id})}" th:text="${city.name}">
+
+                                            </a>
                                         </li>
                                     </ul>
                                     <a href="javascript:PopUpHide()">Hide popup</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="enter">
-                            <a href="">Вход</a>
-                        </div>
 
+
+                    </div>
+                    <div class="second_column">
+                        <a class="enter" th:href="@{/}">Вход</a>
                     </div>
                 </div>
 
                 <div class="bottom_line">
                     <div class="menu">
-                        <li>
-                            <a th:href="@{/films}">Фильмы</a>
-                        </li>
-                        <li>
-                            <a th:href="@{/cinemas}">Кинотеатры</a>
-                        </li>
-                        <li>
-                            <a th:href="@{/events}">События</a>
-                        </li>
-                        <li>
-                            <a th:href="@{/stocks}">Акции</a>
-                        </li>
-                        <li>
-                            <a th:href="@{/imax}">Фильмы в IMAX</a>
-                        </li>
+                            <a class="menu_element" th:href="@{/films}">Фильмы</a>
+                            <a class="menu_element" th:href="@{/cinemas}">Кинотеатры</a>
+                            <a class="menu_element" th:href="@{/events}">События</a>
+                            <a class="menu_element" th:href="@{/stocks}">Акции</a>
+                            <a class="menu_element" th:href="@{/imax}">Фильмы в IMAX</a>
+                        </div>
                     </div>
                 </div>
             </div>
