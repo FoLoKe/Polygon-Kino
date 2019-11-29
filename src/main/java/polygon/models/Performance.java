@@ -2,6 +2,7 @@ package polygon.models;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "polygon.performances")
@@ -22,6 +23,16 @@ public class Performance {
 
     @Column(name = "date")
     private Date date;
+
+    @Column(name = "categories")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "polygon.categories_performances")
+    private Set<Category> categories;
+
+    @Column(name = "categories")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "performance_id")
+    private Set<Session> sessions;
 
     public String getDescription() {
         return description;
