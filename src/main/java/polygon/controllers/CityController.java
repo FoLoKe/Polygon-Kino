@@ -2,37 +2,33 @@ package polygon.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.City;
 import polygon.services.CityService;
-import polygon.services.CityServiceImpl;
 
-import java.util.List;
-
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class CityController {
     @Autowired
     private CityService cityService;
 
-    @RequestMapping(value="/", method = RequestMethod.GET)
-    public ModelAndView allCities() {
-        List<City> films = cityService.allCities();
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home");
-        modelAndView.addObject("citiesList", films);
-        return modelAndView;
-    }
+    @GetMapping("/setCity")
+    public ModelAndView setCity(@RequestParam("id") int id, HttpServletResponse response) {
+        City city = cityService.findById(id);
 
-    @RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
-    public ModelAndView deleteCity(@PathVariable("id") int id) {
+        if(city != null){
+            Cookie cookie = new Cookie("city", Integer.toString(city.getId()));
+            response.addCookie(cookie);
+        }
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
-        City film = cityService.getById(id);
-        cityService.delete(film);
         return modelAndView;
     }
 }

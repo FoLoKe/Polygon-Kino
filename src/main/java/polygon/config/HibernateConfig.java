@@ -1,17 +1,18 @@
 package polygon.config;
 
-import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import polygon.services.CityService;
-import polygon.services.CityServiceImpl;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -39,13 +40,13 @@ public class HibernateConfig {
         properties.put(HBM2DDL_AUTO, environment.getRequiredProperty("hibernate.ddl-auto"));
         properties.put(SHOW_SQL, environment.getRequiredProperty("hibernate.show_sql"));
         properties.put(HBM2DDL_IMPORT_FILES, environment.getRequiredProperty("hibernate.import"));
-        properties.put("hibernate.temp.use_jdbc_metadata_defaults",false);
+        properties.put("hibernate.temp.use_jdbc_metadata_defaults", false);
         return properties;
     }
 
     @Bean
     public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
         dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
         dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
@@ -69,10 +70,24 @@ public class HibernateConfig {
         return transactionManager;
     }
 
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean em
+                = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource());
+        em.setPackagesToScan(new String[] { "polygon.models" });
+
+        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+        em.setJpaProperties(hibernateProperties());
+
+        return em;
+    }
+
     public static void main(String[] args) {
         String url = "jdbc:postgresql://31.42.45.42:5432/postgres";
-        String username = "postgres";
-        String password = "1234";
+        String username = "devteam";
+        String password = "devteam";
         System.out.println("Connecting...");
 
         try (Connection connection = DriverManager.getConnection(url, username, password)) {

@@ -10,49 +10,31 @@
         <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
     </head>
     <body>
-        <div class = "header">
-            <div class = "wrapper">
-                <div class = "upper_line">
-                    <div class="first_column">
-                        <a class="logo" th:href="@{/}">
-                            <img src="images/polygon.png">
+        <div th:insert = "~{header :: head}"></div>
+
+        <div class = "main_container">
+            <div class = "tabs_container">
+                <div class = "tabs_list">
+                    <h1 class = "caption">
+                        КИНО УЖЕ СЕГОДНЯ
+                    </h1>
+                    <div class = "tabs_scroller">
+                        <a class="last_tablet" th:href="@{/performance(id = ${film.id})}" th:each="film : ${filmsList}" >
+                            <p class = "roboto_text" th:text="${film.name}">
+
+                            </p>
+                            <p class = "roboto_text" th:text="${film.description}">
+
+                            </p>
+                            <p class = "roboto_text" th:text="${film.date}">
+
+                            </p>
                         </a>
-                        <div class="geo">
-                            <a href="javascript:PopUpShow()">City</a>
-                            <div class="cities" id="geoPopup">
-                                <div class="wrapper">
-                                    <ul class="list">
-                                        <li th:each="city : ${citiesList}" th:text="${city.name}">
-                                        </li>
-                                    </ul>
-                                    <a href="javascript:PopUpHide()">Hide popup</a>
-                                </div>
+                        <a class = "last_tablet" th:href="@{/films}">
+                            <div class = "more">
+                                <p class = "text">...</p>
                             </div>
-                        </div>
-                        <div class="enter">
-                            <a href="">Вход</a>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="bottom_line">
-                    <div class="menu">
-                        <li>
-                            <a th:href="@{/films}">Фильмы</a>
-                        </li>
-                        <li>
-                            <a th:href="@{/cinemas}">Кинотеатры</a>
-                        </li>
-                        <li>
-                            <a th:href="@{/events}">События</a>
-                        </li>
-                        <li>
-                            <a th:href="@{/stocks}">Акции</a>
-                        </li>
-                        <li>
-                            <a th:href="@{/imax}">Фильмы в IMAX</a>
-                        </li>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -15,15 +15,14 @@
     }
     .header .wrapper{
         width: 100%;
-        max-width: 1140px;
+
         height: 100%;
-        padding: 0 20px;
+        padding: 0 10px;
         box-sizing: border-box;
         margin: 0 auto;
         background: transparent;
         overflow: inherit;
     }
-
     .wrapper * {
         font-weight: 400;
         font-family: Roboto,Arial,sans-serif;
@@ -57,44 +56,12 @@
         width:250px;
         height:100%;
     }
-    .header .wrapper .upper_line  .enter {
-
-          position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 5%;
-        height: 50%;
-
-
-            }
-    .wrapper img{
-        display: block;
-        max-width: 100%;
-        vertical-align: top;
-        border: 0;
+    .header .wrapper .upper_line .second_column {
+        padding-right: 25px;
+        margin-top: 5px;
     }
-
-    .header .wrapper .bottom_line {
-        overflow-x: auto;
-        margin: 8px -20px 0 -20px;
-        padding: 0 0 10px 10px;
-    }
-
-    .header .wrapper .bottom_line .menu{
-        min-width: 700px;
-        height: 34px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        list-style: none;
-        padding: 0;
-    }
-    .header .wrapper .bottom_line .menu li{
-        margin-right: 32px;
-        margin-left: 32px;
-    }
-
-    .header .wrapper .bottom_line .menu a{
+    .header .wrapper .upper_line .second_column .enter {
+        padding: 10px;
         white-space: nowrap;
         font-family: Roboto;
         font-size: 18px;
@@ -104,12 +71,54 @@
         text-decoration: none;
         transition: color .3s;
     }
-
-    .header .wrapper .bottom_line .menu a:hover{
-        color: #5faf69;
+    .header .wrapper .upper_line .enter:hover {
+        background: #555;
+        color: #fff;
+    }
+    .wrapper img {
+        display: block;
+        max-width: 100%;
+        vertical-align: top;
+        border: 0;
+    }
+    .header .wrapper .bottom_line {
+        overflow-x: auto;
+        margin: 8px -20px 0 -20px;
+        padding: 0 0 10px 10px;
+    }
+    .header .wrapper .bottom_line .menu {
+        min-width: 700px;
+        height: 34px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        list-style: none;
+        padding: 0;
+    }
+    .header .wrapper .bottom_line .menu .menu_element {
+        padding-right: 32px;
+        padding-left: 32px;
+        transition: background color .3s;
+    }
+    .header .wrapper .bottom_line .menu .menu_element:hover {
+        background: #555;
+        color: #fff;
     }
 
-    .upper_line .geo .cities{
+    .header .wrapper .bottom_line .menu a {
+        white-space: nowrap;
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.33;
+        color: #333;
+        text-decoration: none;
+        transition: color .3s;
+    }
+    .header .wrapper .bottom_line .menu a:hover {
+        color: #555;
+    }
+    .upper_line .geo .cities {
         cursor: initial;
         position: fixed;
         top: 60px;
@@ -121,15 +130,177 @@
         background: #fff;
         overflow-y: auto;
     }
-
-    .upper_line .geo .cities .list{
+    .upper_line .geo .cities .list {
         column-count: 5;
         max-width: 950px;
     }
-    .b-popup .b-popup-content li{
+    .b-popup .b-popup-content li {
         display: block;
         line-height: 16px;
         line-height: 32px;
         font-size: 16px;
     }
+    .main_container {
+        margin-top: 105px;
+        background: #;
+    }
+    .main_container .tabs_container {
+        padding: 35px 0 0 0;
+    }
+    @media screen and (max-width: 1139px)
+    .main_container .tabs_container .tabs_list {
+        left: 0;
+        display: block;
+        width: auto;
+        overflow: hidden;
+        position: relative;
+        align: top;
+    }
 
+    .main_container .tabs_container .tabs_list {
+        position: relative;
+        left: 25px;
+        display: inline-block;
+        width: 100%;
+        vertical-align: top;
+    }
+
+    @media screen and (max-width: 1139px)
+    .main_container .tabs_container .tabs_scroller {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        display: block;
+        width: auto;
+        margin-top: 25px;
+    }
+
+    .main_container .tabs_container .tabs_scroller {
+        display: inline-block;
+        width: 100%;
+    }
+
+    @media screen and (min-width: 1140px)
+    .main_container .tabs_container .tabs_scroller {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .main_container .tabs_container .tabs_scroller .tablet {
+        float: left;
+        padding-bottom: 20px;
+        display: inline-block;
+        width: 25%;
+        vertical-align: top;
+        text-decoration: none;
+    }
+
+    .main_container .tabs_container .tabs_scroller .last_tablet {
+        background: #aaa;
+        border: 1px solid #999;
+        box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
+        max-width: 160px;
+        max-height: 240px;
+        width: 100%;
+        margin-top: 38px;
+        margin-right: 10px;
+        display: inline-block;
+        vertical-align: top;
+        text-decoration: none;
+        transition: color .3s;
+        min-height: 100px;
+    }
+
+    .main_container .tabs_container .tabs_scroller .last_tablet:hover {
+        color: #5faf69;
+        background: #666666;
+    }
+
+    .main_container .tabs_container .tabs_scroller .last_tablet .roboto_text {
+        margin: 0px;
+        margin-left: 12px;
+        white-space: nowrap;
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.33;
+        color: #333;
+        text-decoration: none;
+        transition: color .3s;
+    }
+    .main_container .tabs_container .tabs_scroller .last_tablet .roboto_text:hover {
+        color: #fff;
+    }
+    .roboto_text {
+        margin: 0px;
+        margin-left: 12px;
+        white-space: nowrap;
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.33;
+        color: white;
+        text-decoration: none;
+    }
+    .geo a {
+        margin: 0px;
+        margin-left: 12px;
+        white-space: nowrap;
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.33;
+        color: #000;
+        text-decoration: none;
+        transition: color .3s;
+    }
+    .geo a:hover{
+        color: #fff;
+    }
+    .geo .list a{
+        color: #555;
+    }
+    .geo .list a:hover{
+        color: #000;
+    }
+    .error p{
+         margin: 0px;
+         margin-left: 12px;
+         white-space: nowrap;
+         font-family: Roboto;
+         font-size: 60px;
+         font-weight: 500;
+         line-height: 1.33;
+         color: #aaa;
+         text-decoration: none;
+    }
+    .caption {
+        margin: 0px;
+        margin-left: 12px;
+        white-space: nowrap;
+        font-family: Roboto;
+        font-size: 60px;
+        font-weight: 500;
+        line-height: 1.33;
+        color: #aaa;
+        text-decoration: none;
+        text-shadow: 4px 4px 0px rgba(0,0,0,1);
+    }
+    .main_container .tabs_container .tabs_scroller .last_tablet .more .text{
+        margin: 0px;
+        margin-left: 35%;
+        white-space: nowrap;
+        font-family: Roboto;
+        font-size: 60px;
+        font-weight: 500;
+        line-height: 1.33;
+        text-decoration: none;
+        transition: color .3s
+    }
+    .main_container .tabs_container .tabs_scroller .last_tablet .more{
+        transition: color .3s;
+        color: #333;
+    }
+    .main_container .tabs_container .tabs_scroller .last_tablet .more:hover{
+        color: #fff;
+    }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div th:insert = "~{header :: head}"></div>
+    <div class="main_container">
+        <p  class = "roboto_text" th:text = ${perf.name}></p>
+        <p  class = "roboto_text" th:text = ${perf.description}></p>
+    </div>
+
+</body>
+</html>

@@ -1,3 +1,17 @@
-
-INSERT INTO polygon.cities(id,name) VALUES(1,'Челяба');
+INSERT INTO polygon.cities(name) VALUES('Москва');
+INSERT INTO polygon.cities(name) VALUES('Санкт-Петербург');
+INSERT INTO polygon.cities(name) VALUES('Челябинск');
+INSERT INTO polygon.cities(name) VALUES('Омск');
+INSERT INTO polygon.cities(name) VALUES('Мурманск');
+INSERT INTO polygon.cities(name) VALUES('Архангельск');
+INSERT INTO polygon.cities(name) VALUES('Красноярск');
+INSERT INTO polygon.buildings(city_id) values (1);
+INSERT INTO polygon.buildings(city_id) values (2);
+insert into polygon.performances(name, date, description) values('Аниме', '2019-12-01', 'параша');
+insert into polygon.performances(name, date, description) values('film 1', '2019-12-20', 'description 1');
+insert into polygon.performances(name, date, description) values('film 2', '2019-03-14', 'desc 2');
+insert into polygon.performances(name, date, description) values('film 3', '2020-03-08', 'description 3');
+insert into polygon.performances(name, date, description) values('film 4', '2021-03-11', 'description 4');
+insert into polygon.performances(name, date, description) values('film 5', '2020-08-15', 'description 5');
+insert into polygon.performances(name, date, description) values('film 6', '2017-03-14', 'description 6');
 commit;

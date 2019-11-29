@@ -1,38 +1,36 @@
 package polygon.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import polygon.daos.BuildingDAO;
+import polygon.repos.BuildingRepository;
 import polygon.models.Building;
 
 import java.util.List;
 
 public class BuildingServiceImpl implements BuildingService {
     @Autowired
-    private BuildingDAO buildingDAO;
+    private BuildingRepository buildingRepository;
 
 
     @Override
     public List<Building> allBuildings() {
-        return buildingDAO.getAllBuildings();
+        return buildingRepository.findAll();
     }
 
     @Override
     public void add(Building building) {
-        buildingDAO.add(building);
     }
 
     @Override
     public void delete(Building building) {
-        buildingDAO.delete(building);
+        buildingRepository.delete(building);
     }
 
     @Override
     public void edit(Building building) {
-        buildingDAO.edit(building);
     }
 
     @Override
     public Building getById(int id) {
-        return buildingDAO.getByID(id);
+        return buildingRepository.getOne(id);
     }
 }

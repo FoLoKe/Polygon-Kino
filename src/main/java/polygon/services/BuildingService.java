@@ -5,7 +5,6 @@ import polygon.models.Building;
 
 import java.util.List;
 
-@Service
 public interface BuildingService {
     List<Building> allBuildings();
     void add(Building building);

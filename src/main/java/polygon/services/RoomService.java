@@ -5,7 +5,6 @@ import polygon.models.Room;
 
 import java.util.List;
 
-@Service
 public interface RoomService {
     List<Room> allCities();
     void add(Room room);
