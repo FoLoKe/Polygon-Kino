@@ -10,6 +10,10 @@
 </head>
 <body>
     <div th:insert = "~{header :: head}"></div>
-    <p  th:text = ${perf.name}></p>
+    <div class="main_container">
+        <p  class = "roboto_text" th:text = ${perf.name}></p>
+        <p  class = "roboto_text" th:text = ${perf.description}></p>
+    </div>
+
 </body>
 </html>

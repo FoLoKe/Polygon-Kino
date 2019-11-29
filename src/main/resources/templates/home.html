@@ -65,7 +65,7 @@
                         Cinema today!
                     </h1>
                     <div class = "tabs_scroller">
-                        <a class="last_tablet" th:href="@{/performance/{id}(id = ${film.id})}" th:each="film : ${filmsList}" >
+                        <a class="last_tablet" th:href="@{/performance(id = ${film.id})}" th:each="film : ${filmsList}" >
                             <p class = "roboto_text" th:text="${film.name}">
 
                             </p>

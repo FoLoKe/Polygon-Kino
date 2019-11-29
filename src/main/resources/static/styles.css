@@ -216,4 +216,14 @@
     .main_container .tabs_container .tabs_scroller .last_tablet .roboto_text:hover {
         color: #111111;
     }
-
+    .roboto_text {
+        margin: 0px;
+        margin-left: 12px;
+        white-space: nowrap;
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.33;
+        color: white;
+        text-decoration: none;
+    }
