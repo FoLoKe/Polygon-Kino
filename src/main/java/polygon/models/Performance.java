@@ -29,10 +29,14 @@ public class Performance {
     @JoinTable(name = "polygon.categories_performances")
     private Set<Category> categories;
 
-    @Column(name = "categories")
+    @Column(name = "sessions")
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "performance_id")
     private Set<Session> sessions;
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setName(String name) {
         this.name = name;

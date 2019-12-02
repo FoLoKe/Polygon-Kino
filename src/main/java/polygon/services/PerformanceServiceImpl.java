@@ -2,10 +2,13 @@ package polygon.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import polygon.models.Category;
 import polygon.repos.PerformanceRepository;
 import polygon.models.Performance;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PerformanceServiceImpl implements PerformanceService {
@@ -18,9 +21,16 @@ public class PerformanceServiceImpl implements PerformanceService {
     }
 
     @Override
+    @Transactional
     public List<Performance> activePerformances() {
         java.util.Date utilDate = new java.util.Date(System.currentTimeMillis());
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        return performanceRepository.findAllActivePerformances(sqlDate);
+        List<Performance> performances = performanceRepository.findAllActivePerformances(sqlDate);
+        for (Performance p: performances) {
+            for (Category c: p.getCategories()) {
+                c.getId();
+            }
+        }
+        return performances;
     }
 }

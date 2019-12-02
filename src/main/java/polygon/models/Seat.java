@@ -17,9 +17,10 @@ public class Seat {
     @Column(name = "row")
     private int row;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @Column(name = "tickets")
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_id")
-    private Ticket ticket;
+    private Set<Ticket> tickets;
 
     public int getId() {
         return id;
@@ -41,11 +42,4 @@ public class Seat {
         this.row = row;
     }
 
-    public Ticket getTicket() {
-        return ticket;
-    }
-
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
-    }
 }
