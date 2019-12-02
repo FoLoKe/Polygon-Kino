@@ -20,4 +20,32 @@ public class Seat {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_id")
     private Ticket ticket;
+
+    public int getId() {
+        return id;
+    }
+
+    public int getSeat() {
+        return seat;
+    }
+
+    public void setSeat(int seat) {
+        this.seat = seat;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
 }

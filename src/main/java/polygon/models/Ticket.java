@@ -12,4 +12,16 @@ public class Ticket {
 
     @Column(name = "occupied")
     private boolean occupied;
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isOccupied() {
+        return occupied;
+    }
+
+    public void setOccupied(boolean occupied) {
+        this.occupied = occupied;
+    }
 }

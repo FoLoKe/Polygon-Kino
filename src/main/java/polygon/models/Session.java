@@ -22,6 +22,31 @@ public class Session {
     @JoinColumn(name = "session_id")
     private Set<Ticket> tickets;
 
+    public int getId() {
+        return id;
+    }
 
+    public Timestamp getTime() {
+        return time;
+    }
 
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
+    }
 }

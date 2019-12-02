@@ -12,4 +12,16 @@ public class Category {
 
     @Column(name = "name")
     private String string;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getString() {
+        return string;
+    }
+
+    public void setString(String string) {
+        this.string = string;
+    }
 }
