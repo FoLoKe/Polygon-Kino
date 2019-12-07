@@ -14,8 +14,8 @@ public class Seat {
     @Column(name = "seat")
     private int seat;
 
-    @Column(name = "row")
-    private int row;
+    @Column(name = "srow")
+    private int srow;
 
     @Column(name = "tickets")
     @OneToMany(fetch = FetchType.LAZY)
@@ -35,11 +35,11 @@ public class Seat {
     }
 
     public int getRow() {
-        return row;
+        return srow;
     }
 
     public void setRow(int row) {
-        this.row = row;
+        this.srow = row;
     }
 
 }

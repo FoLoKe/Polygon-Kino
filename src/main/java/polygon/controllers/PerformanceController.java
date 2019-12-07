@@ -34,6 +34,11 @@ public class PerformanceController {
             Optional<Performance> optional = performanceRepository.findById(id);
             if(optional.isPresent()) {
                 modelAndView.addObject("perf", optional.get());
+
+
+
+
+
             }
             else {
                 throw new NullPointerException();
@@ -46,25 +51,6 @@ public class PerformanceController {
             modelAndView.setViewName("error");
         }
 
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/performance/create", method = RequestMethod.GET)
-    public ModelAndView newPerformance()
-    {
-        Set<Category> categories = new LinkedHashSet<>();
-        categories.add(categoryRepository.findById(1).get());
-        java.util.Date utilDate = new java.util.Date(System.currentTimeMillis());
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        Performance performance = new Performance();
-        performance.setId(9);
-        performance.setName("debug name");
-        performance.setCategories(categories);
-        performance.setDate(sqlDate);
-
-        performanceRepository.save(performance);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 }
