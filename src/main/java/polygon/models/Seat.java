@@ -14,10 +14,32 @@ public class Seat {
     @Column(name = "seat")
     private int seat;
 
-    @Column(name = "row")
-    private int row;
+    @Column(name = "srow")
+    private int srow;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @Column(name = "tickets")
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_id")
-    private Ticket ticket;
+    private Set<Ticket> tickets;
+
+    public int getId() {
+        return id;
+    }
+
+    public int getSeat() {
+        return seat;
+    }
+
+    public void setSeat(int seat) {
+        this.seat = seat;
+    }
+
+    public int getRow() {
+        return srow;
+    }
+
+    public void setRow(int row) {
+        this.srow = row;
+    }
+
 }

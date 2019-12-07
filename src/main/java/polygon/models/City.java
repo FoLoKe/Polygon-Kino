@@ -18,8 +18,12 @@ public class City {
     @JoinColumn(name = "city_id")
     private Set<Building> buildings;
 
-    public void setId(int id) {
-        this.id = id;
+    public Set<Building> getBuildings() {
+        return buildings;
+    }
+
+    public void setBuildings(Set<Building> buildings) {
+        this.buildings = buildings;
     }
 
     public void setName(String name) {

@@ -1,3 +1,4 @@
+
 INSERT INTO polygon.cities(name) VALUES('Москва');
 INSERT INTO polygon.cities(name) VALUES('Санкт-Петербург');
 INSERT INTO polygon.cities(name) VALUES('Челябинск');
@@ -14,4 +15,51 @@ insert into polygon.performances(name, date, description) values('film 3', '2020
 insert into polygon.performances(name, date, description) values('film 4', '2021-03-11', 'description 4');
 insert into polygon.performances(name, date, description) values('film 5', '2020-08-15', 'description 5');
 insert into polygon.performances(name, date, description) values('film 6', '2017-03-14', 'description 6');
+insert into polygon.categories(name) values ('Боевик');
+insert into polygon.categories(name) values ('Экшен');
+insert into polygon.categories(name) values ('Мелодрамма');
+insert into polygon.categories_performances(categories_id, performance_id) values (1,1);
+insert into polygon.categories_performances(categories_id, performance_id) values (2,1);
+insert into polygon.categories_performances(categories_id, performance_id) values (3,1);
+insert into polygon.categories_performances(categories_id, performance_id) values (1,2);
+insert into polygon.categories_performances(categories_id, performance_id) values (2,2);
+insert into polygon.categories_performances(categories_id, performance_id) values (1,3);
+insert into polygon.rooms(building_id, type) values (1, 'Кинотеатр');
+insert into polygon.rooms(building_id, type) values (1, 'Кинотеатр');
+insert into polygon.rooms(building_id, type) values (2, 'ТЦ');
+insert into polygon.seats(room_id,srow, seat) values (1, 1, 1);
+insert into polygon.seats(room_id,srow, seat) values (1, 1, 2);
+insert into polygon.seats(room_id,srow, seat) values (1, 1, 3);
+insert into polygon.seats(room_id,srow, seat) values (1, 1, 4);
+insert into polygon.seats(room_id,srow, seat) values (1, 1, 5);
+insert into polygon.seats(room_id,srow, seat) values (1, 1, 6);
+insert into polygon.seats(room_id,srow, seat) values (1, 1, 7);
+insert into polygon.seats(room_id,srow, seat) values (1, 1, 8);
+insert into polygon.seats(room_id,srow, seat) values (1, 1, 9);
+insert into polygon.seats(room_id,srow, seat) values (1, 2, 1);
+insert into polygon.seats(room_id,srow, seat) values (1, 2, 2);
+insert into polygon.seats(room_id,srow, seat) values (1, 2, 3);
+insert into polygon.seats(room_id,srow, seat) values (1, 2, 4);
+insert into polygon.seats(room_id,srow, seat) values (1, 2, 5);
+insert into polygon.seats(room_id,srow, seat) values (1, 2, 6);
+insert into polygon.seats(room_id,srow, seat) values (1, 2, 7);
+
+insert into polygon.seats(room_id,srow, seat) values (2, 1, 1);
+insert into polygon.seats(room_id,srow, seat) values (2, 1, 2);
+insert into polygon.seats(room_id,srow, seat) values (2, 1, 3);
+insert into polygon.seats(room_id,srow, seat) values (2, 1, 4);
+insert into polygon.seats(room_id,srow, seat) values (2, 1, 5);
+insert into polygon.seats(room_id,srow, seat) values (2, 1, 6);
+insert into polygon.seats(room_id,srow, seat) values (2, 1, 7);
+insert into polygon.seats(room_id,srow, seat) values (2, 1, 8);
+insert into polygon.seats(room_id,srow, seat) values (2, 1, 9);
+insert into polygon.seats(room_id,srow, seat) values (2, 2, 1);
+insert into polygon.seats(room_id,srow, seat) values (2, 2, 2);
+insert into polygon.seats(room_id,srow, seat) values (2, 2, 3);
+insert into polygon.seats(room_id,srow, seat) values (2, 2, 4);
+insert into polygon.seats(room_id,srow, seat) values (2, 2, 5);
+insert into polygon.seats(room_id,srow, seat) values (2, 2, 6);
+insert into polygon.seats(room_id,srow, seat) values (2, 2, 7);
+
+
 commit;

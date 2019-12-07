@@ -29,6 +29,7 @@
                             <p class = "roboto_text" th:text="${film.date}">
 
                             </p>
+                            <p th:each="cat : ${film.categories}" th:text="${cat.name}"></p>
                         </a>
                         <a class = "last_tablet" th:href="@{/films}">
                             <div class = "more">

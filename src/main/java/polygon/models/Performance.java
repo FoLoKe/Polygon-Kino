@@ -29,10 +29,50 @@ public class Performance {
     @JoinTable(name = "polygon.categories_performances")
     private Set<Category> categories;
 
-    @Column(name = "categories")
+    @Column(name = "sessions")
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "performance_id")
     private Set<Session> sessions;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public byte[] getPoster() {
+        return poster;
+    }
+
+    public void setPoster(byte[] poster) {
+        this.poster = poster;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    public Set<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(Set<Session> sessions) {
+        this.sessions = sessions;
+    }
 
     public String getDescription() {
         return description;

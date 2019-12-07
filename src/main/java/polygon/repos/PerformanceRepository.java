@@ -11,4 +11,5 @@ import java.util.List;
 public interface PerformanceRepository extends JpaRepository<Performance, Integer> {
     @Query("select p from Performance p where p.date >= :date")
     List<Performance> findAllActivePerformances(@Param("date") Date date);
+
 }
