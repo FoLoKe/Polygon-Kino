@@ -22,8 +22,20 @@ public class Session {
     @JoinColumn(name = "session_id")
     private Set<Ticket> tickets;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "performance_id")
+    private Performance performance;
+
     public int getId() {
         return id;
+    }
+
+    public Room getRoom() {
+        return room;
     }
 
     public Timestamp getTime() {

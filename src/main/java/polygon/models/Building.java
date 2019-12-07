@@ -11,8 +11,8 @@ public class Building {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "type")
+    private String type;
 
     @Column(name = "address")
     private String address;
@@ -21,16 +21,20 @@ public class Building {
     @JoinColumn(name = "building_id")
     private Set<Room> rooms;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id")
+    private City city;
+
     public int getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(String name) {
+        this.type = name;
     }
 
     public String getAddress() {

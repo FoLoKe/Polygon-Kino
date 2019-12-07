@@ -2,47 +2,53 @@ package polygon.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import polygon.models.Category;
-import polygon.models.Performance;
+import polygon.models.*;
 import polygon.repos.CategoryRepository;
 import polygon.repos.PerformanceRepository;
+import polygon.services.CityService;
+import polygon.services.PerformanceService;
+import polygon.services.SessionService;
 
 import java.sql.Date;
-import java.util.LinkedHashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class PerformanceController {
     @Autowired
-    private PerformanceRepository performanceRepository;
+    private PerformanceService performanceService;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CityService cityService;
+
+    @Autowired
+    private SessionService sessionService;
 
     @RequestMapping(value = "/performance", method = RequestMethod.GET)
-    public ModelAndView getPerformance(@RequestParam("id") int id) {
+    public ModelAndView getPerformance(@RequestParam("id") int id, @CookieValue(value = "city", defaultValue = "1") int cityId) {
         ModelAndView modelAndView = new ModelAndView();
 
         try {
             modelAndView.setViewName("performance");
-            Optional<Performance> optional = performanceRepository.findById(id);
-            if(optional.isPresent()) {
-                modelAndView.addObject("perf", optional.get());
+            Performance performance = performanceService.findById(id);
 
+            modelAndView.addObject("perf", performance);
 
+            String geoCity = "Москва";
+            try {
+                City city = cityService.findById(cityId);
+                geoCity = city.getName();
+                Map<Building, List<Session>> buildingsMap = sessionService.findBuildingsWithSessionsInCity(performance, city);
+                //buildingsMap =
+                modelAndView.addObject("sessions_by_buildings", buildingsMap);
 
-
-
+            } catch (Exception ste) {
+                System.out.println("no connection");
             }
-            else {
-                throw new NullPointerException();
-            }
+
+            modelAndView.addObject("geoCity", geoCity);
+
         } catch (NullPointerException e){
             System.out.println("no prop by id: " + id);
             modelAndView.setViewName("error");
@@ -51,6 +57,16 @@ public class PerformanceController {
             modelAndView.setViewName("error");
         }
 
+        List<City> cities = new ArrayList<>();
+        try {
+            cities = cityService.allCities();
+        } catch (Exception ste) {
+            System.out.println("no connection");
+        }
+
+
+
+        modelAndView.addObject("citiesList", cities);
         return modelAndView;
     }
 }

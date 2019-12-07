@@ -14,9 +14,6 @@ public class Seat {
     @Column(name = "seat")
     private int seat;
 
-    @Column(name = "srow")
-    private int srow;
-
     @Column(name = "tickets")
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_id")
@@ -32,14 +29,6 @@ public class Seat {
 
     public void setSeat(int seat) {
         this.seat = seat;
-    }
-
-    public int getRow() {
-        return srow;
-    }
-
-    public void setRow(int row) {
-        this.srow = row;
     }
 
 }

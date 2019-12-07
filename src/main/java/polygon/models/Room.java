@@ -1,5 +1,7 @@
 package polygon.models;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -18,6 +20,14 @@ public class Room {
         return id;
     }
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "session_id")
+    private Set<Ticket> tickets;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "building_id")
+    private Building building;
+
     public String getType() {
         return type;
     }
@@ -26,12 +36,12 @@ public class Room {
         this.type = type;
     }
 
-    public Set<Seat> getSeats() {
-        return seats;
+    public Set<SeatsRow> getSeats() {
+        return seatsRows;
     }
 
-    public void setSeats(Set<Seat> seats) {
-        this.seats = seats;
+    public void setSeats(Set<SeatsRow> seats) {
+        this.seatsRows = seats;
     }
 
     public Set<Session> getSessions() {
@@ -44,9 +54,38 @@ public class Room {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
-    private Set<Seat> seats;
+    @org.hibernate.annotations.OrderBy(clause = "seatsRow")
+    private Set<SeatsRow> seatsRows;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Set<Session> sessions;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+    public Set<SeatsRow> getSeatsRows() {
+        return seatsRows;
+    }
+
+    public void setSeatsRows(Set<SeatsRow> seatsRows) {
+        this.seatsRows = seatsRows;
+    }
 }

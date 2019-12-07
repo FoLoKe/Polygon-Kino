@@ -2,10 +2,14 @@ package polygon.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import polygon.models.SeatsRow;
+import polygon.models.Session;
 import polygon.repos.RoomRepository;
 import polygon.models.Room;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RoomServiceImpl implements RoomService {
@@ -19,22 +23,15 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void add(Room room) {
+    @Transactional
+    public Room findBySessions(Session session) {
+        Room room = roomRepository.findBySessions(session);
+        room.getSeatsRows().size();
+        Set<SeatsRow> seatsRows = room.getSeatsRows();
+        for (SeatsRow sr : seatsRows) {
+            sr.getSeats().size();
+        }
 
-    }
-
-    @Override
-    public void delete(Room room) {
-        roomRepository.delete(room);
-    }
-
-    @Override
-    public void edit(Room room) {
-
-    }
-
-    @Override
-    public Room getById(int id) {
-        return roomRepository.getOne(id);
+        return room;
     }
 }
