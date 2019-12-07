@@ -15,9 +15,16 @@
         <p  class = "roboto_text" th:text = ${perf.description}></p>
     </div>
 
-    <a th:href="@{/selectRoom(id = ${perf.id})}">
-        BUY TICKET
-    </a>
+    <div th:each = "instance : ${sessions_by_buildings}">
+        <p th:text = "${instance.key.type}">
+
+        </p>
+        <div th:each = "s : ${instance.value}">
+            <a th:text = "${s.time}" th:href="@{/selectSeat(id = ${s.id})}">
+
+            </a>
+        </div>
+    </div>
 
 </body>
 </html>

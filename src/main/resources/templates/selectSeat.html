@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+                     xmlns:th="https://www.thymeleaf.org"
+                     xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<head>
+<body>
+        <table>
+            <tr th:each = "srow : ${room.seatsRows}" >
+                <td th:text = "${srow.seatsRow}"></td>
+                <td th:each = "a : ${srow.seats}" th:text = "${a.seat}"></td>
+            </tr>
+        </table>
+</table>
+</body>
+</html>

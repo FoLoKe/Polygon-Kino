@@ -32,4 +32,6 @@ public class MvcController implements WebMvcConfigurer {
         registry.addResourceHandler("/js/**").
                 addResourceLocations("classpath:/js/");
     }
+
+
 }

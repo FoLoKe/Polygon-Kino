@@ -8,4 +8,5 @@ import java.util.List;
 public interface PerformanceService {
     List<Performance> allPerformances();
     List<Performance> activePerformances();
+    Performance findById(int id);
 }

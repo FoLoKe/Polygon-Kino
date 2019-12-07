@@ -21,6 +21,11 @@ public class PerformanceServiceImpl implements PerformanceService {
     }
 
     @Override
+    public Performance findById(int id) {
+        return performanceRepository.findById(id).get();
+    }
+
+    @Override
     @Transactional
     public List<Performance> activePerformances() {
         java.util.Date utilDate = new java.util.Date(System.currentTimeMillis());
