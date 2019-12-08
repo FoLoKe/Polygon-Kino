@@ -2,6 +2,7 @@ package polygon.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import polygon.models.Building;
 import polygon.models.City;
 import polygon.models.Performance;
@@ -41,7 +42,12 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
+    @Transactional
     public Session findById(int id) {
-        return sessionRepository.findById(id).orElse(null);
+        Session s = sessionRepository.findById(id).orElse(null);
+        if(s != null) {
+            s.getTickets().size();
+        }
+        return s;
     }
 }

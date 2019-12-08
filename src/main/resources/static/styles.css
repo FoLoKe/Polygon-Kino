@@ -306,3 +306,69 @@
     .main_container .tabs_container .tabs_scroller .last_tablet .more:hover{
         color: #fff;
     }
+
+    .seat {
+            background: #aaa;
+            border: 1px solid #999;
+            box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
+            max-width: 32px;
+            max-height: 32px;
+            width: 100%;
+            margin-top: 38px;
+            margin-right: 10px;
+            display: inline-block;
+            vertical-align: top;
+            text-decoration: none;
+            transition: color background .3s;
+            min-height: 32px;
+    }
+
+    .seat:hover {
+           background: #0b0;
+     }
+
+    .hseat {
+                 background: #f00;
+                 border: 1px solid #999;
+                 box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
+                 max-width: 32px;
+                 max-height: 32px;
+                 width: 100%;
+                 margin-top: 38px;
+                 margin-right: 10px;
+                 display: inline-block;
+                 vertical-align: top;
+                 text-decoration: none;
+                 transition: color background .3s;
+                 min-height: 32px;
+    }
+    .sseat {
+         background: #fff;
+                     border: 1px solid #999;
+                     box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
+                     max-width: 32px;
+                     max-height: 32px;
+                     width: 100%;
+                     margin-top: 38px;
+                     margin-right: 10px;
+                     display: inline-block;
+                     vertical-align: top;
+                     text-decoration: none;
+                     transition: color background .3s;
+                     min-height: 32px;
+        }
+    .buyButton {
+                     background: #fff;
+                     border: 1px solid #999;
+                     box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
+                     max-width: 32px;
+                     max-height: 128px;
+                     width: 100%;
+                     margin-top: 38px;
+                     margin-right: 10px;
+                     display: inline-block;
+                     vertical-align: top;
+                     text-decoration: none;
+                     transition: color background .3s;
+                     min-height: 32px;
+        }

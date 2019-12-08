@@ -7,17 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import polygon.models.Room;
-import polygon.models.Seat;
-import polygon.models.SeatsRow;
-import polygon.models.Session;
+import polygon.models.*;
 import polygon.services.RoomService;
 import polygon.services.SessionService;
+import polygon.services.TicketService;
 
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class SelectionController {
@@ -28,6 +23,9 @@ public class SelectionController {
     @Autowired
     private SessionService sessionService;
 
+    @Autowired
+    private TicketService ticketService;
+
     @RequestMapping(value = "/selectSeat", method = RequestMethod.GET)
     public ModelAndView getPerformance(@RequestParam("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -37,15 +35,22 @@ public class SelectionController {
             modelAndView.setViewName("selectSeat");
             Room room = roomService.findBySessions(session);
             Set<SeatsRow> rows = room.getSeatsRows();
-            List<SeatsRow> rowsList = new LinkedList<>(rows);
-            rowsList.sort(new Comparator<SeatsRow>() {
-                @Override
-                public int compare(SeatsRow o1, SeatsRow o2) {
-                    return 0;
+            Set<Ticket> tickets = session.getTickets();
+
+            List<Map<Seat, Ticket>> mapArrayList = new LinkedList<>();
+            for (SeatsRow sr : rows) {
+                Map<Seat, Ticket> map = new LinkedHashMap<>();
+                for(Seat s : sr.getSeats()) {
+                    for(Ticket t : tickets) {
+                        if(t.getSeat().getId() == s.getId())
+                            map.put(s, t);
+                    }
+
                 }
-            });
+                mapArrayList.add(map);
+            }
 
-
+            modelAndView.addObject("rowsList",mapArrayList);
             modelAndView.addObject("room", room);
 
         } catch (Exception e) {
@@ -53,5 +58,31 @@ public class SelectionController {
         }
 
         return  modelAndView;
+    }
+
+    public class SeatWithState {
+        public Seat seat;
+        public Boolean state;
+    }
+
+    @RequestMapping(value = "/buy", method = RequestMethod.GET)
+    public ModelAndView buyTickets(@RequestParam("ticketsId") String sids) {
+        String[] splitIds = sids.split(" ");
+        List<Integer> ids = new ArrayList<>();
+        for (String s: splitIds) {
+            if(s!= null && !s.isEmpty()) {
+                try {
+                    ids.add(Integer.parseInt(s));
+                } catch (NumberFormatException e) {
+                    System.out.println("bad link" + e.toString());
+                }
+            }
+        }
+
+        ticketService.setTickets(ids);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("confirmPage");
+
+        return modelAndView;
     }
 }

@@ -21,7 +21,15 @@ public class Ticket {
     @JoinColumn(name = "session_id")
     private Session session;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    public Seat getSeat() {
+        return seat;
+    }
+
+    public void setSeat(Seat seat) {
+        this.seat = seat;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "seat_id")
     private Seat seat;
 
