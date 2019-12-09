@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().ignoringAntMatchers("/console/**");
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/console/**","/**").permitAll().anyRequest().authenticated()
+                .antMatchers("/img/**","/console/**","/**").permitAll().anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").loginProcessingUrl("/login").successHandler(urlRedirect())

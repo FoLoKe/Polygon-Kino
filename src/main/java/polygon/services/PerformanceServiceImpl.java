@@ -7,6 +7,9 @@ import polygon.models.Category;
 import polygon.repos.PerformanceRepository;
 import polygon.models.Performance;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.util.Base64;
 import java.util.List;
 import java.util.Set;
 
@@ -37,5 +40,31 @@ public class PerformanceServiceImpl implements PerformanceService {
             }
         }
         return performances;
+    }
+
+    @Override
+    public void writeImageToResponse(Integer id, HttpServletResponse response) {
+        //store image in browser cache
+        response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+        response.setHeader("Cache-Control", "max-age=2628000");
+
+        //obtaining bytes from DB
+        Performance performance = performanceRepository.findById(id).orElse(null);
+        if(performance != null) {
+            byte[] imageData = performance.getPoster();
+
+            //Some conversion
+            //Maybe to base64 string or something else
+            //Pay attention to encoding (UTF-8, etc)
+            //Base64.Decoder dec = Base64.getDecoder();
+            //byte[] convertedStringBytes = dec.decode(imageData);
+
+            //write result to http response
+            try (OutputStream out = response.getOutputStream()) {
+                out.write(imageData);
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        }
     }
 }

@@ -35,11 +35,11 @@
 
 
                     <div class="second_column">
-                        <a  href="javascript:lPopUpSwitch()">
+                        <a class = "etext" href="javascript:lPopUpSwitch()">
                         <div class="enter">
 
-                            <p sec:authorize="isAnonymous()"> Вход</p>
-                            <p sec:authorize="isAuthenticated()">[[${#httpServletRequest.remoteUser}]] </p>
+                            <p class = "etext" sec:authorize="isAnonymous()"> Вход</p>
+                            <p class = "etext" sec:authorize="isAuthenticated()">[[${#httpServletRequest.remoteUser}]] </p>
                         </div>
                         </a>
 
