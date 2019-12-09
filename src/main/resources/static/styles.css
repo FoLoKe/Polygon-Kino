@@ -356,7 +356,7 @@
                      text-decoration: none;
                      transition: color background .3s;
                      min-height: 32px;
-        }
+    }
     .buyButton {
                      background: #fff;
                      border: 1px solid #999;
@@ -371,4 +371,16 @@
                      text-decoration: none;
                      transition: color background .3s;
                      min-height: 32px;
-        }
+    }
+    .login{
+            background: #fff;
+                margin: 8px 10px 0 30px;
+                font-family: Roboto;
+                font-size: 16px;
+                line-height: 28px;
+                color: #333;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                position: relative;
+    }

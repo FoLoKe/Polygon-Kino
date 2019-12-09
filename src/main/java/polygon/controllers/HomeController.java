@@ -58,13 +58,4 @@ public class HomeController {
         modelAndView.addObject("citiesList", cities);
         return modelAndView;
     }
-
-    @RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
-    public ModelAndView deleteCity(@PathVariable("id") int id) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
-        City city = cityService.findById(id);
-        cityService.delete(city);
-        return modelAndView;
-    }
 }
