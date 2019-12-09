@@ -5,6 +5,9 @@
 <head>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
+    <script type="text/javascript" th:src="@{js/selection.js}" src = "js/selection.js"></script>
 <head>
 <body>
         <table>
@@ -12,7 +15,19 @@
                 <td th:text = "${srow.seatsRow}"></td>
                 <td th:each = "a : ${srow.seats}" th:text = "${a.seat}"></td>
             </tr>
+
+            <tr  th:each = "srow : ${rowsList}" >
+                <td  class = "seat" th:each = "instance : ${srow}" th:value= "${instance.value.occupied}" th:attr = "ticket = ${instance.value.id}">
+                    <p th:text = "${instance.key.seat}" >
+
+                    </p>
+                </td>
+            </tr>
         </table>
+
+        <a id = buy href = "#" class = "buyButton">
+            BUY
+        </a>
 </table>
 </body>
 </html>

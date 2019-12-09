@@ -35,22 +35,13 @@ insert into polygon.rooms(building_id, type) values (4, 'simple');
 insert into polygon.rooms(building_id, type) values (4, 'simple')
 insert into polygon.rooms(building_id, type) values (5, 'simple');
 
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 10:30:00' , 1, 1);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 10:35:00' , 3, 2);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 12:30:00' , 1, 1);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 14:35:00' , 1, 2);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 11:50:00' , 3, 1);
-
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 10:30:00' , 5, 2);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 10:35:00' , 5, 2);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 12:30:00' , 6, 2);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 14:35:00' , 7, 2);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 11:50:00' , 7, 2);
 
 insert into polygon.seatsRows(room_id, seatsRow) values (1, 1);
 insert into polygon.seatsRows(room_id, seatsRow) values (1, 2);
 insert into polygon.seatsRows(room_id, seatsRow) values (1, 3);
 insert into polygon.seatsRows(room_id, seatsRow) values (1, 4);
+
+
 
 insert into polygon.seats(seatsRow_id, seat) values (1, 1);
 insert into polygon.seats(seatsRow_id, seat) values (1, 2);
@@ -82,5 +73,37 @@ insert into polygon.seats(seatsRow_id, seat) values (4,2);
 insert into polygon.seats(seatsRow_id, seat) values (4,3);
 insert into polygon.seats(seatsRow_id, seat) values (4,4);
 
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 10:30:00' , 1, 1);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 10:35:00' , 3, 2);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 12:30:00' , 1, 1);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 14:35:00' , 1, 2);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 11:50:00' , 3, 1);
+
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 10:30:00' , 5, 2);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 10:35:00' , 5, 2);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 12:30:00' , 6, 2);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 14:35:00' , 7, 2);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 11:50:00' , 7, 2);
+
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 1);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 2);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 3);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 4);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 5);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 6);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 7);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 8);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 9);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 10);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 11);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 12);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (true, 4, 13);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (true, 4, 14);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 15);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 16);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 17);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 18);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 19);
+insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 20);
 
 commit;
