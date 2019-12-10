@@ -321,6 +321,7 @@
             box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
             max-width: 32px;
             max-height: 32px;
+            min-width: 32px;
             width: 100%;
             margin-top: 38px;
             margin-right: 10px;
@@ -341,6 +342,7 @@
                  box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
                  max-width: 32px;
                  max-height: 32px;
+                 min-width: 32px;
                  width: 100%;
                  margin-top: 38px;
                  margin-right: 10px;
@@ -356,6 +358,7 @@
                      box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
                      max-width: 32px;
                      max-height: 32px;
+                     min-width: 32px;
                      width: 100%;
                      margin-top: 38px;
                      margin-right: 10px;
@@ -381,14 +384,85 @@
                      min-height: 32px;
     }
     .login{
-            background: #fff;
-                margin: 8px 10px 0 30px;
-                font-family: Roboto;
-                font-size: 16px;
-                line-height: 28px;
-                color: #333;
-                display: flex;
-                align-items: center;
-                cursor: pointer;
-                position: relative;
+            background: #555;
+            border-color: #ccc;
+            border-style: solid;
+            border-width: thin;
+            border-top-width: 0;
+            margin: 0px 0px 0 0px;
+            font-family: Roboto;
+            width: min-content;
+            font-size: 16px;
+            line-height: 27px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            padding: 10px;
     }
+
+    .login input {
+        border-style: none;
+        padding: 5px;
+        margin-bottom: 5px;
+        font-family: Roboto;
+        font-size: 15px;
+        margin-left: auto;
+        display: flex;
+        background: #ccc;
+    }
+
+    .login label {
+    }
+    .sessions {
+        background: #555;
+        display: flex;
+        padding: 10px;
+    }
+    .session_tab {
+        background: #aaa;
+        color: #222;
+        margin: 2px;
+        text-decoration: none;
+        box-shadow: 0 3px rgba(0,0,0,0.5);
+        transition: background .3s color .3s;
+    }
+
+    .session_tab:hover {
+        background: #222;
+        color: #ddd;
+    }
+
+    .session_tab a {
+        text-decoration: none;
+        font-family: Roboto;
+        font-size: 18px;
+        color: inherit;
+    }
+
+    .performance {
+        background: #555;
+        margin-bottom: 10px;
+        text-decoration: none;
+        font-family: Roboto;
+        font-size: 18px;
+        color: #bbb;
+    }
+
+    .performance p {
+        padding: none;
+        margin: 5px;
+    }
+
+    .seats_rows {
+        margin: auto;
+    }
+
+    .seats_row {
+        display: flex;
+        margin: auto;
+        width: fit-content;
+    }
+
+

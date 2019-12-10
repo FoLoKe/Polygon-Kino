@@ -46,7 +46,12 @@ public class HomeController {
 
         List<Performance> films = new ArrayList<>();
         try {
-            films = performanceService.activePerformances();
+            List<Performance> tempFilms = performanceService.activePerformances();
+            for (Performance film : tempFilms) {
+                films.add(film);
+                if(films.size() >= 5)
+                    break;
+            }
         } catch (Exception e) {
             System.out.println("no connection");
         }

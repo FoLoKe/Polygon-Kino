@@ -1,7 +1,9 @@
 package polygon.models;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Set;
 
 @Entity
@@ -40,6 +42,11 @@ public class Session {
 
     public Timestamp getTime() {
         return time;
+    }
+
+    public String getSimpleTime() {
+
+        return "" + time.getHours() + ":" + time.getMinutes();
     }
 
     public void setTime(Timestamp time) {
