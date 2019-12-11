@@ -1,14 +1,13 @@
 package polygon.models;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Set;
 
 @Entity
 @Table(name = "polygon.sessions")
 public class Session {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

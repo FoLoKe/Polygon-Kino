@@ -6,6 +6,7 @@ import java.util.Set;
 @Entity
 @Table(name = "polygon.cities")
 public class City {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

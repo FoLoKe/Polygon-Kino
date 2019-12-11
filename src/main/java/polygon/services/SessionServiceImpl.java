@@ -10,13 +10,13 @@ import polygon.models.Session;
 import polygon.repos.BuildingRepository;
 import polygon.repos.SessionRepository;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class SessionServiceImpl implements SessionService {
+
     @Autowired
     private SessionRepository sessionRepository;
 

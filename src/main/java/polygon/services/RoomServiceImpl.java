@@ -3,10 +3,10 @@ package polygon.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import polygon.models.Room;
 import polygon.models.SeatsRow;
 import polygon.models.Session;
 import polygon.repos.RoomRepository;
-import polygon.models.Room;
 
 import java.util.List;
 import java.util.Set;

@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -16,9 +15,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
 
 import static org.hibernate.cfg.AvailableSettings.*;
@@ -28,6 +24,7 @@ import static org.hibernate.cfg.AvailableSettings.*;
 @EnableTransactionManagement
 @PropertySource(value = "classpath:db.properties")
 public class HibernateConfig {
+    
     private Environment environment;
 
     @Autowired
@@ -84,19 +81,5 @@ public class HibernateConfig {
         em.setJpaProperties(hibernateProperties());
 
         return em;
-    }
-
-    public static void main(String[] args) {
-        String url = "jdbc:postgresql://31.42.45.42:5432/postgres";
-        String username = "devteam";
-        String password = "devteam";
-        System.out.println("Connecting...");
-
-        try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            System.out.println("Connection successful!");
-        } catch (SQLException e) {
-            System.out.println("Connection failed!");
-            e.printStackTrace();
-        }
     }
 }

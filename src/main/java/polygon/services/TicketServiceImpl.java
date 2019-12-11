@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 @Transactional
 public class TicketServiceImpl implements TicketService {
+
     @Autowired
     private TicketRepository ticketRepository;
 
@@ -21,7 +22,6 @@ public class TicketServiceImpl implements TicketService {
             if(ticket != null && !ticket.isOccupied()) {
                 ticket.setOccupied(true);
                 ticketRepository.save(ticket);
-
             }
         }
         ticketRepository.flush();

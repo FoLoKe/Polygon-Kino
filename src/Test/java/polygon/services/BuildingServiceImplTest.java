@@ -12,7 +12,6 @@ import polygon.repos.BuildingRepository;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -40,7 +39,7 @@ public class BuildingServiceImplTest {
     public void edit() {
     }
 
-    @Test
+//    @Test
 //    public void getById() {
 //        Building building = new Building();
 //        building = buildingRepository.getOne(1);

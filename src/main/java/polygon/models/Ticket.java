@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "polygon.tickets")
 public class Ticket {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

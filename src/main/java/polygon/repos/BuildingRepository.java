@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface BuildingRepository extends JpaRepository<Building, Integer> {
+
     List<Building> findByCity(City city);
 }

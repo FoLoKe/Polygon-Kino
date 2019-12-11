@@ -1,13 +1,12 @@
 package polygon.models;
 
-import org.hibernate.Hibernate;
-
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "polygon.rooms")
 public class Room {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

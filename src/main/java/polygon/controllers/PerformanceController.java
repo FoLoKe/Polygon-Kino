@@ -4,19 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import polygon.models.*;
-import polygon.repos.CategoryRepository;
-import polygon.repos.PerformanceRepository;
+import polygon.models.Building;
+import polygon.models.City;
+import polygon.models.Performance;
+import polygon.models.Session;
 import polygon.services.CityService;
 import polygon.services.PerformanceService;
 import polygon.services.SessionService;
 
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Date;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class PerformanceController {
+
     @Autowired
     private PerformanceService performanceService;
 
@@ -68,17 +71,12 @@ public class PerformanceController {
             System.out.println("no connection");
         }
 
-
-
         modelAndView.addObject("citiesList", cities);
         return modelAndView;
-
-
     }
 
     @RequestMapping(value = "/img/{id}", method = RequestMethod.GET)
     public void getImage(@PathVariable("id") Integer id, HttpServletResponse response) {
         performanceService.writeImageToResponse(id, response);
     }
-
 }
