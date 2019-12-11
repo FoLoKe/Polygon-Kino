@@ -18,7 +18,7 @@
                             <img src="images/polygon.png">
                         </a>
                         <div class="geo">
-                            <a href="javascript:PopUpShow()" th:text="${geoCity}"></a>
+                            <a href="javascript:PopUpSwitch()" th:text="${geoCity}"></a>
                             <div class="cities" id="geoPopup">
                                 <div class="wrapper">
                                     <ul class="list">
@@ -28,15 +28,35 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <a href="javascript:PopUpHide()">Hide popup</a>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
+
+
                     <div class="second_column">
-                        <a class="enter" th:href="@{/}">Вход</a>
+                        <a class = "etext" href="javascript:lPopUpSwitch()">
+                        <div class="enter">
+
+                            <p class = "etext" sec:authorize="isAnonymous()"> Вход</p>
+                            <p class = "etext" sec:authorize="isAuthenticated()">[[${#httpServletRequest.remoteUser}]] </p>
+                        </div>
+                        </a>
+
+                        <div id="loginPopup">
+                            <div class="login">
+
+                                <form sec:authorize="isAnonymous()" th:action="@{/login}" method="post">
+                                    <div><label> User Name : <input type="text" name="username"/> </label></div>
+                                    <div><label> Password: <input type="password" name="password"/> </label></div>
+                                    <div><input type="submit" value="Sign In"/></div>
+
+                                </form>
+                                <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+                                    <div><input type="submit" value="Sign Out"/></div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

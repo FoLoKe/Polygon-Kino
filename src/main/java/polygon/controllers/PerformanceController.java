@@ -11,6 +11,7 @@ import polygon.services.CityService;
 import polygon.services.PerformanceService;
 import polygon.services.SessionService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.util.*;
 
@@ -43,6 +44,9 @@ public class PerformanceController {
                 //buildingsMap =
                 modelAndView.addObject("sessions_by_buildings", buildingsMap);
 
+                //for(Map.Entry<Building, List<Session>> me : buildingsMap.entrySet()) {
+                //    me.getValue().get(0).getTime().
+                //}
             } catch (Exception ste) {
                 System.out.println("no connection");
             }
@@ -68,5 +72,13 @@ public class PerformanceController {
 
         modelAndView.addObject("citiesList", cities);
         return modelAndView;
+
+
     }
+
+    @RequestMapping(value = "/img/{id}", method = RequestMethod.GET)
+    public void getImage(@PathVariable("id") Integer id, HttpServletResponse response) {
+        performanceService.writeImageToResponse(id, response);
+    }
+
 }

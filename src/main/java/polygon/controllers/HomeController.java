@@ -46,7 +46,12 @@ public class HomeController {
 
         List<Performance> films = new ArrayList<>();
         try {
-            films = performanceService.activePerformances();
+            List<Performance> tempFilms = performanceService.activePerformances();
+            for (Performance film : tempFilms) {
+                films.add(film);
+                if(films.size() >= 5)
+                    break;
+            }
         } catch (Exception e) {
             System.out.println("no connection");
         }
@@ -56,15 +61,6 @@ public class HomeController {
         modelAndView.addObject("geoCity", geoCity);
         modelAndView.addObject("filmsList", films);
         modelAndView.addObject("citiesList", cities);
-        return modelAndView;
-    }
-
-    @RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
-    public ModelAndView deleteCity(@PathVariable("id") int id) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
-        City city = cityService.findById(id);
-        cityService.delete(city);
         return modelAndView;
     }
 }

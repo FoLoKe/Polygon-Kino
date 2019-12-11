@@ -12,6 +12,7 @@
         position: fixed;
         z-index: 100;
         top: 0;
+        text-decoration: none;
     }
     .header .wrapper{
         width: 100%;
@@ -62,6 +63,7 @@
     }
     .header .wrapper .upper_line .second_column .enter {
         padding: 10px;
+        max-width: fit-content;
         white-space: nowrap;
         font-family: Roboto;
         font-size: 18px;
@@ -69,11 +71,17 @@
         line-height: 1.33;
         color: #333;
         text-decoration: none;
-        transition: color .3s;
+        transition: color background .3s;
+        margin-inline-start: auto;
+    }
+    .etext {
+        text-decoration: none;
+        max-width: fit-content;
     }
     .header .wrapper .upper_line .enter:hover {
         background: #555;
         color: #fff;
+        text-decoration: none;
     }
     .wrapper img {
         display: block;
@@ -202,7 +210,7 @@
         border: 1px solid #999;
         box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
         max-width: 160px;
-        max-height: 240px;
+        max-height: 540px;
         width: 100%;
         margin-top: 38px;
         margin-right: 10px;
@@ -313,6 +321,7 @@
             box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
             max-width: 32px;
             max-height: 32px;
+            min-width: 32px;
             width: 100%;
             margin-top: 38px;
             margin-right: 10px;
@@ -333,6 +342,7 @@
                  box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
                  max-width: 32px;
                  max-height: 32px;
+                 min-width: 32px;
                  width: 100%;
                  margin-top: 38px;
                  margin-right: 10px;
@@ -348,6 +358,7 @@
                      box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
                      max-width: 32px;
                      max-height: 32px;
+                     min-width: 32px;
                      width: 100%;
                      margin-top: 38px;
                      margin-right: 10px;
@@ -356,7 +367,7 @@
                      text-decoration: none;
                      transition: color background .3s;
                      min-height: 32px;
-        }
+    }
     .buyButton {
                      background: #fff;
                      border: 1px solid #999;
@@ -371,4 +382,87 @@
                      text-decoration: none;
                      transition: color background .3s;
                      min-height: 32px;
-        }
+    }
+    .login{
+            background: #555;
+            border-color: #ccc;
+            border-style: solid;
+            border-width: thin;
+            border-top-width: 0;
+            margin: 0px 0px 0 0px;
+            font-family: Roboto;
+            width: min-content;
+            font-size: 16px;
+            line-height: 27px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            padding: 10px;
+    }
+
+    .login input {
+        border-style: none;
+        padding: 5px;
+        margin-bottom: 5px;
+        font-family: Roboto;
+        font-size: 15px;
+        margin-left: auto;
+        display: flex;
+        background: #ccc;
+    }
+
+    .login label {
+    }
+    .sessions {
+        background: #555;
+        display: flex;
+        padding: 10px;
+    }
+    .session_tab {
+        background: #aaa;
+        color: #222;
+        margin: 2px;
+        text-decoration: none;
+        box-shadow: 0 3px rgba(0,0,0,0.5);
+        transition: background .3s color .3s;
+    }
+
+    .session_tab:hover {
+        background: #222;
+        color: #ddd;
+    }
+
+    .session_tab a {
+        text-decoration: none;
+        font-family: Roboto;
+        font-size: 18px;
+        color: inherit;
+    }
+
+    .performance {
+        background: #555;
+        margin-bottom: 10px;
+        text-decoration: none;
+        font-family: Roboto;
+        font-size: 18px;
+        color: #bbb;
+    }
+
+    .performance p {
+        padding: none;
+        margin: 5px;
+    }
+
+    .seats_rows {
+        margin: auto;
+    }
+
+    .seats_row {
+        display: flex;
+        margin: auto;
+        width: fit-content;
+    }
+
+

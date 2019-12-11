@@ -7,8 +7,5 @@ import java.util.List;
 
 public interface CityService {
     List<City> allCities();
-    void add(City city);
-    void delete(City city);
-    void edit(City city);
     City findById(int id);
 }

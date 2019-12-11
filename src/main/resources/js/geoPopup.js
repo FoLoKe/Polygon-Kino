@@ -1,9 +1,23 @@
 $(document).ready(function(){
-    PopUpHide();
-});
-function PopUpShow(){
-    $("#geoPopup").show();
-}
-function PopUpHide(){
-    $("#geoPopup").hide();
-}
+     PopUpHide();
+     lPopUpHide();
+ });
+ function PopUpSwitch(){
+    if($("#geoPopup").is(":visible"))
+        $("#geoPopup").hide();
+    else
+        $("#geoPopup").show();
+ }
+ function PopUpHide(){
+     $("#geoPopup").hide();
+ }
+
+ function lPopUpSwitch(){
+     if($("#loginPopup").is(":visible"))
+         $("#loginPopup").hide();
+     else
+         $("#loginPopup").show();
+ }
+ function lPopUpHide(){
+     $("#loginPopup").hide();
+ }

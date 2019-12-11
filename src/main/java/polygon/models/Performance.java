@@ -18,7 +18,7 @@ public class Performance {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "poster")
+    @Column(name = "poster", length = 1024*1024)
     private byte[] poster;
 
     @Column(name = "date")

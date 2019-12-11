@@ -1,6 +1,7 @@
 package polygon.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.repos.CityRepository;
@@ -17,27 +18,11 @@ public class CityServiceImpl implements CityService {
 
     @Override
     @Transactional
+    @Cacheable
     public List<City> allCities() {
         return cityRepository.findAll();
     }
 
-    @Override
-    @Transactional
-    public void add(City city) {
-
-    }
-
-    @Override
-    @Transactional
-    public void delete(City city) {
-        cityRepository.delete(city);
-    }
-
-    @Override
-    @Transactional
-    public void edit(City city) {
-
-    }
 
     @Override
     @Transactional
