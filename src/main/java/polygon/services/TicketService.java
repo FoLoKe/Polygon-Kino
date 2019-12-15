@@ -1,9 +1,12 @@
 package polygon.services;
 
+import polygon.models.Ticket;
+
 import java.util.List;
 
 public interface TicketService {
 
-    void setTickets(List<Integer> ids);
+    boolean setTickets(List<Integer> ids);
     void rollbackTickets(List<Integer> ids);
+    Ticket getTicketById(Integer id);
 }

@@ -22,6 +22,7 @@ public class RegServiceImpl implements RegService {
     @Override
     public User registerNewUserAccount(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setBalance(0);
         return userRepository.save(user);
     }
 

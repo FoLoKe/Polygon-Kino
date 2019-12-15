@@ -39,7 +39,7 @@ public class RegController {
         }
 
         if (regService.userExists(user.getUsername())) {
-            result.rejectValue("email", "message.regError","Почта уже занята");
+            result.rejectValue("username", "message.regError","Имя пользователя уже занято");
         }
 
         if(user.getPassword().isEmpty()) {
