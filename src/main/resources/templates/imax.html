@@ -1,14 +1,24 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 </head>
 <body>
-<div class = "header">
-    <p class = "name">
-        Фильмы в Imax"
-    </p>
+<div th:insert = "~{header :: head}"></div>
+<div class = "main_container">
+    <div class = "tabs_container">
+        <div class = "tabs_list">
+            <h1 class = "caption">
+                Фильмы в IMAX
+            </h1>
+        </div>
+    </div>
 </div>
+
 </body>
 </html>
