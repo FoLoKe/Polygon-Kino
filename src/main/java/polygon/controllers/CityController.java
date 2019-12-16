@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.City;
+import polygon.services.BuildingService;
 import polygon.services.CityService;
 
 import javax.servlet.http.Cookie;
@@ -16,6 +17,8 @@ public class CityController {
 
     @Autowired
     private CityService cityService;
+    @Autowired
+    private BuildingService buildingService;
 
     @GetMapping("/setCity")
     public ModelAndView setCity(@RequestParam("id") int id, HttpServletResponse response) {
