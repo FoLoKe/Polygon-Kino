@@ -1,4 +1,4 @@
-
+Insert into polygon.users(username, password) values ('user','user');
 INSERT INTO polygon.cities(name) VALUES('Москва');
 INSERT INTO polygon.cities(name) VALUES('Санкт-Петербург');
 INSERT INTO polygon.buildings(city_id, type) values (1,'Кинотеатр');

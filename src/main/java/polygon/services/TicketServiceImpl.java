@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import polygon.models.Ticket;
 import polygon.repos.TicketRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,15 +17,29 @@ public class TicketServiceImpl implements TicketService {
     private TicketRepository ticketRepository;
 
     @Override
-    public void setTickets(List<Integer> ids) {
+    public boolean setTickets(List<Integer> ids) {
+        List<Ticket> tickets = new ArrayList<>();
         for (int id : ids) {
             Ticket ticket = ticketRepository.findById(id).orElse(null);
             if(ticket != null && !ticket.isOccupied()) {
                 ticket.setOccupied(true);
-                ticketRepository.save(ticket);
+                tickets.add(ticket);
+            } else {
+                return false;
             }
         }
+        ticketRepository.saveAll(tickets);
         ticketRepository.flush();
+        return true;
+    }
+
+    @Override
+    public Ticket getTicketById(Integer id) {
+        Ticket ticket = ticketRepository.findById(id).orElse(null);
+        if(ticket != null) {
+            ticket.getSession().getPrice();
+        }
+        return ticket;
     }
 
     @Override

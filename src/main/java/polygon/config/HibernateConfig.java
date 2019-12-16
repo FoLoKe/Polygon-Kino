@@ -24,7 +24,7 @@ import static org.hibernate.cfg.AvailableSettings.*;
 @EnableTransactionManagement
 @PropertySource(value = "classpath:db.properties")
 public class HibernateConfig {
-    
+
     private Environment environment;
 
     @Autowired

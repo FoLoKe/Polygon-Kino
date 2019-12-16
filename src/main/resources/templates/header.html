@@ -49,10 +49,13 @@
                                 <form sec:authorize="isAnonymous()" th:action="@{/login}" method="post">
                                     <div><label> User Name : <input type="text" name="username"/> </label></div>
                                     <div><label> Password: <input type="password" name="password"/> </label></div>
-                                    <div><input type="submit" value="Sign In"/></div>
+                                    <div><input type="submit" value="Войти"/></div>
+                                    <div><a class="etext" th:href="@{/registration}">Регистрация</a></div>
 
                                 </form>
+
                                 <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+                                    <div><p th:text="${userBalance}"></p></div>
                                     <div><input type="submit" value="Sign Out"/></div>
                                 </form>
                             </div>
