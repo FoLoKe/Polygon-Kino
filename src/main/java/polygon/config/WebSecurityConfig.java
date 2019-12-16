@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationSuccessHandler urlRedirect(){
         return new UrlAuthSuccessHandler();
-    }
+    } //проверка на успешносозданного пользователя (из конфига вызов loginPage)
 
     @Bean
     @Override

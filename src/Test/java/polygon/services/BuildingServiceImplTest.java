@@ -3,6 +3,7 @@ package polygon.services;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -10,7 +11,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import polygon.models.Building;
 import polygon.repos.BuildingRepository;
 
+import javax.validation.constraints.AssertFalse;
 import java.util.List;
+import java.util.Optional;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -18,31 +23,31 @@ import java.util.List;
 
 public class BuildingServiceImplTest {
 
-    @MockBean
-    private BuildingRepository buildingRepository;
+    @Autowired
+    private BuildingService buildingService;
 
     @Test
     public void allBuildings() {
-        List<Building> expected=buildingRepository.findAll();
+        List<Building> expected=buildingService.allBuildings();
         Assert.assertNotNull(expected);
+        Assert.assertEquals(5,expected.size());
     }
+
 
     @Test
-    public void add() {
-    }
+    public void getById() {
+//        Building building;
+        Object object;
+        int id = 1;
+        object=buildingService.getById(id);
+        Assert.assertNotNull(object);
 
-    @Test
-    public void delete() {
-    }
+//        Optional<Building> actual;
+//        actual = buildingRepository.findById(1);
 
-    @Test
-    public void edit() {
-    }
-
-//    @Test
-//    public void getById() {
-//        Building building = new Building();
+//        assertEquals(expected, actual);
+        //        Building building;
 //        building = buildingRepository.getOne(1);
-//        Assert.assertNotNull(building);
-//    }
+//        Assert.assertNotNull(actual);
+    }
 }
