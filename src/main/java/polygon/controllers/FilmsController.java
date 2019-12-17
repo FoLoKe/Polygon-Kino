@@ -19,7 +19,6 @@ import polygon.services.PerformanceService;
 import polygon.services.PolygonUserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -39,39 +38,26 @@ public class FilmsController
     private CategoryService categoryService;
 
     @RequestMapping(value="/films", method = RequestMethod.GET)
-    public ModelAndView allcitiesfilms(HttpServletRequest request) {
-
-        List<City> cities = new ArrayList<>();
-        try {
-            cities = cityService.allCities();
-        } catch (Exception ste) {
-            System.out.println("no connection");
-        }
-
-
-        List<Category> tags = new ArrayList<>();
-        List<Performance> films = new ArrayList<>();
-        try {
-            films = performanceService.activePerformances();
-
-        } catch (Exception e) {
-            System.out.println("no connection");
-        }
-
-        try {
-            tags = categoryService.allCategories();
-
-        } catch (Exception e) {
-            System.out.println("no connection");
-        }
-
+    public ModelAndView allFilms(HttpServletRequest request, @CookieValue(value = "city", defaultValue = "1") int cityId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("films");
-        modelAndView.addObject("filmsList", films);
 
-        ModelAndView modelAndView2 = new ModelAndView();
-        modelAndView2.setViewName("tags");
-        modelAndView2.addObject("tagslist", tags);
+        String geoCity = "Москва";
+        City city = cityService.findById(cityId);
+        geoCity = city.getName();
+        modelAndView.addObject("geoCity", geoCity);
+
+        List<City> cities;
+        cities = cityService.allCities();
+        modelAndView.addObject("citiesList", cities);
+
+        List<Category> tags;
+        tags = categoryService.allCategories();
+        modelAndView.addObject("tagsList", tags);
+
+        List<Performance> films;
+        films = performanceService.activePerformances();
+        modelAndView.addObject("filmsList", films);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userBalance = 0;
