@@ -77,30 +77,30 @@ public class SelectionController {
 
     @RequestMapping(value = "/selectSeat", method = RequestMethod.POST)
     public ModelAndView getPerformance(@RequestParam("byBalance") int byBalance,
-                                       @RequestParam("ticketsId") String sids,
+                                       @RequestParam("cats") String sids,
                                        @ModelAttribute("purchaseInfo") PurchaseInfo purchaseInfo,
                                        BindingResult result,
                                        Model model)
     {
         int price = 0;
-            String[] splitIds = sids.split(" ");
-            List<Integer> ids = new ArrayList<>();
-            for (String s: splitIds) {
-                if(s!= null && !s.isEmpty()) {
-                    try {
-                        ids.add(Integer.parseInt(s));
-                        Ticket ticket=ticketService.getTicketById(Integer.parseInt(s)) ;
-                        if(ticket != null) {
-                            price += ticket.getSession().getPrice();
-                        } else {
-                            return new ModelAndView("redirect:/confirmPage");
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("bad link" + e.toString());
+        String[] splitIds = sids.split(" ");
+        List<Integer> ids = new ArrayList<>();
+        for (String s: splitIds) {
+            if(s!= null && !s.isEmpty()) {
+                try {
+                    ids.add(Integer.parseInt(s));
+                    Ticket ticket=ticketService.getTicketById(Integer.parseInt(s)) ;
+                    if(ticket != null) {
+                        price += ticket.getSession().getPrice();
+                    } else {
                         return new ModelAndView("redirect:/confirmPage");
                     }
+                } catch (NumberFormatException e) {
+                    System.out.println("bad link" + e.toString());
+                    return new ModelAndView("redirect:/confirmPage");
                 }
             }
+        }
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = null;
