@@ -9,6 +9,7 @@ import polygon.models.Category;
 import polygon.models.Performance;
 import polygon.models.Room;
 import polygon.models.Session;
+import polygon.repos.CinemasRepository;
 import polygon.repos.PerformanceRepository;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,9 @@ public class PerformanceServiceImpl implements PerformanceService {
 
     @Autowired
     PerformanceRepository performanceRepository;
+
+    @Autowired
+    CinemasRepository cinemasRepository;
 
     @Override
     public List<Performance> allPerformances() {
@@ -45,6 +49,8 @@ public class PerformanceServiceImpl implements PerformanceService {
         }
         return performances;
     }
+
+
 
     @Override
     @Transactional

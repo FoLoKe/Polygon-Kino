@@ -10,15 +10,29 @@
 </head>
 <body>
 <div th:insert = "~{header :: head}"></div>
+
 <div class = "main_container">
     <div class = "tabs_container">
         <div class = "tabs_list">
             <h1 class = "caption">
                 Кинотеатры
             </h1>
+            <div class = "tabs_scroller">
+                <div class="last_tablet"  th:each="cinema : ${cinemasList}" >
+
+                    <p class = "roboto_text" th:text="${cinema.id}">insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 14:35:00' , 2, 2);
+                        insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 11:50:00' , 2, 1);
+                    </p>
+                    <p class = "roboto_text" th:text="${cinema.type}">
+                    </p>
+                    <p class = "roboto_text" th:text="${cinema.address}">
+                    </p>
+                    <p class = "roboto_text" th:text="${cinema.city.getName()}">
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>

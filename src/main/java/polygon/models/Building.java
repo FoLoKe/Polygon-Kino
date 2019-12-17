@@ -34,6 +34,10 @@ public class Building {
         return type;
     }
 
+    public City getCity() {
+        return city;
+    }
+
     public void setType(String name) {
         this.type = name;
     }
