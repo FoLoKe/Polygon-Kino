@@ -14,9 +14,13 @@
         <p  class = "roboto_text" th:text = ${perf.name}></p>
         <p  class = "roboto_text" th:text = ${perf.description}></p>
     </div>
-
+    <div>
+        <form>Выберите дату: <input type="date" name="calendar">
+            <input type="submit" value="Отправить">
+        </form>
+    </div>
     <div class = "performance" th:each = "instance : ${sessions_by_buildings}">
-        <p th:text = "${instance.key.type}">
+        <p th:text = "${instance.key.address + ' ' + instance.key.type}">
 
         </p>
         <div class ="sessions">

@@ -1,11 +1,11 @@
 Insert into polygon.users(username, password) values ('user','user');
 INSERT INTO polygon.cities(name) VALUES('Москва');
 INSERT INTO polygon.cities(name) VALUES('Санкт-Петербург');
-INSERT INTO polygon.buildings(city_id, type) values (1,'Кинотеатр');
-INSERT INTO polygon.buildings(city_id, type) values (2,'ТЦ');
-INSERT INTO polygon.buildings(city_id, type) values (2,'Кинотеатр');
-INSERT INTO polygon.buildings(city_id, type) values (1,'ТЦ');
-INSERT INTO polygon.buildings(city_id, type) values (1,'Молл');
+INSERT INTO polygon.buildings(city_id, type, address) values (1,'Кинотеатр', 'Пушкина к14 а1');
+INSERT INTO polygon.buildings(city_id, type, address) values (2,'ТЦ', 'Колотушкина д1');
+INSERT INTO polygon.buildings(city_id, type, address) values (2,'Кинотеатр', 'Вишневая д5');
+INSERT INTO polygon.buildings(city_id, type, address) values (1,'ТЦ', 'Корзинкина д1');
+INSERT INTO polygon.buildings(city_id, type, address) values (1,'Молл', 'Малиновая к1224б');
 insert into polygon.performances(name, date, description, poster) values('Аниме', '2019-12-20', 'параша', FILE_READ('src/main/resources/images/cover.jpg'));
 insert into polygon.performances(name, date, description, poster) values('film 1', '2019-12-20', 'description 1', FILE_READ('src/main/resources/images/cover1.jpg'));
 insert into polygon.performances(name, date, description, poster) values('film 2', '2019-03-14', 'description 2', FILE_READ('src/main/resources/images/cover2.jpg'));
