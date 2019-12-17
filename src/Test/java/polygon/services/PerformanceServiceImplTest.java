@@ -25,8 +25,8 @@ public class PerformanceServiceImplTest {
     @Autowired
     private PerformanceService performanceService;
 
-    @MockBean
-    PerformanceRepository performanceRepository;
+//    @MockBean
+//    PerformanceRepository performanceRepository;
 
     @Test
     public void allPerformances() {

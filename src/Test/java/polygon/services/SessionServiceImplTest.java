@@ -3,6 +3,8 @@ package polygon.services;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,21 +33,24 @@ public class SessionServiceImplTest {
     private BuildingRepository buildingRepository;
     @MockBean
     private SessionRepository sessionRepository;
+    @MockBean
+    City city;
     @Test
     public void findSessionsInCity() {
         City city = new City();
-        List<Session> expected=sessionService.findSessionsInCity(city);
-        Assert.assertNotNull(expected);
-        Assert.assertEquals(0,expected.size());
+        sessionService.findSessionsInCity(city);
+        Mockito.verify(sessionRepository,Mockito.times(1)).findAllActiveSessionForCity(city);
     }
 
-    @Test
+     @Test
     public void findBuildingsWithSessionsInCity() {
         Performance performance = new Performance();
         City city = new City();
-        Map<Building, List<Session>> orderedTest = sessionService.findBuildingsWithSessionsInCity(performance,city);
+        Building b = new Building();
+        Map<Building, List<Session>> orderedTest = new LinkedHashMap<>();
+        sessionService.findBuildingsWithSessionsInCity(performance,city);
+        Mockito.verify(buildingRepository,Mockito.times(1)).findByCity(city);
         Assert.assertNotNull(orderedTest);
-        Assert.assertEquals(0,orderedTest.size());
     }
 
     @Test
