@@ -2,7 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
     <head>
         <link rel="stylesheet" href="styles.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
@@ -26,6 +26,30 @@
                             </p>
                             <div>
                             <div class = "tag" th:each="cat : ${film.categories}" th:text="${cat.name}"></div>
+                            </div>
+                        </a>
+                        <a class = "last_tablet" th:href="@{/films}">
+                            <div class = "more">
+                                <p class = "text">...</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "tabs_container">
+                <div class = "tabs_list">
+                    <h1 class = "caption">
+                        УЖЕ СОВСЕМ СКОРО
+                    </h1>
+                    <div class = "tabs_scroller">
+                        <a class="last_tablet" th:href="@{/performance(id = ${film.id})}" th:each="film : ${premiersList}" >
+                            <img th:src="*{'/img/' + film.id}">
+                            <p class = "description" th:text="${film.name}">
+
+                            </p>
+                            <div>
+                                <div class = "tag" th:each="cat : ${film.categories}" th:text="${cat.name}"></div>
                             </div>
                         </a>
                         <a class = "last_tablet" th:href="@{/films}">

@@ -17,7 +17,6 @@ import polygon.services.PerformanceService;
 import polygon.services.PolygonUserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,30 +33,24 @@ public class FilmsController
     private PerformanceService performanceService;
 
     @RequestMapping(value="/films", method = RequestMethod.GET)
-    public ModelAndView allcitiesfilms(HttpServletRequest request) {
-
-        List<City> cities = new ArrayList<>();
-        try {
-            cities = cityService.allCities();
-        } catch (Exception ste) {
-            System.out.println("no connection");
-        }
-
-
-
-        List<Performance> films = new ArrayList<>();
-        try {
-            films = performanceService.activePerformances();
-
-        } catch (Exception e) {
-            System.out.println("no connection");
-        }
-
+    public ModelAndView allcitiesfilms(HttpServletRequest request,
+                                       @CookieValue(value = "city", defaultValue = "1") int cityId)
+    {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("films");
 
-        modelAndView.addObject("filmsList", films);
+        List<City> cities;
+        cities = cityService.allCities();
+        modelAndView.addObject("citiesList", cities);
 
+        String geoCity = "Москва";
+        City city = cityService.findById(cityId);
+        geoCity = city.getName();
+        modelAndView.addObject("geoCity", geoCity);
+
+        List<Performance> films;
+        films = performanceService.activeIMAXPerformances(city);
+        modelAndView.addObject("filmsList", films);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userBalance = 0;

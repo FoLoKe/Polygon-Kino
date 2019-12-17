@@ -28,6 +28,7 @@ public class Performance {
     @Column(name = "categories")
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "polygon.categories_performances")
+    @OrderBy(value= "id")
     private Set<Category> categories;
 
     @Column(name = "sessions")

@@ -6,17 +6,17 @@ INSERT INTO polygon.buildings(city_id, type, address) values (2,'ТЦ', 'Кол�
 INSERT INTO polygon.buildings(city_id, type, address) values (2,'Кинотеатр', 'Вишневая д5');
 INSERT INTO polygon.buildings(city_id, type, address) values (1,'ТЦ', 'Корзинкина д1');
 INSERT INTO polygon.buildings(city_id, type, address) values (1,'Молл', 'Малиновая к1224б');
-insert into polygon.performances(name, date, description, poster) values('Аниме', '2019-12-20', 'параша', FILE_READ('src/main/resources/images/cover.jpg'));
-insert into polygon.performances(name, date, description, poster) values('film 1', '2019-12-20', 'description 1', FILE_READ('src/main/resources/images/cover1.jpg'));
+insert into polygon.performances(name, date, description, poster) values('Аниме', '2019-12-8', 'параша', FILE_READ('src/main/resources/images/cover.jpg'));
+insert into polygon.performances(name, date, description, poster) values('film 1', '2019-12-7', 'description 1', FILE_READ('src/main/resources/images/cover1.jpg'));
 insert into polygon.performances(name, date, description, poster) values('film 2', '2019-03-14', 'description 2', FILE_READ('src/main/resources/images/cover2.jpg'));
-insert into polygon.performances(name, date, description, poster) values('film 3', '2020-03-08', 'description 3', FILE_READ('src/main/resources/images/cover3.jpg'));
-insert into polygon.performances(name, date, description, poster) values('film 4', '2021-03-11', 'description 4', FILE_READ('src/main/resources/images/cover4.jpg'));
-insert into polygon.performances(name, date, description, poster) values('film 5', '2020-08-15', 'description 5', FILE_READ('src/main/resources/images/cover5.jpg'));
-insert into polygon.performances(name, date, description, poster) values('film 6', '2017-03-14', 'description 6', FILE_READ('src/main/resources/images/cover6.jpg'));
+insert into polygon.performances(name, date, description, poster) values('film 3', '2019-03-08', 'description 3', FILE_READ('src/main/resources/images/cover3.jpg'));
+insert into polygon.performances(name, date, description, poster) values('film 4', '2019-03-11', 'description 4', FILE_READ('src/main/resources/images/cover4.jpg'));
+insert into polygon.performances(name, date, description, poster) values('film 5', '2019-08-15', 'description 5', FILE_READ('src/main/resources/images/cover5.jpg'));
+insert into polygon.performances(name, date, description, poster) values('film 6', '2020-03-14', 'description 6', FILE_READ('src/main/resources/images/cover6.jpg'));
 insert into polygon.performances(name, date, description, poster) values('film 7', '2020-03-08', 'description 3', FILE_READ('src/main/resources/images/cover7.jpg'));
-insert into polygon.performances(name, date, description, poster) values('film 8', '2021-03-11', 'description 4', FILE_READ('src/main/resources/images/cover8.jpg'));
-insert into polygon.performances(name, date, description, poster) values('film 9', '2020-08-15', 'description 5', FILE_READ('src/main/resources/images/cover9.jpg'));
-insert into polygon.performances(name, date, description, poster) values('film 10', '2019-12-19', 'description 6', FILE_READ('src/main/resources/images/cover10.jpg'));
+insert into polygon.performances(name, date, description, poster) values('film 8', '2019-03-11', 'description 4', FILE_READ('src/main/resources/images/cover8.jpg'));
+insert into polygon.performances(name, date, description, poster) values('film 9', '2019-08-15', 'description 5', FILE_READ('src/main/resources/images/cover9.jpg'));
+insert into polygon.performances(name, date, description, poster) values('film 10', '2019-12-16', 'description 6', FILE_READ('src/main/resources/images/cover10.jpg'));
 insert into polygon.categories(name) values ('Боевик');
 insert into polygon.categories(name) values ('Экшен');
 insert into polygon.categories(name) values ('Мелодрамма');
@@ -39,6 +39,10 @@ insert into polygon.categories_performances(categories_id, performance_id) value
 insert into polygon.categories_performances(categories_id, performance_id) values (2,9);
 insert into polygon.categories_performances(categories_id, performance_id) values (2,10);
 insert into polygon.categories_performances(categories_id, performance_id) values (1,10);
+insert into polygon.categories_performances(categories_id, performance_id) values (2,10);
+insert into polygon.categories_performances(categories_id, performance_id) values (1,11);
+insert into polygon.categories_performances(categories_id, performance_id) values (2,11);
+insert into polygon.categories_performances(categories_id, performance_id) values (3,11);
 
 insert into polygon.rooms(building_id, type) values (1, 'simple');
 insert into polygon.rooms(building_id, type) values (1, 'simple');
@@ -153,7 +157,7 @@ insert into polygon.seats(seatsRow_id, seat) values (10,5);
 insert into polygon.seats(seatsRow_id, seat) values (10,6);
 
 
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-01-15 10:30:00' , 1, 1);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-19 10:30:00' , 1, 1);
 insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-19 10:35:00' , 3, 2);
 insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-17 12:30:00' , 1, 1);
 insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-18 14:35:00' , 1, 2);
@@ -177,7 +181,8 @@ insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, 
 insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-18 11:50:00' , 2, 9);
 insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-19 14:35:00' , 2, 10);
 insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-19 11:50:00' , 2, 10);
-
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-19 14:35:00' , 1, 11);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-19 11:50:00' , 1, 11);
 
 insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 1);
 insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 2);

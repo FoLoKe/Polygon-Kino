@@ -5,6 +5,7 @@ import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import polygon.models.City;
 import polygon.models.Performance;
 import polygon.models.Room;
 import polygon.models.Session;
@@ -31,30 +32,43 @@ public class PerformanceServiceImpl implements PerformanceService {
     }
 
     @Override
+    @Transactional
     public Performance findById(int id) {
-        return performanceRepository.findById(id).get();
+        Performance performance = performanceRepository.findById(id).orElse(new Performance());
+        performance.getCategories().size();
+        return performance;
     }
 
     @Override
     @Transactional
-    public List<Performance> activePerformances() {
+    public List<Performance> activePerformances(City city) {
         java.util.Date utilDate = new java.util.Date(System.currentTimeMillis());
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        List<Performance> performances = performanceRepository.findAllActivePerformances(sqlDate);
+        List<Performance> performances = performanceRepository.findAllActivePerformances(sqlDate, city);
         for (Performance p: performances) {
             p.getCategories().size();
         }
         return performances;
     }
 
-
+    @Override
+    @Transactional
+    public List<Performance> premiers(City city) {
+        java.util.Date utilDate = new java.util.Date(System.currentTimeMillis());
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        List<Performance> performances = performanceRepository.findAllPremiers(sqlDate, city);
+        for (Performance p: performances) {
+            p.getCategories().size();
+        }
+        return performances;
+    }
 
     @Override
     @Transactional
-    public List<Performance> activeimaxPerformances() {
+    public List<Performance> activeIMAXPerformances(City city) {
         java.util.Date utilDate = new java.util.Date(System.currentTimeMillis());
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        List<Performance> performances = performanceRepository.findAllActivePerformances(sqlDate);
+        List<Performance> performances = performanceRepository.findAllActivePerformances(sqlDate, city);
         List<Performance> imax=new ArrayList<>();
         for (Performance p: performances) {
             p.getSessions().size();

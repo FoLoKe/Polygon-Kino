@@ -3,19 +3,16 @@ package polygon.services;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+import polygon.models.City;
 import polygon.models.Performance;
 import polygon.repos.PerformanceRepository;
 
-import java.awt.image.DataBufferByte;
 import java.util.List;
-
-import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -40,12 +37,12 @@ public class PerformanceServiceImplTest {
         Object object;
         object = performanceService.findById(1);
         Assert.assertNotNull(object);
-
     }
 
     @Test
     public void activePerformances() {
-        List<Performance> expected=performanceService.activePerformances();
+        City city = new City();
+        List<Performance> expected=performanceService.activePerformances(city);
         Assert.assertNotNull(expected);
         Assert.assertEquals(5,expected.size());
     }

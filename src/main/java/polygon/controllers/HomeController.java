@@ -32,40 +32,38 @@ public class HomeController {
     private PerformanceService performanceService;
 
     @RequestMapping(value="/", method = RequestMethod.GET)
-    public ModelAndView allCities(HttpServletRequest request, @CookieValue(value = "city", defaultValue = "1") int cityId) {
-
-        List<City> cities = new ArrayList<>();
-        try {
-            cities = cityService.allCities();
-        } catch (Exception ste) {
-            System.out.println("no connection");
-        }
-
-        String geoCity = "Москва";
-        try {
-            City city = cityService.findById(cityId);
-            geoCity = city.getName();
-        } catch (Exception ste) {
-            System.out.println("no connection");
-        }
-
-        List<Performance> films = new ArrayList<>();
-        try {
-            List<Performance> tempFilms = performanceService.activePerformances();
-            for (Performance film : tempFilms) {
-                films.add(film);
-                if(films.size() >= 5)
-                    break;
-            }
-        } catch (Exception e) {
-            System.out.println("no connection");
-        }
-
+    public ModelAndView allCities(HttpServletRequest request,
+                                  @CookieValue(value = "city", defaultValue = "1") int cityId)
+    {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
-        modelAndView.addObject("geoCity", geoCity);
-        modelAndView.addObject("filmsList", films);
+
+        List<City> cities;
+        cities = cityService.allCities();
         modelAndView.addObject("citiesList", cities);
+
+        String geoCity = "Москва";
+        City city = cityService.findById(cityId);
+        geoCity = city.getName();
+        modelAndView.addObject("geoCity", geoCity);
+
+        List<Performance> films = new ArrayList<>();
+        List<Performance> tempFilms = performanceService.activePerformances(city);
+        for (Performance film : tempFilms) {
+            films.add(film);
+            if(films.size() >= 5)
+                break;
+        }
+        modelAndView.addObject("filmsList", films);
+
+        List<Performance> premiers = new ArrayList<>();
+        List<Performance> tempPremiers = performanceService.premiers(city);
+        for (Performance film : tempPremiers) {
+            premiers.add(film);
+            if(premiers.size() >= 5)
+                break;
+        }
+        modelAndView.addObject("premiersList", premiers);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userBalance = 0;
