@@ -9,6 +9,7 @@ public interface PerformanceService {
 
     List<Performance> allPerformances();
     List<Performance> activePerformances();
+    List<Performance> activeimaxPerformances();
     Performance findById(int id);
     public void writeImageToResponse(Integer id, HttpServletResponse response);
 }

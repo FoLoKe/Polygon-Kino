@@ -1,14 +1,19 @@
 package polygon.services;
 
+import org.hibernate.Hibernate;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.Category;
 import polygon.models.Performance;
+import polygon.models.Room;
+import polygon.models.Session;
 import polygon.repos.PerformanceRepository;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,6 +44,31 @@ public class PerformanceServiceImpl implements PerformanceService {
             }
         }
         return performances;
+    }
+
+    @Override
+    @Transactional
+    public List<Performance> activeimaxPerformances() {
+        java.util.Date utilDate = new java.util.Date(System.currentTimeMillis());
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        List<Performance> performances = performanceRepository.findAllActivePerformances(sqlDate);
+        List<Performance> imax=new ArrayList<>();
+        for (Performance p: performances) {
+            p.getSessions().size();
+            p.getCategories().size();
+            for (Session s: p.getSessions()) {
+                Room r = s.getRoom();
+                Hibernate.initialize(r);
+                if (r instanceof HibernateProxy) {
+                    r = (Room) ((HibernateProxy) r).getHibernateLazyInitializer()
+                            .getImplementation();
+                }
+                if (r.getType().equals("IMAX")) {
+                    imax.add(p);
+                }
+            }
+        }
+        return imax;
     }
 
     @Override

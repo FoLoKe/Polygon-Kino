@@ -9,72 +9,113 @@
     <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 </head>
 <body>
-    <div th:fragment="head">
-        <div class = "header">
-            <div class = "wrapper">
-                <div class = "upper_line">
-                    <div class="first_column">
-                        <a class="logo" th:href="@{/}">
-                            <img src="images/polygon.png">
-                        </a>
-                        <div class="geo">
-                            <a href="javascript:PopUpSwitch()" th:text="${geoCity}"></a>
-                            <div class="cities" id="geoPopup">
-                                <div class="wrapper">
-                                    <ul class="list">
-                                        <li th:each="city : ${citiesList}">
-                                            <a th:href = "@{/setCity(id = ${city.id})}" th:text="${city.name}">
+<div th:fragment="head">
+    <div class = "header">
+        <div class = "wrapper">
+            <div class = "upper_line">
+                <div class="first_column">
+                    <a class="logo" th:href="@{/}">
+                        <img src="images/polygon.png">
+                    </a>
+                    <div class="geo">
+                        <a href="javascript:PopUpSwitch()" th:text="${geoCity}"></a>
+                        <div class="cities" id="geoPopup">
+                            <div class="wrapper">
+                                <ul class="list">
+                                    <li th:each="city : ${citiesList}">
+                                        <a th:href = "@{/setCity(id = ${city.id})}" th:text="${city.name}">
 
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
 
 
-                    <div class="second_column">
-                        <a class = "etext" href="javascript:lPopUpSwitch()">
+                </div>
+                <div class="second_column">
+                    <a class = "etext" href="javascript:lPopUpSwitch()">
                         <div class="enter">
 
                             <p class = "etext" sec:authorize="isAnonymous()"> Вход</p>
                             <p class = "etext" sec:authorize="isAuthenticated()">[[${#httpServletRequest.remoteUser}]] </p>
                         </div>
-                        </a>
+                    </a>
 
-                        <div id="loginPopup">
-                            <div class="login">
+                    <div class="soc">
+                        <div>
+                            <a href="https://vk.com/kinoteatr" class="soc_link" target="_blank"><span class="yad icon-yd-vk"></span></a>
 
-                                <form sec:authorize="isAnonymous()" th:action="@{/login}" method="post">
-                                    <div><label> User Name : <input type="text" name="username"/> </label></div>
-                                    <div><label> Password: <input type="password" name="password"/> </label></div>
-                                    <div><input type="submit" value="Войти"/></div>
-                                    <div><a class="etext" th:href="@{/registration}">Регистрация</a></div>
 
-                                </form>
 
-                                <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-                                    <div><p th:text="${userBalance}"></p></div>
-                                    <div><input type="submit" value="Sign Out"/></div>
-                                </form>
-                            </div>
+
+                        </div>
+                        <div>
+                            <a href="https://www.instagram.com/kinoteatr.official/" class="soc_link" target="_blank"><span class="yad icon-yd-instagram"></span></a>
+                        </div>
+                        <div>
+                            <a href="https://www.facebook.com/kinoteatr.official/" class="soc_link" target="_blank"><span class="yad icon-yd-facebook"></span></a>
+
+
+                        </div>
+                        <div>
+                            <a href="https://ok.ru/kinoteatr" class="soc_link" target="_blank"><span class="yad icon-yd-ok"></span></a>
+
+
+                        </div>
+                        <div>
+                            <a href="https://twitter.com/kinoteatr_kino" class="soc_link" target="_blank"><span class="yad icon-yd-twitter"></span></a>
+
+
+                        </div>
+                        <div>
+                            <a href="https://t.me/kinookko" class="soc_link" target="_blank"><span class="yad icon-yd-telegram"></span></a>
+
+
+                        </div>
+                        <div>
+                            <a href="https://zen.yandex.ru/id/5d88bdfcfc69ab00ad925e47" class="soc_link" target="_blank"><span class="yad icon-yd-zen">
+							<span class="path1"></span>
+							<span class="path2"></span>
+						</span></a>
+
+
+
+                        </div>
+                    </div>
+
+                    <div id="loginPopup">
+                        <div class="login">
+
+                            <form sec:authorize="isAnonymous()" th:action="@{/login}" method="post">
+                                <div><label> User Name : <input type="text" name="username"/> </label></div>
+                                <div><label> Password: <input type="password" name="password"/> </label></div>
+                                <div><input type="submit" value="Войти"/></div>
+                                <div><a class="etext" th:href="@{/registration}">Регистрация</a></div>
+
+                            </form>
+
+                            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+                                <div><input type="submit" value="Sign Out"/></div>
+                            </form>
                         </div>
                     </div>
                 </div>
 
-                <div class="bottom_line">
-                    <div class="menu">
-                            <a class="menu_element" th:href="@{/films}">Фильмы</a>
-                            <a class="menu_element" th:href="@{/cinemas}">Кинотеатры</a>
-                            <a class="menu_element" th:href="@{/events}">События</a>
-                            <a class="menu_element" th:href="@{/stocks}">Акции</a>
-                            <a class="menu_element" th:href="@{/imax}">Фильмы в IMAX</a>
-                        </div>
-                    </div>
+
+            </div>
+
+            <div class="bottom_line">
+                <div class="menu">
+                    <a class="menu_element" th:href="@{/films}">Фильмы</a>
+                    <a class="menu_element" th:href="@{/cinemas}">Кинотеатры</a>
+                    <a class="menu_element" th:href="@{/imax}">Фильмы в IMAX</a>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 </body>
 </html>
