@@ -63,6 +63,7 @@ window.onload = function () {
                       }
             }
     var c = document.getElementById('confirmBalance');
+    if(c!=null) {
             c.onclick = function() {
                             var b = document.querySelectorAll('.sseat');
                                   if(b.length <= 5) {
@@ -83,7 +84,8 @@ window.onload = function () {
                                         alert('перестаньте читерить');
                                         return false;
                                   }
-                        }
+               }
+    }
 }
 
 function PopUpSwitch(){

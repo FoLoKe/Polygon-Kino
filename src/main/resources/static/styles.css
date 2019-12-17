@@ -372,13 +372,13 @@
                      background: #fff;
                      border: 1px solid #999;
                      box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
-                     max-width: 32px;
-                     max-height: 128px;
-                     width: 100%;
-                     margin-top: 38px;
-                     margin-right: 10px;
-                     display: inline-block;
-                     vertical-align: top;
+                    max-width: 128px;
+                        max-height: 32px;
+                        color: #333;
+                        margin-left: auto;
+                        margin-right: 10px;
+                        font-family: Roboto;
+                        padding: 5px;
                      text-decoration: none;
                      transition: color background .3s;
                      min-height: 32px;
@@ -408,7 +408,6 @@
         margin-bottom: 5px;
         font-family: Roboto;
         font-size: 15px;
-        margin-left: auto;
         display: flex;
         background: #ccc;
     }
@@ -464,5 +463,96 @@
         margin: auto;
         width: fit-content;
     }
+    .tag {
+    color: #aaa;
+    background: #333;
+    padding: 5px;
+    margin: 2px;
+    border-radius: 5px;
+    font-family: Roboto;
+    }
 
+.description {
+    color: #333;
+    font-family: Roboto;
+}
 
+.regbutton {
+    color: #333;
+    text-decoration: none;
+    background: #ccc;
+    padding: 5px;
+
+}
+.regform {
+        display: inline-table;
+        background: #ddd;
+        padding: 10px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: Roboto;
+}
+.regelem {
+    display: flex;
+        padding: 5px;
+}
+.regform input{
+    margin-left: auto;
+}
+.regform label{
+    margin-right: 10px;
+}
+
+.regelem p {
+    color: #d00;
+        margin: unset;
+        margin-left: 5px;
+}
+.regcaption {
+
+}
+.buyFooter{
+        display: flex;
+        width: 100%;
+        background: #666;
+        padding: 5px;
+        margin-top: 10px;
+}
+.price {
+    padding 5px;
+    color: #aaa;
+    font-family: Roboto;
+}
+.buyPopup {
+        display: block;
+            background: rgba(1,1,1,0.5);
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            padding: 100%;
+}
+.infoForm {
+    background: #ddd;
+    padding: 20px;
+}
+.infoForm .element {
+    margin: 15px
+}
+.buyBody {
+    margin: unset;
+}
+.buyCaption {
+    margin: unset;
+    margin-top: 5px;
+}
+.confirmButton {
+    background: #666;
+    color: #ddd;
+        padding: 5px;
+        margin-top: 5px;
+        font-family: Roboto;
+        text-decoration: none;
+}

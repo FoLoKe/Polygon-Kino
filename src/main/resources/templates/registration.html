@@ -8,33 +8,40 @@
     <script type="text/javascript" th:src="@{js/cpsw.js}" src="js/cpsw.js"></script>
 </head>
 <body>
-<h1>Registration</h1>
-<form id = "reg" action="/registration" th:object="${user}" method="POST" enctype="utf8">
-    <div>
+<center>
+    <div class = "regpage">
+
+<form class = "regform" id = "reg" action="/registration" th:object="${user}" method="POST" enctype="utf8">
+    <p class="regcaption">Registration</p>
+    <div class="regelem">
         <label>Username</label>
-        <input th:field="*{username}"/>
         <p th:each="error: ${#fields.errors('username')}"
            th:text="${error}">Validation error</p>
+        <input th:field="*{username}"/>
+
     </div>
-    <div>
+    <div class="regelem">
         <label>Email</label>
-        <input type="email" th:field="*{email}"/>
         <p th:each="error : ${#fields.errors('email')}"
            th:text="${error}">Validation error</p>
+        <input type="email" th:field="*{email}"/>
+
     </div>
-    <div>
+    <div class="regelem">
         <label>Password</label>
-        <input type="password" id = "psw" th:field="*{password}"/>
         <p th:each="error : ${#fields.errors('password')}"
            th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label>Confirm password</label>
-        <input id = "cpsw" type="password"/>
-        <p id = "cpswErr">Пароли не совпадают</p>
-    </div>
-    <a href="javascript:check()">Register</a>
-</form>
+        <input type="password" id = "psw" th:field="*{password}"/>
 
+    </div>
+    <div class="regelem">
+        <label>Confirm password</label>
+        <p id = "cpswErr">Пароли не совпадают</p>
+        <input id = "cpsw" type="password"/>
+    </div>
+    <a class="regbutton" href="javascript:check()">Register</a>
+</form>
+    </div>
+</center>
 </body>
 </html>
