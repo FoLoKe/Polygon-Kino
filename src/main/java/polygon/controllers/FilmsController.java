@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.Category;
 import polygon.models.City;
@@ -18,7 +19,8 @@ import polygon.services.CityService;
 import polygon.services.PerformanceService;
 import polygon.services.PolygonUserDetailsService;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 @Controller
@@ -37,10 +39,16 @@ public class FilmsController
     @Autowired
     private CategoryService categoryService;
 
-    @RequestMapping(value="/films", method = RequestMethod.GET)
-    public ModelAndView allFilms(HttpServletRequest request, @CookieValue(value = "city", defaultValue = "1") int cityId) {
+
+
+    @RequestMapping(value = "/films", method = RequestMethod.GET)
+    public ModelAndView filmsByTag(@RequestParam(required = false, name = "cats") String sids,
+            @CookieValue(value = "city", defaultValue = "1") int cityId) {
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("films");
+
+        //String linkAppend=
 
         String geoCity = "Москва";
         City city = cityService.findById(cityId);
@@ -55,10 +63,24 @@ public class FilmsController
         tags = categoryService.allCategories();
         modelAndView.addObject("tagsList", tags);
 
-        List<Performance> films;
-        films = performanceService.activePerformances(city);
+        List<Performance> films = new ArrayList<>();
+
+        if(sids != null && !sids.isEmpty()) {
+            String[] splitIds = sids.split(" ");
+            LinkedHashSet<Integer> ids = new LinkedHashSet<>();
+            for (String s : splitIds) {
+                if (s != null && !s.isEmpty()) {
+                    ids.add(Integer.parseInt(s));
+                    films.addAll(performanceService.activePerformances(Integer.parseInt(s)));
+                }
+            }
+        } else {
+            films = performanceService.activePerformances(city);
+        }
+
         modelAndView.addObject("filmsList", films);
 
+        //modelAndView.addObject("linkAppend"," 2");
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userBalance = 0;

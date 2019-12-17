@@ -143,7 +143,7 @@ public class SelectionController {
     @RequestMapping(value = "/confirmPage", method = RequestMethod.GET)
     public ModelAndView confirm() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("confirmPage");
+        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 

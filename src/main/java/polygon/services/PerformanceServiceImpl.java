@@ -5,10 +5,8 @@ import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import polygon.models.City;
-import polygon.models.Performance;
-import polygon.models.Room;
-import polygon.models.Session;
+import polygon.models.*;
+import polygon.repos.CategoryRepository;
 import polygon.repos.CinemasRepository;
 import polygon.repos.PerformanceRepository;
 
@@ -25,6 +23,9 @@ public class PerformanceServiceImpl implements PerformanceService {
 
     @Autowired
     CinemasRepository cinemasRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Override
     public List<Performance> allPerformances() {
@@ -86,6 +87,19 @@ public class PerformanceServiceImpl implements PerformanceService {
             }
         }
         return imax;
+    }
+
+    @Override
+    @Transactional
+    public List<Performance> activePerformances(Integer id) {
+        Category category = categoryRepository.findById(id).orElse(null);
+        List<Performance> performances = new ArrayList<>();
+        if(category != null)
+            performances =  performanceRepository.getAllFilmsByTag(category);
+        for (Performance p: performances) {
+            p.getCategories().size();
+        }
+        return performances;
     }
 
     @Override

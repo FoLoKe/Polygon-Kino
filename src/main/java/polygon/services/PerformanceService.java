@@ -13,6 +13,8 @@ public interface PerformanceService {
     List<Performance> activeIMAXPerformances(City city);
     List<Performance> premiers(City city);
 
+    List<Performance> activePerformances(Integer id);
+
     Performance findById(int id);
     public void writeImageToResponse(Integer id, HttpServletResponse response);
 }

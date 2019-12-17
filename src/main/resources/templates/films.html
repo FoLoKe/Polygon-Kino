@@ -21,9 +21,11 @@
 
             </div>
             <div class="tagsContainer">
-                <a class="ico"  th:each="eTag : ${tagsList}">
+                <div th:each="eTag : ${tagsList}">
+                <a class="ico" th:href = "@{/films(cats = ${eTag.id})}" method="post">
                     <p class = "tag" th:text="${eTag.name}"></p>
                 </a>
+                </div>
             </div>
             <div class = "tabs_scroller">
                 <a class="last_tablet" th:href="@{/performance(id = ${film.id})}" th:each="film : ${filmsList}" >

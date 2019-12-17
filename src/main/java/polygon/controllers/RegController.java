@@ -63,7 +63,7 @@ public class RegController {
             return new ModelAndView("registration", "user", user);
         }
         else {
-            return new ModelAndView("successRegister", "user", user);
+            return new ModelAndView("redirect:/");
         }
     }
 
