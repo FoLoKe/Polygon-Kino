@@ -34,78 +34,31 @@ public class FilmsController
     @Autowired
     private PerformanceService performanceService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @RequestMapping(value="/films", method = RequestMethod.GET)
-    public ModelAndView allFilmsInCity(HttpServletRequest request,
-                                       @CookieValue(value = "city", defaultValue = "1") int cityId)
-    {
+    public ModelAndView allFilms(HttpServletRequest request, @CookieValue(value = "city", defaultValue = "1") int cityId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("films");
-
-        List<City> cities;
-        cities = cityService.allCities();
-        modelAndView.addObject("citiesList", cities);
 
         String geoCity = "Москва";
         City city = cityService.findById(cityId);
         geoCity = city.getName();
         modelAndView.addObject("geoCity", geoCity);
 
-        List<Performance> films;
-        films = performanceService.activeIMAXPerformances(city);
-        modelAndView.addObject("filmsList", films);
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        int userBalance = 0;
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-        if(username != null && !username.isEmpty()) {
-            User user = polygonUserDetailsService.getUserByUsername(username);
-            if(user!= null) {
-                userBalance = user.getBalance();
-            }
-        }
-        modelAndView.addObject("userBalance", userBalance);
-
-        return modelAndView;
-    }
-
-    @RequestMapping(value="/films", method = RequestMethod.POST)
-    public ModelAndView filmsByTag(HttpServletRequest request, @RequestParam("tagsId") String sids,
-                                       @CookieValue(value = "city", defaultValue = "1") int cityId) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("films");
-
-        String[] splitIds = sids.split(" ");
-        List<Integer> ids = new ArrayList<>();
-        for (String s: splitIds) {
-            if(s!= null && !s.isEmpty()) {
-                try {
-                    ids.add(Integer.parseInt(s));
-
-                } catch (NumberFormatException e) {
-                    System.out.println("bad link" + e.toString());
-                    return new ModelAndView("redirect:/confirmPage");
-                }
-            }
-        }
-
         List<City> cities;
         cities = cityService.allCities();
         modelAndView.addObject("citiesList", cities);
 
-        String geoCity = "Москва";
-        City city = cityService.findById(cityId);
-        geoCity = city.getName();
-        modelAndView.addObject("geoCity", geoCity);
+        List<Category> tags;
+        tags = categoryService.allCategories();
+        modelAndView.addObject("tagsList", tags);
 
         List<Performance> films;
-        films = performanceService.activeIMAXPerformances(city);
+        films = performanceService.activePerformances();
         modelAndView.addObject("filmsList", films);
+
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userBalance = 0;

@@ -447,17 +447,20 @@ background-color: #353535;
     padding: 5px;
     margin: 2px;
     border-radius: 5px;
+    border-style: solid;
     font-family: Roboto;
 }
 .description {
     color: #333;
     font-family: Roboto;
 }
+
 .regbutton {
     color: #333;
     text-decoration: none;
     background: #ccc;
     padding: 5px;
+
 }
 .regform {
     display: inline-table;
@@ -530,6 +533,15 @@ background-color: #353535;
     margin-top: 5px;
     font-family: Roboto;
     text-decoration: none;
+}
+.ico {
+    display: inline-block;
+        width: fit-content;
+    }
+}
+.tagsContainer {
+        display: inline-block;
+        width: 100%;
 }
 .calendar {
     margin: auto;

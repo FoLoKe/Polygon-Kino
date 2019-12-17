@@ -20,16 +20,12 @@
             <div class = "tabs_scroller">
                 <a class="last_tablet" th:href="@{/performance(id = ${film.id})}" th:each="film : ${filmsList}" >
                     <img th:src="*{'/img/' + film.id}">
-                    <p class = "roboto_text" th:text="${film.name}">
+                    <p class = "description" th:text="${film.name}">
 
                     </p>
-                    <p class = "roboto_text" th:text="${film.description}">
-
-                    </p>
-                    <p class = "roboto_text" th:text="${film.date}">
-
-                    </p>
-                    <p th:each="cat : ${film.categories}" th:text="${cat.name}"></p>
+                    <div>
+                        <div class = "tag" th:each="cat : ${film.categories}" th:text="${cat.name}"></div>
+                    </div>
                 </a>
                 <a class = "last_tablet" th:href="@{/films}">
                     <div class = "more">

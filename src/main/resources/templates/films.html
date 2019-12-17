@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
@@ -14,22 +14,26 @@
 <div class = "main_container">
     <div class = "tabs_container">
         <div class = "tabs_list">
+            <div class = "up_col">
             <h1 class = "caption">
                 Фильмы
             </h1>
+
+            </div>
+            <div class="tagsContainer">
+                <a class="ico"  th:each="eTag : ${tagsList}">
+                    <p class = "tag" th:text="${eTag.name}"></p>
+                </a>
+            </div>
             <div class = "tabs_scroller">
                 <a class="last_tablet" th:href="@{/performance(id = ${film.id})}" th:each="film : ${filmsList}" >
                     <img th:src="*{'/img/' + film.id}">
-                    <p class = "roboto_text" th:text="${film.name}">
+                    <p class = "description" th:text="${film.name}">
 
                     </p>
-                    <p class = "roboto_text" th:text="${film.description}">
-
-                    </p>
-                    <p class = "roboto_text" th:text="${film.date}">
-
-                    </p>
-                    <p th:each="cat : ${film.categories}" th:text="${cat.name}"></p>
+                    <div>
+                        <div class = "tag" th:each="cat : ${film.categories}" th:text="${cat.name}"></div>
+                    </div>
                 </a>
                 <a class = "last_tablet" th:href="@{/films}">
                     <div class = "more">
