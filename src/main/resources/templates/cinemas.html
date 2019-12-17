@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
@@ -20,9 +20,6 @@
             <div class = "tabs_scroller">
                 <div class="last_tablet"  th:each="cinema : ${cinemasList}" >
 
-                    <p class = "roboto_text" th:text="${cinema.id}">insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 14:35:00' , 2, 2);
-                        insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 11:50:00' , 2, 1);
-                    </p>
                     <p class = "roboto_text" th:text="${cinema.type}">
                     </p>
                     <p class = "roboto_text" th:text="${cinema.address}">

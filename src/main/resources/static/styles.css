@@ -449,6 +449,7 @@ background-color: #353535;
     border-radius: 5px;
     border-style: solid;
     font-family: Roboto;
+    width: fit-content;
 }
 .description {
     color: #333;

@@ -19,7 +19,11 @@ public class CityServiceImpl implements CityService {
     @Transactional
     @Cacheable
     public List<City> allCities() {
-        return cityRepository.findAll();
+        List<City> cities = cityRepository.findAll();
+        for(City c : cities) {
+            c.getBuildings().size();
+        }
+        return cities;
     }
 
     @Override

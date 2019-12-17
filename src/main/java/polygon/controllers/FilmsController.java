@@ -8,17 +8,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import polygon.models.Category;
 import polygon.models.City;
 import polygon.models.Performance;
 import polygon.models.User;
+import polygon.services.CategoryService;
 import polygon.services.CityService;
 import polygon.services.PerformanceService;
 import polygon.services.PolygonUserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -56,7 +56,7 @@ public class FilmsController
         modelAndView.addObject("tagsList", tags);
 
         List<Performance> films;
-        films = performanceService.activePerformances();
+        films = performanceService.activePerformances(city);
         modelAndView.addObject("filmsList", films);
 
 
