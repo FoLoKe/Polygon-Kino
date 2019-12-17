@@ -10,6 +10,8 @@ import polygon.models.Session;
 import polygon.repos.BuildingRepository;
 import polygon.repos.SessionRepository;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,12 +31,23 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Map<Building, List<Session>> findBuildingsWithSessionsInCity(Performance performance, City city) {
+    public Map<Building, List<Session>> findBuildingsWithSessionsInCity(Performance performance, City city, Timestamp time) {
 
         List <Building> buildings = buildingRepository.findByCity(city);
         Map<Building, List<Session>> orderedSessions = new LinkedHashMap<>();
+        Calendar ac = Calendar.getInstance();
+        ac.setTime(time);
+        ac.add(Calendar.HOUR, - time.getHours());
+        ac.add(Calendar.MINUTE, - time.getMinutes());
+        time = new Timestamp(ac.getTime().getTime());
+
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(time);
+        c.add(Calendar.DATE, 1);
+        Timestamp endTime = new Timestamp(c.getTime().getTime());
         for (Building b: buildings) {
-           List<Session> sessions = sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(b, performance);
+           List<Session> sessions = sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(b, performance, time, endTime);
            orderedSessions.put(b, sessions);
         }
 

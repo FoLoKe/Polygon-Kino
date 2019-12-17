@@ -36,7 +36,7 @@ insert into polygon.categories_performances(categories_id, performance_id) value
 insert into polygon.categories_performances(categories_id, performance_id) values (1,8);
 insert into polygon.categories_performances(categories_id, performance_id) values (2,8);
 insert into polygon.categories_performances(categories_id, performance_id) values (1,9);
-insert into polygon.categories_performances(categories_id, performance_id) values (1,9);
+insert into polygon.categories_performances(categories_id, performance_id) values (2,9);
 insert into polygon.categories_performances(categories_id, performance_id) values (2,10);
 insert into polygon.categories_performances(categories_id, performance_id) values (1,10);
 
@@ -153,30 +153,30 @@ insert into polygon.seats(seatsRow_id, seat) values (10,5);
 insert into polygon.seats(seatsRow_id, seat) values (10,6);
 
 
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 10:30:00' , 1, 1);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 10:35:00' , 3, 2);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 12:30:00' , 1, 1);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 14:35:00' , 1, 2);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 11:50:00' , 3, 1);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-01-15 10:30:00' , 1, 1);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-19 10:35:00' , 3, 2);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-17 12:30:00' , 1, 1);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-18 14:35:00' , 1, 2);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-18 11:50:00' , 3, 1);
 
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 10:30:00' , 5, 2);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 10:35:00' , 5, 2);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 12:30:00' , 6, 2);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 14:35:00' , 7, 2);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 11:50:00' , 7, 2);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-17 10:30:00' , 5, 2);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-17 10:35:00' , 5, 2);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-17 12:30:00' , 6, 2);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-18 14:35:00' , 7, 2);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-19 11:50:00' , 7, 2);
 
 
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 14:35:00' , 2, 2);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 11:50:00' , 2, 1);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-17 14:35:00' , 2, 2);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-17 11:50:00' , 2, 1);
 
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 14:35:00' , 2, 7);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 11:50:00' , 2, 7);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 14:35:00' , 2, 8);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 11:50:00' , 2, 8);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 14:35:00' , 2, 9);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 11:50:00' , 2, 9);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 14:35:00' , 2, 10);
-insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2020-01-15 11:50:00' , 2, 10);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-17 14:35:00' , 2, 7);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-17 11:50:00' , 2, 7);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-18 14:35:00' , 2, 8);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-18 11:50:00' , 2, 8);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-18 14:35:00' , 2, 9);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-18 11:50:00' , 2, 9);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-19 14:35:00' , 2, 10);
+insert into polygon.sessions(Price, time, Room_id, Performance_id) values (100, '2019-12-19 11:50:00' , 2, 10);
 
 
 insert into polygon.tickets(occupied, session_Id, seat_id) values (false, 4, 1);

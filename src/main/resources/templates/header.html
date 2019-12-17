@@ -40,50 +40,9 @@
 
                             <p class = "etext" sec:authorize="isAnonymous()"> Вход</p>
                             <p class = "etext" sec:authorize="isAuthenticated()">[[${#httpServletRequest.remoteUser}]] </p>
+
                         </div>
                     </a>
-
-                    <div class="soc">
-                        <div>
-                            <a href="https://vk.com/kinoteatr" class="soc_link" target="_blank"><span class="yad icon-yd-vk"></span></a>
-
-
-
-
-                        </div>
-                        <div>
-                            <a href="https://www.instagram.com/kinoteatr.official/" class="soc_link" target="_blank"><span class="yad icon-yd-instagram"></span></a>
-                        </div>
-                        <div>
-                            <a href="https://www.facebook.com/kinoteatr.official/" class="soc_link" target="_blank"><span class="yad icon-yd-facebook"></span></a>
-
-
-                        </div>
-                        <div>
-                            <a href="https://ok.ru/kinoteatr" class="soc_link" target="_blank"><span class="yad icon-yd-ok"></span></a>
-
-
-                        </div>
-                        <div>
-                            <a href="https://twitter.com/kinoteatr_kino" class="soc_link" target="_blank"><span class="yad icon-yd-twitter"></span></a>
-
-
-                        </div>
-                        <div>
-                            <a href="https://t.me/kinookko" class="soc_link" target="_blank"><span class="yad icon-yd-telegram"></span></a>
-
-
-                        </div>
-                        <div>
-                            <a href="https://zen.yandex.ru/id/5d88bdfcfc69ab00ad925e47" class="soc_link" target="_blank"><span class="yad icon-yd-zen">
-							<span class="path1"></span>
-							<span class="path2"></span>
-						</span></a>
-
-
-
-                        </div>
-                    </div>
 
                     <div id="loginPopup">
                         <div class="login">
@@ -97,6 +56,7 @@
                             </form>
 
                             <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+                                <p class = "etext" th:text="${userBalance}"></p>
                                 <div><input type="submit" value="Sign Out"/></div>
                             </form>
                         </div>

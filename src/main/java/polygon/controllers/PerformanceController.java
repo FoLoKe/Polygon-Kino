@@ -13,7 +13,12 @@ import polygon.services.PerformanceService;
 import polygon.services.SessionService;
 
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -33,50 +38,59 @@ public class PerformanceController {
     public ModelAndView getPerformance(@RequestParam("id") int id, @CookieValue(value = "city", defaultValue = "1") int cityId) {
         ModelAndView modelAndView = new ModelAndView();
 
+        Date date = new Date(System.currentTimeMillis());
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Timestamp time = new java.sql.Timestamp(date.getTime());
+        modelAndView.addObject("day", dateFormat.format(date));
+
+        init(modelAndView, id, cityId, time);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/performance", method = RequestMethod.POST)
+    public ModelAndView getPerformanceWithDate(@RequestParam("id") int id,
+                                               @CookieValue(value = "city", defaultValue = "1") int cityId,
+                                               @ModelAttribute("day") String date)
+    {
+        ModelAndView modelAndView = new ModelAndView();
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date utilDate = new Date();
         try {
-            modelAndView.setViewName("performance");
-            Performance performance = performanceService.findById(id);
-
-            modelAndView.addObject("perf", performance);
-
-            String geoCity = "Москва";
-            try {
-                City city = cityService.findById(cityId);
-                geoCity = city.getName();
-                Map<Building, List<Session>> buildingsMap = sessionService.findBuildingsWithSessionsInCity(performance, city);
-                //buildingsMap =
-                modelAndView.addObject("sessions_by_buildings", buildingsMap);
-
-                //for(Map.Entry<Building, List<Session>> me : buildingsMap.entrySet()) {
-                //    me.getValue().get(0).getTime().
-                //}
-            } catch (Exception ste) {
-                System.out.println("no connection");
-            }
-
-            modelAndView.addObject("geoCity", geoCity);
-
-        } catch (NullPointerException e){
-            System.out.println("no prop by id: " + id);
-            modelAndView.setViewName("error");
-        } catch (Exception e) {
-            System.out.println("no connection");
-            modelAndView.setViewName("error");
+            utilDate = dateFormat.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+        java.sql.Timestamp time = new java.sql.Timestamp(utilDate.getTime());
+        modelAndView.addObject("day", date);
 
-        List<City> cities = new ArrayList<>();
-        try {
-            cities = cityService.allCities();
-        } catch (Exception ste) {
-            System.out.println("no connection");
-        }
+        init(modelAndView, id, cityId, time);
 
-        modelAndView.addObject("citiesList", cities);
         return modelAndView;
     }
 
     @RequestMapping(value = "/img/{id}", method = RequestMethod.GET)
     public void getImage(@PathVariable("id") Integer id, HttpServletResponse response) {
         performanceService.writeImageToResponse(id, response);
+    }
+
+    private void init(ModelAndView modelAndView, int id, int cityId, Timestamp time) {
+        modelAndView.setViewName("performance");
+
+        Performance performance = performanceService.findById(id);
+        modelAndView.addObject("perf", performance);
+
+        String geoCity = "Москва";
+        City city = cityService.findById(cityId);
+        geoCity = city.getName();
+        modelAndView.addObject("geoCity", geoCity);
+
+        List<City> cities = new ArrayList<>();
+        cities = cityService.allCities();
+        modelAndView.addObject("citiesList", cities);
+
+        Map<Building, List<Session>> buildingsMap = sessionService.findBuildingsWithSessionsInCity(performance, city, time);
+        modelAndView.addObject("sessions_by_buildings", buildingsMap);
     }
 }

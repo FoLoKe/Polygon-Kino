@@ -5,7 +5,6 @@ import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import polygon.models.Category;
 import polygon.models.Performance;
 import polygon.models.Room;
 import polygon.models.Session;
@@ -43,9 +42,7 @@ public class PerformanceServiceImpl implements PerformanceService {
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         List<Performance> performances = performanceRepository.findAllActivePerformances(sqlDate);
         for (Performance p: performances) {
-            for (Category c: p.getCategories()) {
-                c.getId();
-            }
+            p.getCategories().size();
         }
         return performances;
     }

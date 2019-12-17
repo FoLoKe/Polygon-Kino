@@ -1,502 +1,477 @@
 :root
 {
-    --white: #c7c7c7;
-    --dkgray: #353535;
-    background-color: #353535;
+--white: #c7c7c7;
+--dkgray: #353535;
+background-color: #353535;
 
-}.header {
-        width: 100%;
-
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.06);
-        background-color: #c7c7c7;
-        position: fixed;
-        z-index: 100;
-        top: 0;
-        text-decoration: none;
-    }
-    .header .wrapper{
-        width: 100%;
-
-        height: 100%;
-        padding: 0 10px;
-        box-sizing: border-box;
-        margin: 0 auto;
-        background: transparent;
-        overflow: inherit;
-    }
-    .wrapper * {
-        font-weight: 400;
-        font-family: Roboto,Arial,sans-serif;
-    }
+}
+.header {
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.06);
+    background-color: #c7c7c7;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    text-decoration: none;
+}
+.header .wrapper {
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    background: transparent;
+    overflow: inherit;
+}
+.wrapper * {
+    font-weight: 400;
+    font-family: Roboto,Arial,sans-serif;
+}
     .header .wrapper .upper_line{
-        position: relative;
-        padding: 12px 0 4px 10px;
-        height: 40px;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: stretch;
-    }
-    .header .wrapper .upper_line .first_column{
-        display: flex;
-        align-items: center;
-    }
-    .header .wrapper .upper_line .first_column .geo{
-            height: 28px;
-            margin: 8px 10px 0 30px;
-            font-family: Roboto;
-            font-size: 16px;
-            line-height: 28px;
-            color: #63c;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            position: relative;
-    }
-    .header .wrapper .upper_line .first_column .logo {
-        width:250px;
-        height:100%;
-    }
-    .header .wrapper .upper_line .second_column {
-        padding-right: 25px;
-        margin-top: 5px;
-    }
-    .header .wrapper .upper_line .second_column .enter {
-        padding: 10px;
-        max-width: fit-content;
-        white-space: nowrap;
-        font-family: Roboto;
-        font-size: 18px;
-        font-weight: 500;
-        line-height: 1.33;
-        color: #333;
-        text-decoration: none;
-        transition: color background .3s;
-        margin-inline-start: auto;
-    }
-    .etext {
-        text-decoration: none;
-        max-width: fit-content;
-    }
-    .header .wrapper .upper_line .enter:hover {
-        background: #555;
-        color: #fff;
-        text-decoration: none;
-    }
-    .wrapper img {
-        display: block;
-        max-width: 100%;
-        vertical-align: top;
-        border: 0;
-    }
-    .header .wrapper .bottom_line {
-        overflow-x: auto;
-        margin: 8px -20px 0 -20px;
-
-    }
-    .header .wrapper .bottom_line .menu {
-        min-width: 700px;
-        height: 34px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        list-style: none;
-        padding: 0;
-    }
-    .header .wrapper .bottom_line .menu .menu_element {
-        padding-right: 32px;
-        padding-left: 32px;
-        transition: background color .3s;
-        height: 100%;
-        padding-top: 10px;
-    }
-    .header .wrapper .bottom_line .menu .menu_element:hover {
-        background: #555;
-        color: #fff;
-    }
-
-    .header .wrapper .bottom_line .menu a {
-        white-space: nowrap;
-        font-family: Roboto;
-        font-size: 18px;
-        font-weight: 500;
-        line-height: 1.33;
-        color: #333;
-        text-decoration: none;
-        transition: color .3s;
-    }
-    .header .wrapper .bottom_line .menu a:hover {
-        color: #555;
-    }
-    .upper_line .geo .cities {
-        cursor: initial;
-        position: fixed;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        max-height: calc(100vh - 60px);
-        padding: 50px 0 20px;
-        box-sizing: border-box;
-        background: #fff;
-        overflow-y: auto;
-    }
-    .upper_line .geo .cities .list {
-        column-count: 5;
-        max-width: 950px;
-    }
-    .b-popup .b-popup-content li {
-        display: block;
-        line-height: 16px;
-        line-height: 32px;
-        font-size: 16px;
-    }
-    .main_container {
-        margin-top: 105px;
-        background: #;
-    }
-    .main_container .tabs_container {
-        padding: 35px 0 0 0;
-    }
-    @media screen and (max-width: 1139px)
+    position: relative;
+    padding: 12px 0 4px 10px;
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+.header .wrapper .upper_line .first_column{
+    display: flex;
+    align-items: center;
+}
+.header .wrapper .upper_line .first_column .geo{
+    height: 28px;
+    margin: 8px 10px 0 30px;
+    font-family: Roboto;
+    font-size: 16px;
+    line-height: 28px;
+    color: #63c;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+.header .wrapper .upper_line .first_column .logo {
+    width:250px;
+    height:100%;
+}
+.header .wrapper .upper_line .second_column {
+    padding-right: 25px;
+    margin-top: 5px;
+}
+.header .wrapper .upper_line .second_column .enter {
+    padding: 10px;
+    max-width: fit-content;
+    white-space: nowrap;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.33;
+    color: #333;
+    text-decoration: none;
+    transition: color background .3s;
+    margin-inline-start: auto;
+}
+.etext {
+    text-decoration: none;
+    max-width: fit-content;
+}
+.header .wrapper .upper_line .enter:hover {
+    background: #555;
+    color: #fff;
+    text-decoration: none;
+}
+.wrapper img {
+    display: block;
+    max-width: 100%;
+    vertical-align: top;
+    border: 0;
+}
+.header .wrapper .bottom_line {
+    overflow-x: auto;
+    margin: 8px -20px 0 -20px;
+}
+.header .wrapper .bottom_line .menu {
+    min-width: 700px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+}
+.header .wrapper .bottom_line .menu .menu_element {
+    padding-right: 32px;
+    padding-left: 32px;
+    transition: background color .3s;
+    height: 100%;
+    padding-top: 10px;
+}
+.header .wrapper .bottom_line .menu .menu_element:hover {
+    background: #555;
+    color: #fff;
+}
+.header .wrapper .bottom_line .menu a {
+    white-space: nowrap;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.33;
+    color: #333;
+    text-decoration: none;
+    transition: color .3s;
+}
+.header .wrapper .bottom_line .menu a:hover {
+    color: #555;
+}
+.upper_line .geo .cities {
+    cursor: initial;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    max-height: calc(100vh - 60px);
+    padding: 50px 0 20px;
+    box-sizing: border-box;
+    background: #fff;
+    overflow-y: auto;
+}
+.upper_line .geo .cities .list {
+    column-count: 5;
+    max-width: 950px;
+}
+.b-popup .b-popup-content li {
+    display: block;
+    line-height: 16px;
+    line-height: 32px;
+    font-size: 16px;
+}
+.main_container {
+    margin-top: 105px;
+    background: #;
+}
+.main_container .tabs_container {
+    padding: 35px 0 0 0;
+}
+@media screen and (max-width: 1139px)
     .main_container .tabs_container .tabs_list {
-        left: 0;
-        display: block;
-        width: auto;
-        overflow: hidden;
-        position: relative;
-        align: top;
-    }
-
-    .main_container .tabs_container .tabs_list {
-        position: relative;
-        left: 25px;
-        display: inline-block;
-        width: 100%;
-        vertical-align: top;
-    }
-
-    @media screen and (max-width: 1139px)
-    .main_container .tabs_container .tabs_scroller {
-        overflow-x: scroll;
-        overflow-y: hidden;
-        white-space: nowrap;
-        display: block;
-        width: auto;
-        margin-top: 25px;
-    }
-
-    .main_container .tabs_container .tabs_scroller {
-        display: inline-block;
-        width: 100%;
-    }
-
-    @media screen and (min-width: 1140px)
-    .main_container .tabs_container .tabs_scroller {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .main_container .tabs_container .tabs_scroller .tablet {
-        float: left;
-        padding-bottom: 20px;
-        display: inline-block;
-        width: 25%;
-        vertical-align: top;
-        text-decoration: none;
-    }
-
-    .main_container .tabs_container .tabs_scroller .last_tablet {
-        background: #aaa;
-        border: 1px solid #999;
-        box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
-        max-width: 160px;
-        max-height: 540px;
-        width: 100%;
-        margin-top: 38px;
-        margin-right: 10px;
-        display: inline-block;
-        vertical-align: top;
-        text-decoration: none;
-        transition: color .3s;
-        min-height: 100px;
-    }
-
-    .main_container .tabs_container .tabs_scroller .last_tablet:hover {
-        color: #5faf69;
-        background: #666666;
-    }
-
-    .main_container .tabs_container .tabs_scroller .last_tablet .roboto_text {
-        margin: 0px;
-        margin-left: 12px;
-        white-space: nowrap;
-        font-family: Roboto;
-        font-size: 18px;
-        font-weight: 500;
-        line-height: 1.33;
-        color: #333;
-        text-decoration: none;
-        transition: color .3s;
-    }
-    .main_container .tabs_container .tabs_scroller .last_tablet .roboto_text:hover {
-        color: #fff;
-    }
-    .roboto_text {
-        margin: 0px;
-        margin-left: 12px;
-        white-space: nowrap;
-        font-family: Roboto;
-        font-size: 18px;
-        font-weight: 500;
-        line-height: 1.33;
-        color: white;
-        text-decoration: none;
-    }
-    .geo a {
-        margin: 0px;
-        margin-left: 12px;
-        white-space: nowrap;
-        font-family: Roboto;
-        font-size: 18px;
-        font-weight: 500;
-        line-height: 1.33;
-        color: #000;
-        text-decoration: none;
-        transition: color .3s;
-    }
-    .geo a:hover{
-        color: #fff;
-    }
-    .geo .list a{
-        color: #555;
-    }
-    .geo .list a:hover{
-        color: #000;
-    }
-    .error p{
-         margin: 0px;
-         margin-left: 12px;
-         white-space: nowrap;
-         font-family: Roboto;
-         font-size: 60px;
-         font-weight: 500;
-         line-height: 1.33;
-         color: #aaa;
-         text-decoration: none;
-    }
-    .caption {
-        margin: 0px;
-        margin-left: 12px;
-        white-space: nowrap;
-        font-family: Roboto;
-        font-size: 60px;
-        font-weight: 500;
-        line-height: 1.33;
-        color: #aaa;
-        text-decoration: none;
-        text-shadow: 4px 4px 0px rgba(0,0,0,1);
-    }
-    .main_container .tabs_container .tabs_scroller .last_tablet .more .text{
-        margin: 0px;
-        margin-left: 35%;
-        white-space: nowrap;
-        font-family: Roboto;
-        font-size: 60px;
-        font-weight: 500;
-        line-height: 1.33;
-        text-decoration: none;
-        transition: color .3s
-    }
-    .main_container .tabs_container .tabs_scroller .last_tablet .more{
-        transition: color .3s;
-        color: #333;
-    }
-    .main_container .tabs_container .tabs_scroller .last_tablet .more:hover{
-        color: #fff;
-    }
-
-    .seat {
-            background: #aaa;
-            border: 1px solid #999;
-            box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
-            max-width: 32px;
-            max-height: 32px;
-            min-width: 32px;
-            width: 100%;
-            margin-top: 38px;
-            margin-right: 10px;
-            display: inline-block;
-            vertical-align: top;
-            text-decoration: none;
-            transition: color background .3s;
-            min-height: 32px;
-    }
-
-    .seat:hover {
-           background: #0b0;
-     }
-
-    .hseat {
-                 background: #f00;
-                 border: 1px solid #999;
-                 box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
-                 max-width: 32px;
-                 max-height: 32px;
-                 min-width: 32px;
-                 width: 100%;
-                 margin-top: 38px;
-                 margin-right: 10px;
-                 display: inline-block;
-                 vertical-align: top;
-                 text-decoration: none;
-                 transition: color background .3s;
-                 min-height: 32px;
-    }
-    .sseat {
-         background: #fff;
-                     border: 1px solid #999;
-                     box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
-                     max-width: 32px;
-                     max-height: 32px;
-                     min-width: 32px;
-                     width: 100%;
-                     margin-top: 38px;
-                     margin-right: 10px;
-                     display: inline-block;
-                     vertical-align: top;
-                     text-decoration: none;
-                     transition: color background .3s;
-                     min-height: 32px;
-    }
-    .buyButton {
-                     background: #fff;
-                     border: 1px solid #999;
-                     box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
-                    max-width: 128px;
-                        max-height: 32px;
-                        color: #333;
-                        margin-left: auto;
-                        margin-right: 10px;
-                        font-family: Roboto;
-                        padding: 5px;
-                     text-decoration: none;
-                     transition: color background .3s;
-                     min-height: 32px;
-    }
-    .login{
-            background: #555;
-            border-color: #ccc;
-            border-style: solid;
-            border-width: thin;
-            border-top-width: 0;
-            margin: 0px 0px 0 0px;
-            font-family: Roboto;
-            width: min-content;
-            font-size: 16px;
-            line-height: 27px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            position: relative;
-            padding: 10px;
-    }
-
-    .login input {
-        border-style: none;
-        padding: 5px;
-        margin-bottom: 5px;
-        font-family: Roboto;
-        font-size: 15px;
-        display: flex;
-        background: #ccc;
-    }
-
-    .login label {
-    }
-    .sessions {
-        background: #555;
-        display: flex;
-        padding: 10px;
-    }
-    .session_tab {
-        background: #aaa;
-        color: #222;
-        margin: 2px;
-        text-decoration: none;
-        box-shadow: 0 3px rgba(0,0,0,0.5);
-        transition: background .3s color .3s;
-    }
-
-    .session_tab:hover {
-        background: #222;
-        color: #ddd;
-    }
-
-    .session_tab a {
-        text-decoration: none;
-        font-family: Roboto;
-        font-size: 18px;
-        color: inherit;
-    }
-
-    .performance {
-        background: #555;
-        margin-bottom: 10px;
-        text-decoration: none;
-        font-family: Roboto;
-        font-size: 18px;
-        color: #bbb;
-    }
-
-    .performance p {
-        padding: none;
-        margin: 5px;
-    }
-
-    .seats_rows {
-        margin: auto;
-    }
-
-    .seats_row {
-        display: flex;
-        margin: auto;
-        width: fit-content;
-    }
-    .tag {
+    left: 0;
+    display: block;
+    width: auto;
+    overflow: hidden;
+    position: relative;
+    align: top;
+}
+.main_container .tabs_container .tabs_list {
+    position: relative;
+    left: 25px;
+    display: inline-block;
+    width: 100%;
+    vertical-align: top;
+}
+@media screen and (max-width: 1139px)
+.main_container .tabs_container .tabs_scroller {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    display: block;
+    width: auto;
+    margin-top: 25px;
+}
+.main_container .tabs_container .tabs_scroller {
+    display: inline-block;
+    width: 100%;
+}
+@media screen and (min-width: 1140px)
+.main_container .tabs_container .tabs_scroller {
+    display: flex;
+    flex-wrap: wrap;
+}
+.main_container .tabs_container .tabs_scroller .tablet {
+    float: left;
+    padding-bottom: 20px;
+    display: inline-block;
+    width: 25%;
+    vertical-align: top;
+    text-decoration: none;
+}
+.main_container .tabs_container .tabs_scroller .last_tablet {
+    background: #aaa;
+    border: 1px solid #999;
+    box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
+    max-width: 160px;
+    max-height: 540px;
+    width: 100%;
+    margin-top: 38px;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: top;
+    text-decoration: none;
+    transition: color .3s;
+    min-height: 100px;
+}
+.main_container .tabs_container .tabs_scroller .last_tablet:hover {
+    color: #5faf69;
+    background: #666666;
+}
+.main_container .tabs_container .tabs_scroller .last_tablet .roboto_text {
+    margin: 0px;
+    margin-left: 12px;
+    white-space: nowrap;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.33;
+    color: #333;
+    text-decoration: none;
+    transition: color .3s;
+}
+.main_container .tabs_container .tabs_scroller .last_tablet .roboto_text:hover {
+    color: #fff;
+}
+.roboto_text {
+    margin: 0px;
+    margin-left: 12px;
+    white-space: nowrap;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.33;
+    color: white;
+    text-decoration: none;
+}
+.geo a {
+    margin: 0px;
+    margin-left: 12px;
+    white-space: nowrap;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.33;
+    color: #000;
+    text-decoration: none;
+    transition: color .3s;
+}
+.geo a:hover{
+    color: #fff;
+}
+.geo .list a{
+    color: #555;
+}
+.geo .list a:hover{
+    color: #000;
+}
+.error p{
+    margin: 0px;
+    margin-left: 12px;
+    white-space: nowrap;
+    font-family: Roboto;
+    font-size: 60px;
+    font-weight: 500;
+    line-height: 1.33;
+    color: #aaa;
+    text-decoration: none;
+}
+.caption {
+    margin: 0px;
+    margin-left: 12px;
+    white-space: nowrap;
+    font-family: Roboto;
+    font-size: 60px;
+    font-weight: 500;
+    line-height: 1.33;
+    color: #aaa;
+    text-decoration: none;
+    text-shadow: 4px 4px 0px rgba(0,0,0,1);
+}
+.main_container .tabs_container .tabs_scroller .last_tablet .more .text{
+    margin: 0px;
+    margin-left: 35%;
+    white-space: nowrap;
+    font-family: Roboto;
+    font-size: 60px;
+    font-weight: 500;
+    line-height: 1.33;
+    text-decoration: none;
+    transition: color .3s
+}
+.main_container .tabs_container .tabs_scroller .last_tablet .more{
+    transition: color .3s;
+    color: #333;
+}
+.main_container .tabs_container .tabs_scroller .last_tablet .more:hover{
+    color: #fff;
+}
+.seat {
+    background: #aaa;
+    border: 1px solid #999;
+    box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
+    max-width: 32px;
+    max-height: 32px;
+    min-width: 32px;
+    width: 100%;
+    margin-top: 38px;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: top;
+    text-decoration: none;
+    transition: color background .3s;
+    min-height: 32px;
+}
+.seat:hover {
+    background: #0b0;
+}
+.hseat {
+    background: #f00;
+    border: 1px solid #999;
+    box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
+    max-width: 32px;
+    max-height: 32px;
+    min-width: 32px;
+    width: 100%;
+    margin-top: 38px;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: top;
+    text-decoration: none;
+    transition: color background .3s;
+    min-height: 32px;
+}
+.sseat {
+    background: #fff;
+    border: 1px solid #999;
+    box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
+    max-width: 32px;
+    max-height: 32px;
+    min-width: 32px;
+    width: 100%;
+    margin-top: 38px;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: top;
+    text-decoration: none;
+    transition: color background .3s;
+    min-height: 32px;
+}
+.buyButton {
+    background: #fff;
+    border: 1px solid #999;
+    box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
+    max-width: 128px;
+    max-height: 32px;
+    color: #333;
+    margin-left: auto;
+    margin-right: 10px;
+    font-family: Roboto;
+    padding: 5px;
+    text-decoration: none;
+    transition: color background .3s;
+    min-height: 32px;
+}
+.login{
+    background: #555;
+    border-color: #ccc;
+    border-style: solid;
+    border-width: thin;
+    border-top-width: 0;
+    margin: 0px 0px 0 0px;
+    font-family: Roboto;
+    width: min-content;
+    font-size: 16px;
+    line-height: 27px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    padding: 10px;
+}
+.login input {
+    border-style: none;
+    padding: 5px;
+    margin-bottom: 5px;
+    font-family: Roboto;
+    font-size: 15px;
+    display: flex;
+    background: #ccc;
+}
+.login label {
+}
+.sessions {
+    background: #555;
+    display: flex;
+    padding: 10px;
+}
+.session_tab {
+    background: #aaa;
+    color: #222;
+    margin: 2px;
+    text-decoration: none;
+    box-shadow: 0 3px rgba(0,0,0,0.5);
+    transition: background .3s color .3s;
+}
+.session_tab:hover {
+    background: #222;
+    color: #ddd;
+}
+.session_tab a {
+    text-decoration: none;
+    font-family: Roboto;
+    font-size: 18px;
+    color: inherit;
+}
+.performance {
+    background: #555;
+    margin-bottom: 10px;
+    text-decoration: none;
+    font-family: Roboto;
+    font-size: 18px;
+    color: #bbb;
+}
+.performance p {
+    padding: none;
+    margin: 5px;
+}
+.seats_rows {
+    margin: auto;
+}
+.seats_row {
+    display: flex;
+    margin: auto;
+    width: fit-content;
+}
+.tag {
     color: #aaa;
     background: #333;
     padding: 5px;
     margin: 2px;
     border-radius: 5px;
     font-family: Roboto;
-    }
-
+}
 .description {
     color: #333;
     font-family: Roboto;
 }
-
 .regbutton {
     color: #333;
     text-decoration: none;
     background: #ccc;
     padding: 5px;
-
 }
 .regform {
-        display: inline-table;
-        background: #ddd;
-        padding: 10px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-family: Roboto;
+    display: inline-table;
+    background: #ddd;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Roboto;
 }
 .regelem {
     display: flex;
-        padding: 5px;
+    padding: 5px;
 }
 .regform input{
     margin-left: auto;
@@ -507,18 +482,18 @@
 
 .regelem p {
     color: #d00;
-        margin: unset;
-        margin-left: 5px;
+    margin: unset;
+    margin-left: 5px;
 }
 .regcaption {
 
 }
 .buyFooter{
-        display: flex;
-        width: 100%;
-        background: #666;
-        padding: 5px;
-        margin-top: 10px;
+    display: flex;
+    width: 100%;
+    background: #666;
+    padding: 5px;
+    margin-top: 10px;
 }
 .price {
     padding 5px;
@@ -526,13 +501,13 @@
     font-family: Roboto;
 }
 .buyPopup {
-        display: block;
-            background: rgba(1,1,1,0.5);
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            padding: 100%;
+    display: block;
+    background: rgba(1,1,1,0.5);
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 100%;
 }
 .infoForm {
     background: #ddd;
@@ -551,8 +526,32 @@
 .confirmButton {
     background: #666;
     color: #ddd;
-        padding: 5px;
-        margin-top: 5px;
+    padding: 5px;
+    margin-top: 5px;
+    font-family: Roboto;
+    text-decoration: none;
+}
+.calendar {
+    margin: auto;
+    padding: 5px;
+    background: #555;
+    align-items: center;
+}
+.calendar .calendarForm {
+    display: flow-root;
         font-family: Roboto;
-        text-decoration: none;
+        color: #eee;
+        padding: 5px;
+        font-size: 20px;
+}
+.calendar .calendarForm .calendarCalendar {
+    font-family: Roboto;
+    font-size: 16px;
+}
+.calendar .calendarForm .calendarButton {
+    font-family: Roboto;
+        font-size: 16px;
+        background: #ddd;
+        border: none;
+        padding: 4px;
 }

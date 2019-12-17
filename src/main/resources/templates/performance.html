@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 
 <head>
     <link rel="stylesheet" href="styles.css">
@@ -14,9 +14,11 @@
         <p  class = "roboto_text" th:text = ${perf.name}></p>
         <p  class = "roboto_text" th:text = ${perf.description}></p>
     </div>
-    <div>
-        <form>Выберите дату: <input type="date" name="calendar">
-            <input type="submit" value="Отправить">
+    <div class="calendar">
+        <form class="calendarForm" th:attr = "action=@{/performance(id = ${perf.id})}" method = "post">
+            Выберите дату:
+            <input class="calendarCalendar" type="date" name="day" th:value="${day}"  >
+            <input class="calendarButton" type="submit" value="Выбрать">
         </form>
     </div>
     <div class = "performance" th:each = "instance : ${sessions_by_buildings}">

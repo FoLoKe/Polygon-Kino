@@ -15,11 +15,8 @@ import polygon.models.Session;
 import polygon.repos.BuildingRepository;
 import polygon.repos.SessionRepository;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -43,7 +40,9 @@ public class SessionServiceImplTest {
     public void findBuildingsWithSessionsInCity() {
         Performance performance = new Performance();
         City city = new City();
-        Map<Building, List<Session>> orderedTest = sessionService.findBuildingsWithSessionsInCity(performance,city);
+        java.util.Date utilDate = new java.util.Date(System.currentTimeMillis());
+        java.sql.Timestamp time = new java.sql.Timestamp(utilDate.getTime());
+        Map<Building, List<Session>> orderedTest = sessionService.findBuildingsWithSessionsInCity(performance,city,time);
         Assert.assertNotNull(orderedTest);
         Assert.assertEquals(0,orderedTest.size());
     }
