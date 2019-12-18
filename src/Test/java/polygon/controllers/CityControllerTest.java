@@ -29,7 +29,7 @@ public class CityControllerTest {
 
     @Test
     public void setCity() throws  Exception{
-        this.mockMvc.perform(get("//cinemas"))
+        this.mockMvc.perform(get("/cinemas"))
                 .andDo(print())
                 .andExpect(status().isOk());
         Mockito.verify(cityService,Mockito.times(1)).findById(1);

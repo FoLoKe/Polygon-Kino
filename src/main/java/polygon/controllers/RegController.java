@@ -32,7 +32,8 @@ public class RegController {
             @ModelAttribute("user") @Valid User user,
             BindingResult result,
             WebRequest request,
-            Errors errors) {
+            Errors errors)
+    {
 
         if(user.getUsername().isEmpty()) {
             result.rejectValue("username", "message.regError", "Укажите имя пользователя");

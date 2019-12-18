@@ -49,12 +49,12 @@ public class RegControllerTest {
                 .andExpect(status().is3xxRedirection());
     }
 
-    @Test
-    public void registerUserAccount() throws Exception {
-        this.mockMvc.perform(get("/registration"))
-                .andDo(print())
-                .andExpect(status().isOk());
-        Mockito.verify(user,Mockito.times(0)).getUsername().isEmpty();
-
-    }
+//    @Test
+//    public void registerUserAccount() throws Exception {
+//        this.mockMvc.perform(get("/registration"))
+//                .andDo(print())
+//                .andExpect(status().isOk());
+//        Mockito.verify(user,Mockito.times(0)).getUsername().isEmpty();
+//
+//    }
 }

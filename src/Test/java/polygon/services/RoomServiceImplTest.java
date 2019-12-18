@@ -3,6 +3,7 @@ package polygon.services;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -25,8 +26,8 @@ public class RoomServiceImplTest {
     @Autowired
     private RoomService roomService;
 
-//    @MockBean
-//    private RoomRepository roomRepository;
+    @Mock
+    private RoomRepository roomRepository;
 
     @Test
     public void allCities() {
@@ -38,12 +39,7 @@ public class RoomServiceImplTest {
     @Test
     public void findBySessions() {
         Session session = new Session();
-        Room expected=roomService.findBySessions(session);
-        Assert.assertNotNull(expected);
-//        Mockito.verify(roomRepository,Mockito.times(1)).findBySessions(session);
-//        Assert.assertEquals(2,expected.size());
-//        Room room = roomService.findBySessions(session);
-//        Assert.assertNotNull(room);
-//        Assert.assertEquals(7,room.getSeatsRows().size());
+        roomService.findBySessions(session);
+        Mockito.verify(roomRepository,Mockito.times(1)).findBySessions(session);
     }
 }
