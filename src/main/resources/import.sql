@@ -6,10 +6,10 @@ INSERT INTO polygon.buildings(city_id, type, address) values (2,'ТЦ', 'Кол�
 INSERT INTO polygon.buildings(city_id, type, address) values (2,'Кинотеатр', 'Вишневая д5');
 INSERT INTO polygon.buildings(city_id, type, address) values (1,'ТЦ', 'Корзинкина д1');
 INSERT INTO polygon.buildings(city_id, type, address) values (1,'Молл', 'Малиновая к1224б');
-insert into polygon.performances(name, date, description, poster) values('Аниме', '2019-12-1', 'параша', FILE_READ('src/main/resources/images/cover.jpg'));
-insert into polygon.performances(name, date, description, poster) values('film 1', '2019-12-2', 'description 1', FILE_READ('src/main/resources/images/cover1.jpg'));
-insert into polygon.performances(name, date, description, poster) values('film 2', '2019-03-14', 'description 2', FILE_READ('src/main/resources/images/cover2.jpg'));
-insert into polygon.performances(name, date, description, poster) values('film 3', '2018-03-08', 'description 3', FILE_READ('src/main/resources/images/cover3.jpg'));
+insert into polygon.performances(name, date, description, poster) values('film 0', '2019-12-1', 'description 0', FILE_READ('src/main/resources/images/cover2.jpg'));
+insert into polygon.performances(name, date, description, poster) values('РЖЕВ', '2019-12-2', 'Красная Армия после нескольких месяцев ожесточенных боев, наконец-то выбивает врага из села Овсянниково, что стоит огромных потерь — от роты остается всего треть личного состава. Измотанные до предела бойцы ждут подкрепления…', FILE_READ('src/main/resources/images/cover4.jpg'));
+insert into polygon.performances(name, date, description, poster) values('film 2', '2019-03-14', 'description 2', FILE_READ('src/main/resources/images/cover3.jpg'));
+insert into polygon.performances(name, date, description, poster) values('film 3', '2018-03-08', 'description 3', FILE_READ('src/main/resources/images/cover1.jpg'));
 insert into polygon.performances(name, date, description, poster) values('film 4', '2021-03-11', 'description 4', FILE_READ('src/main/resources/images/cover4.jpg'));
 insert into polygon.performances(name, date, description, poster) values('film 5', '2020-08-15', 'description 5', FILE_READ('src/main/resources/images/cover5.jpg'));
 insert into polygon.performances(name, date, description, poster) values('film 6', '2017-03-14', 'description 6', FILE_READ('src/main/resources/images/cover6.jpg'));
