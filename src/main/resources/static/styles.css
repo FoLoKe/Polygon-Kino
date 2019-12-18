@@ -1,14 +1,15 @@
 :root
 {
---white: #c7c7c7;
---dkgray: #353535;
-background-color: #353535;
+--white: #eee;
+--dkgray: #111;
+--orange: #ff9900;
+background-color: #111;
 
 }
 .header {
     width: 100%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.06);
-    background-color: #c7c7c7;
+    background-color: white;
     position: fixed;
     z-index: 100;
     top: 0;
@@ -100,6 +101,7 @@ background-color: #353535;
     align-items: center;
     list-style: none;
     padding: 0;
+    background: orange;
 }
 .header .wrapper .bottom_line .menu .menu_element {
     padding-right: 32px;
