@@ -77,7 +77,7 @@ public class SelectionController {
 
     @RequestMapping(value = "/selectSeat", method = RequestMethod.POST)
     public ModelAndView getPerformance(@RequestParam("byBalance") int byBalance,
-                                       @RequestParam("cats") String sids,
+                                       @RequestParam("ticketsId") String sids,
                                        @ModelAttribute("purchaseInfo") PurchaseInfo purchaseInfo,
                                        BindingResult result,
                                        Model model)

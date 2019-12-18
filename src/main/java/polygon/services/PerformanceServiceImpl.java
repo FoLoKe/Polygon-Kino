@@ -127,4 +127,11 @@ public class PerformanceServiceImpl implements PerformanceService {
             }
         }
     }
+
+    @Override
+    @Transactional
+    public void add(List<Performance> performance) {
+        performanceRepository.saveAll(performance);
+        performanceRepository.flush();
+    }
 }

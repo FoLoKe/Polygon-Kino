@@ -8,6 +8,7 @@ import polygon.models.Building;
 import polygon.models.City;
 import polygon.models.Performance;
 import polygon.models.Session;
+import polygon.services.CategoryService;
 import polygon.services.CityService;
 import polygon.services.PerformanceService;
 import polygon.services.SessionService;
@@ -17,10 +18,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class PerformanceController {
@@ -92,5 +90,33 @@ public class PerformanceController {
 
         Map<Building, List<Session>> buildingsMap = sessionService.findBuildingsWithSessionsInCity(performance, city, time);
         modelAndView.addObject("sessions_by_buildings", buildingsMap);
+    }
+
+    @Autowired
+    CategoryService categoryService;
+
+    @RequestMapping(value = "/debug", method = RequestMethod.GET)
+    public ModelAndView getPerformance() {
+        byte[] poster = performanceService.findById(2).getPoster();
+
+        Performance performance = new Performance();
+        java.util.Date date = new Date();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        performance.setPoster(poster);
+        performance.setDate(sqlDate);
+        performance.setName("debug film");
+        performance.setDescription("debug description");
+        performance.setCategories(new LinkedHashSet<>(categoryService.allCategories()));
+
+        List<Performance> performances = new ArrayList<>();
+        for(int i = 12; i<1000; i++) {
+            performance.setId(i);
+            performances.add(performance);
+        }
+
+        performanceService.add(performances);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
     }
 }

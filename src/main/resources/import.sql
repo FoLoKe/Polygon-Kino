@@ -39,7 +39,7 @@ insert into polygon.categories_performances(categories_id, performance_id) value
 insert into polygon.categories_performances(categories_id, performance_id) values (2,9);
 insert into polygon.categories_performances(categories_id, performance_id) values (2,10);
 insert into polygon.categories_performances(categories_id, performance_id) values (1,10);
-insert into polygon.categories_performances(categories_id, performance_id) values (2,10);
+insert into polygon.categories_performances(categories_id, performance_id) values (3,10);
 insert into polygon.categories_performances(categories_id, performance_id) values (1,11);
 insert into polygon.categories_performances(categories_id, performance_id) values (2,11);
 insert into polygon.categories_performances(categories_id, performance_id) values (3,11);

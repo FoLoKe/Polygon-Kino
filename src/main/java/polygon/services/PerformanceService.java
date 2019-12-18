@@ -14,7 +14,7 @@ public interface PerformanceService {
     List<Performance> premiers(City city);
 
     List<Performance> activePerformances(Integer id);
-
+    void add(List<Performance> performance);
     Performance findById(int id);
-    public void writeImageToResponse(Integer id, HttpServletResponse response);
+    void writeImageToResponse(Integer id, HttpServletResponse response);
 }
