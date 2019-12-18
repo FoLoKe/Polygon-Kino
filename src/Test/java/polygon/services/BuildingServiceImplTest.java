@@ -42,12 +42,5 @@ public class BuildingServiceImplTest {
         object=buildingService.getById(id);
         Assert.assertNotNull(object);
 
-//        Optional<Building> actual;
-//        actual = buildingRepository.findById(1);
-
-//        assertEquals(expected, actual);
-        //        Building building;
-//        building = buildingRepository.getOne(1);
-//        Assert.assertNotNull(actual);
     }
 }

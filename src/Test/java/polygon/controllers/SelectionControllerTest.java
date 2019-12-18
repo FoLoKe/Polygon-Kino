@@ -41,7 +41,6 @@ public class SelectionControllerTest {
 
     @MockBean
     private TicketService ticketService;
-//    List<Map<Seat, Ticket>> mapArrayList = new LinkedList<>();
     Room room;
     @Test
     public void getPerformance() throws Exception {
