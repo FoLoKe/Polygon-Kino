@@ -4,16 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import polygon.models.Building;
-import polygon.models.City;
-import polygon.models.Performance;
-import polygon.models.Session;
-import polygon.services.CategoryService;
-import polygon.services.CityService;
-import polygon.services.PerformanceService;
-import polygon.services.SessionService;
+import polygon.models.*;
+import polygon.services.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -31,6 +26,12 @@ public class PerformanceController {
 
     @Autowired
     private SessionService sessionService;
+
+    @Autowired
+    private RoomService roomService;
+
+    @Autowired
+    private TicketService ticketService;
 
     @RequestMapping(value = "/performance", method = RequestMethod.GET)
     public ModelAndView getPerformance(@RequestParam("id") int id, @CookieValue(value = "city", defaultValue = "1") int cityId) {
@@ -99,22 +100,56 @@ public class PerformanceController {
     public ModelAndView getPerformance() {
         byte[] poster = performanceService.findById(2).getPoster();
 
-        Performance performance = new Performance();
+//        Performance performance = new Performance();
         java.util.Date date = new Date();
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-        performance.setPoster(poster);
-        performance.setDate(sqlDate);
-        performance.setName("debug film");
-        performance.setDescription("debug description");
-        performance.setCategories(new LinkedHashSet<>(categoryService.allCategories()));
+        Timestamp time = new Timestamp(sqlDate.getTime());
 
-        List<Performance> performances = new ArrayList<>();
-        for(int i = 12; i<1000; i++) {
-            performance.setId(i);
-            performances.add(performance);
+        Calendar ac = Calendar.getInstance();
+        ac.setTime(time);
+        ac.add(Calendar.HOUR, + 1);
+        time = new Timestamp(ac.getTime().getTime());
+////    ac.add(Calendar.MINUTE, - time.getMinutes());
+////        performance.setPoster(poster);
+////        performance.setDate(sqlDate);
+////        performance.setName("debug film");
+////        performance.setDescription("debug description");
+////        performance.setCategories(new LinkedHashSet<>(categoryService.allCategories()));
+////
+////        List<Performance> performances = new ArrayList<>();
+////        for(int i = 12; i<1000; i++) {
+////            performance.setId(i);
+////            performances.add(performance);
+////        }w
+////
+////        performanceService.add(performances);
+        List<Performance> performances = performanceService.allPresentPerformances();
+        Room room = roomService.findById(1);
+        for (Performance p : performances) {
+            Session s = new Session();
+            s.setTime(time);
+            s.setPrice(250);
+
+            s.setRoom(room);
+            Set<Ticket> tickets = new LinkedHashSet<>();
+            for(SeatsRow sr : room.getSeatsRows()) {
+                for(Seat seat : sr.getSeats()) {
+                    Ticket ticket = new Ticket();
+                    ticket.setOccupied(false);
+                    ticket.setSeat(seat);
+                    ticket.setSession(s);
+                    tickets.add(ticket);
+                }
+            }
+
+            s.setTickets(tickets);
+            s.setPerformance(p);
+            sessionService.addSession(s);
+//            for(Ticket t : tickets) {
+//                ticketService.addTicket(t);
+//            }
         }
 
-        performanceService.add(performances);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
         return modelAndView;

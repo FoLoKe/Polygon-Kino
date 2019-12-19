@@ -4,7 +4,7 @@
 --dkgray: #111;
 --orange: #ff9900;
 background-color: #111;
-
+font-family: Roboto;
 }
 .header {
     width: 100%;
@@ -26,7 +26,7 @@ background-color: #111;
 }
 .wrapper * {
     font-weight: 400;
-    font-family: Roboto,Arial,sans-serif;
+    
 }
     .header .wrapper .upper_line{
     position: relative;
@@ -44,7 +44,7 @@ background-color: #111;
 .header .wrapper .upper_line .first_column .geo{
     height: 28px;
     margin: 8px 10px 0 30px;
-    font-family: Roboto;
+    
     font-size: 16px;
     line-height: 28px;
     color: #63c;
@@ -65,7 +65,7 @@ background-color: #111;
     padding: 10px;
     max-width: fit-content;
     white-space: nowrap;
-    font-family: Roboto;
+    
     font-size: 18px;
     font-weight: 500;
     line-height: 1.33;
@@ -80,7 +80,7 @@ background-color: #111;
 }
 .header .wrapper .upper_line .enter:hover {
     background: #555;
-    color: #fff;
+    color: white;
     text-decoration: none;
 }
 .wrapper img {
@@ -112,11 +112,11 @@ background-color: #111;
 }
 .header .wrapper .bottom_line .menu .menu_element:hover {
     background: #555;
-    color: #fff;
+    color: white;
 }
 .header .wrapper .bottom_line .menu a {
     white-space: nowrap;
-    font-family: Roboto;
+    
     font-size: 18px;
     font-weight: 500;
     line-height: 1.33;
@@ -136,7 +136,7 @@ background-color: #111;
     max-height: calc(100vh - 60px);
     padding: 50px 0 20px;
     box-sizing: border-box;
-    background: #fff;
+    background: white;
     overflow-y: auto;
 }
 .upper_line .geo .cities .list {
@@ -199,7 +199,7 @@ background-color: #111;
     text-decoration: none;
 }
 .main_container .tabs_container .tabs_scroller .last_tablet {
-    background: #aaa;
+    background: white;
     border: 1px solid #999;
     box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
     max-width: 160px;
@@ -221,7 +221,7 @@ background-color: #111;
     margin: 0px;
     margin-left: 12px;
     white-space: nowrap;
-    font-family: Roboto;
+    
     font-size: 18px;
     font-weight: 500;
     line-height: 1.33;
@@ -230,13 +230,13 @@ background-color: #111;
     transition: color .3s;
 }
 .main_container .tabs_container .tabs_scroller .last_tablet .roboto_text:hover {
-    color: #fff;
+    color: white;
 }
 .roboto_text {
     margin: 0px;
     margin-left: 12px;
     white-space: nowrap;
-    font-family: Roboto;
+    
     font-size: 18px;
     font-weight: 500;
     line-height: 1.33;
@@ -247,7 +247,7 @@ background-color: #111;
     margin: 0px;
     margin-left: 12px;
     white-space: nowrap;
-    font-family: Roboto;
+    
     font-size: 18px;
     font-weight: 500;
     line-height: 1.33;
@@ -256,7 +256,7 @@ background-color: #111;
     transition: color .3s;
 }
 .geo a:hover{
-    color: #fff;
+    color: white;
 }
 .geo .list a{
     color: #555;
@@ -268,22 +268,22 @@ background-color: #111;
     margin: 0px;
     margin-left: 12px;
     white-space: nowrap;
-    font-family: Roboto;
+    
     font-size: 60px;
     font-weight: 500;
     line-height: 1.33;
-    color: #aaa;
+    color: white;
     text-decoration: none;
 }
 .caption {
     margin: 0px;
     margin-left: 12px;
     white-space: nowrap;
-    font-family: Roboto;
+    
     font-size: 60px;
     font-weight: 500;
     line-height: 1.33;
-    color: #aaa;
+    color: white;
     text-decoration: none;
     text-shadow: 4px 4px 0px rgba(0,0,0,1);
 }
@@ -291,7 +291,7 @@ background-color: #111;
     margin: 0px;
     margin-left: 35%;
     white-space: nowrap;
-    font-family: Roboto;
+    
     font-size: 60px;
     font-weight: 500;
     line-height: 1.33;
@@ -303,10 +303,10 @@ background-color: #111;
     color: #333;
 }
 .main_container .tabs_container .tabs_scroller .last_tablet .more:hover{
-    color: #fff;
+    color: white;
 }
 .seat {
-    background: #aaa;
+    background: white;
     border: 1px solid #999;
     box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
     max-width: 32px;
@@ -342,7 +342,7 @@ background-color: #111;
     min-height: 32px;
 }
 .sseat {
-    background: #fff;
+    background: white;
     border: 1px solid #999;
     box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
     max-width: 32px;
@@ -358,7 +358,7 @@ background-color: #111;
     min-height: 32px;
 }
 .buyButton {
-    background: #fff;
+    background: white;
     border: 1px solid #999;
     box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
     max-width: 128px;
@@ -366,7 +366,7 @@ background-color: #111;
     color: #333;
     margin-left: auto;
     margin-right: 10px;
-    font-family: Roboto;
+    
     padding: 5px;
     text-decoration: none;
     transition: color background .3s;
@@ -374,16 +374,16 @@ background-color: #111;
 }
 .login{
     background: #555;
-    border-color: #ccc;
+    border-color: white;
     border-style: solid;
     border-width: thin;
     border-top-width: 0;
     margin: 0px 0px 0 0px;
-    font-family: Roboto;
+    
     width: min-content;
     font-size: 16px;
     line-height: 27px;
-    color: #fff;
+    color: white;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -394,10 +394,10 @@ background-color: #111;
     border-style: none;
     padding: 5px;
     margin-bottom: 5px;
-    font-family: Roboto;
+    
     font-size: 15px;
     display: flex;
-    background: #ccc;
+    background: white;
 }
 .login label {
 }
@@ -407,7 +407,7 @@ background-color: #111;
     padding: 10px;
 }
 .session_tab {
-    background: #aaa;
+    background: white;
     color: #222;
     margin: 2px;
     text-decoration: none;
@@ -415,12 +415,12 @@ background-color: #111;
     transition: background .3s color .3s;
 }
 .session_tab:hover {
-    background: #222;
-    color: #ddd;
+    background: #dkgray;
+    color: #white;
 }
 .session_tab a {
     text-decoration: none;
-    font-family: Roboto;
+    
     font-size: 18px;
     color: inherit;
 }
@@ -428,9 +428,9 @@ background-color: #111;
     background: #555;
     margin-bottom: 10px;
     text-decoration: none;
-    font-family: Roboto;
+    
     font-size: 18px;
-    color: #bbb;
+    color: white;
 }
 .performance p {
     padding: none;
@@ -448,36 +448,36 @@ background-color: #111;
     transform: translate(0px, +50%);
 }
 .tag {
-    color: #aaa;
+    color: white;
     background: #333;
     padding: 5px;
     margin: 2px;
     border-radius: 5px;
     border-style: solid;
-    font-family: Roboto;
+    
     width: fit-content;
 }
 .description {
     color: #333;
-    font-family: Roboto;
+    
 }
 
 .regbutton {
     color: #333;
     text-decoration: none;
-    background: #ccc;
+    background: white;
     padding: 5px;
 
 }
 .regform {
     display: inline-table;
-    background: #ddd;
+    background: white;
     padding: 10px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-family: Roboto;
+    
 }
 .regelem {
     display: flex;
@@ -510,8 +510,8 @@ background-color: #111;
 }
 .price {
     padding 5px;
-    color: #aaa;
-    font-family: Roboto;
+    color: white;
+    
 }
 .buyPopup {
     display: block;
@@ -523,7 +523,7 @@ background-color: #111;
     padding: 100%;
 }
 .infoForm {
-    background: #ddd;
+    background: white;
     padding: 20px;
 }
 .infoForm .element {
@@ -541,10 +541,10 @@ background-color: #111;
 }
 .confirmButton {
     background: #666;
-    color: #ddd;
+    color: white;
     padding: 5px;
     margin-top: 5px;
-    font-family: Roboto;
+    
     text-decoration: none;
 }
 .ico {
@@ -564,19 +564,19 @@ background-color: #111;
 }
 .calendar .calendarForm {
     display: flow-root;
-        font-family: Roboto;
-        color: #eee;
+        
+        color: white;
         padding: 5px;
         font-size: 20px;
 }
 .calendar .calendarForm .calendarCalendar {
-    font-family: Roboto;
+    
     font-size: 16px;
 }
 .calendar .calendarForm .calendarButton {
-    font-family: Roboto;
+    
         font-size: 16px;
-        background: #ddd;
+        background: white;
         border: none;
         padding: 4px;
 }

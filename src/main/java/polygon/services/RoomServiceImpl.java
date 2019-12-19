@@ -34,4 +34,16 @@ public class RoomServiceImpl implements RoomService {
 
         return room;
     }
+
+    @Override
+    @Transactional
+    public Room findById(int id) {
+        Room room = roomRepository.findById(id).orElse(new Room());
+        room.getSeatsRows().size();
+        Set<SeatsRow> seatsRows = room.getSeatsRows();
+        for (SeatsRow sr : seatsRows) {
+            sr.getSeats().size();
+        }
+        return room;
+    }
 }

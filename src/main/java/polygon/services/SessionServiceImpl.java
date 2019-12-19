@@ -3,12 +3,10 @@ package polygon.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import polygon.models.Building;
-import polygon.models.City;
-import polygon.models.Performance;
-import polygon.models.Session;
+import polygon.models.*;
 import polygon.repos.BuildingRepository;
 import polygon.repos.SessionRepository;
+import polygon.repos.TicketRepository;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -24,6 +22,15 @@ public class SessionServiceImpl implements SessionService {
 
     @Autowired
     private BuildingRepository buildingRepository;
+
+    @Autowired
+    private TicketRepository ticketRepository;
+
+    @Override
+    public void addSession(Session session) {
+        sessionRepository.save(session);
+        sessionRepository.flush();
+    }
 
     @Override
     public List<Session> findSessionsInCity(City city) {

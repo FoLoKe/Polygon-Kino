@@ -9,4 +9,5 @@ public interface TicketService {
     boolean setTickets(List<Integer> ids);
     void rollbackTickets(List<Integer> ids);
     Ticket getTicketById(Integer id);
+    void addTicket(Ticket ticket);
 }

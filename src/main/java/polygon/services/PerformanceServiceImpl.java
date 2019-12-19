@@ -54,6 +54,14 @@ public class PerformanceServiceImpl implements PerformanceService {
 
     @Override
     @Transactional
+    public List<Performance> allPresentPerformances() {
+        java.util.Date utilDate = new java.util.Date(System.currentTimeMillis());
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        return performanceRepository.findAllPresent(sqlDate);
+    }
+
+    @Override
+    @Transactional
     public List<Performance> premiers(City city) {
         java.util.Date utilDate = new java.util.Date(System.currentTimeMillis());
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
