@@ -16,6 +16,8 @@
                 <p class = "buyCaption" th:text="Приобрести"></p>
             </a>
         </div>
+        <div class="room">
+            <div class="leftWall"></div>
         <table class = "seats_rows">
             <tr class = "seats_row"  th:each = "srow : ${rowsList}">
                 <td> <p th:text = "1"></p></td>
@@ -24,6 +26,8 @@
                 </td>
             </tr>
         </table>
+            <div class="rightWall"></div>
+        </div>
         <div class="buyPopup" id="buyPopup">
             <form class = "infoForm" id = "infoForm" th:object="${purchaseInfo}" method="POST">
                 <div class="element"><label> Телефон: <input type="text" th:field="*{tel}"/> </label></div>

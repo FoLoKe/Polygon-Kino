@@ -36,6 +36,11 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
+    public List<Building> allByCity(City city) {
+        return buildingRepository.findByCity(city);
+    }
+
+    @Override
     public Building getById(int id) {
         return buildingRepository.getOne(id);
     }

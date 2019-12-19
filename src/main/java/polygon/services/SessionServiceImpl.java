@@ -5,14 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.*;
 import polygon.repos.BuildingRepository;
+import polygon.repos.PerformanceRepository;
 import polygon.repos.SessionRepository;
 import polygon.repos.TicketRepository;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class SessionServiceImpl implements SessionService {
@@ -25,6 +23,9 @@ public class SessionServiceImpl implements SessionService {
 
     @Autowired
     private TicketRepository ticketRepository;
+
+    @Autowired
+    private PerformanceRepository performanceRepository;
 
     @Override
     public void addSession(Session session) {
@@ -59,6 +60,30 @@ public class SessionServiceImpl implements SessionService {
         }
 
          return orderedSessions;
+    }
+
+    @Override
+    public Map<Timestamp,Map<Performance, List<Session>>> findSessionsInBuilding(Building building) {
+        Timestamp time = new Timestamp(new Date().getTime());
+
+        Calendar c = Calendar.getInstance();
+        c.set(time.getYear(), time.getMonth(), time.getDay());
+        Map<Timestamp,Map<Performance, List<Session>>> timestampMapMap = new LinkedHashMap<>();
+        for (int i=1; i < 14; i++) {
+            c.setTime(time);
+            c.add(Calendar.DATE, 14);
+            Timestamp endTime = new Timestamp(c.getTime().getTime());
+
+            Map<Performance, List<Session>> performanceSessionMap = new LinkedHashMap<>();
+            List<Performance> performances = performanceRepository.findAll();
+            for (Performance p : performances) {
+                performanceSessionMap.put(p, sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(building, p, time, endTime));
+            }
+
+            timestampMapMap.put(time, performanceSessionMap);
+            time=endTime;
+        }
+        return timestampMapMap;
     }
 
     @Override

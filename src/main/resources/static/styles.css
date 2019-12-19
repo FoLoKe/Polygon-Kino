@@ -438,14 +438,12 @@ font-family: Roboto;
 }
 .seats_rows {
     margin: auto;
-    top: 50%;
 }
 .seats_row {
     display: flex;
     margin: auto;
     width: fit-content;
     perspective: 500px;
-    transform: translate(0px, +50%);
 }
 .tag {
     color: white;
@@ -501,7 +499,7 @@ font-family: Roboto;
 .buyFooter{
     display: flex;
     width: 100%;
-    background: #666;
+    background: white;
     padding: 5px;
     margin-top: 10px;
         position: absolute;
@@ -510,7 +508,7 @@ font-family: Roboto;
 }
 .price {
     padding 5px;
-    color: white;
+    color: dkgray;
     
 }
 .buyPopup {
@@ -570,13 +568,30 @@ font-family: Roboto;
         font-size: 20px;
 }
 .calendar .calendarForm .calendarCalendar {
-    
     font-size: 16px;
 }
 .calendar .calendarForm .calendarButton {
-    
-        font-size: 16px;
-        background: white;
-        border: none;
-        padding: 4px;
+    font-size: 16px;
+    background: white;
+    border: none;
+    padding: 4px;
+}
+.room {
+    margin: auto;
+    position: absolute;
+    display: inline-flex;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    perspective: 500px
+}
+.leftWall {
+    transform: rotate3d(1, 1, 1, 45deg);
+    min-width: 50px;
+    background: white;
+}
+.rightWall {
+    transform: rotate3d(-1, 1, 1, -45deg);
+    min-width: 50px;
+    background: white;
 }
