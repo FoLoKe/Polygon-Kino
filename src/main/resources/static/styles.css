@@ -320,6 +320,7 @@ background-color: #111;
     text-decoration: none;
     transition: color background .3s;
     min-height: 32px;
+    transform: rotateX(45deg);
 }
 .seat:hover {
     background: #0b0;
@@ -438,12 +439,13 @@ background-color: #111;
 .seats_rows {
     margin: auto;
     top: 50%;
-    transform: translate(0px, +50%);
 }
 .seats_row {
     display: flex;
     margin: auto;
     width: fit-content;
+    perspective: 500px;
+    transform: translate(0px, +50%);
 }
 .tag {
     color: #aaa;
