@@ -9,24 +9,36 @@
         <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
         <script type="text/javascript" th:src="@{js/selection.js}" src = "js/selection.js"></script>
     </head>
-    <body class="buyBody">
+    <body class="buyRoot">
+    <div class="buyBody">
+        <div class = "buyHeader">
+            <a class = "exitCross" th:href = "@{/performance(id = ${ssession.performance.id})}">&#10005;</a>
+        </div>
         <div class = "buyFooter">
             <p class = "price" id="price">Цена</p>
             <a id = buy href="javascript:PopUpSwitch()" class = "buyButton">
                 <p class = "buyCaption" th:text="Приобрести"></p>
             </a>
         </div>
+
         <div class="room">
-            <div class="leftWall"></div>
-        <table class = "seats_rows">
-            <tr class = "seats_row"  th:each = "srow : ${rowsList}">
-                <td> <p th:text = "1"></p></td>
-                <td  class = "seat" th:each = "instance : ${srow}" th:value= "${instance.value.occupied}" th:attr = "ticket = ${instance.value.id}" th:attrappend =  "ticketPrice = ${ssession.price}">
-                    <p th:text = "${instance.key.seat}"></p>
-                </td>
-            </tr>
-        </table>
-            <div class="rightWall"></div>
+            <center>
+            <div class="screen">
+                <img class="screenImage" th:src = "*{'/img/' + ssession.performance.id}">
+            </div>
+            </center>
+            <div class = "bottom">
+                <div class="leftWall"></div>
+                <table class = "seats_rows">
+                    <tr class = "seats_row"  th:each = "srow : ${rowsList}">
+                        <td> <p th:text = "1"></p></td>
+                        <td  class = "seat" th:each = "instance : ${srow}" th:value= "${instance.value.occupied}" th:attr = "ticket = ${instance.value.id}" th:attrappend =  "ticketPrice = ${ssession.price}">
+                            <p th:text = "${instance.key.seat}"></p>
+                        </td>
+                    </tr>
+                </table>
+                <div class="rightWall"></div>
+            </div>
         </div>
         <div class="buyPopup" id="buyPopup">
             <form class = "infoForm" id = "infoForm" th:object="${purchaseInfo}" method="POST">
@@ -36,5 +48,6 @@
                 <div class="element" sec:authorize = "isAuthenticated()"><a class="confirmButton" href="#" id = "confirmBalance" >Купить за баллы</a></div>
             </form>
         </div>
+    </div>
     </body>
 </html>

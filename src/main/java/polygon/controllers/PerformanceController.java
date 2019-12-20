@@ -74,6 +74,11 @@ public class PerformanceController {
         performanceService.writeImageToResponse(id, response);
     }
 
+    @RequestMapping(value = "/preview/{id}", method = RequestMethod.GET)
+    public void getPreviewImage(@PathVariable("id") Integer id, HttpServletResponse response) {
+        performanceService.writePreviewToResponse(id, response);
+    }
+
     private void init(ModelAndView modelAndView, int id, int cityId, Timestamp time) {
         modelAndView.setViewName("performance");
 

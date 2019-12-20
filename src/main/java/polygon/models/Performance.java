@@ -31,6 +31,12 @@ public class Performance {
     @OrderBy(value= "id")
     private Set<Category> categories;
 
+    @Column(name = "previews")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "polygon.previews_performances")
+    @OrderBy(value= "id")
+    private Set<Preview> previews;
+
     @Column(name = "sessions")
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "performance_id")

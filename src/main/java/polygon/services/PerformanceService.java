@@ -17,4 +17,5 @@ public interface PerformanceService {
     void add(List<Performance> performance);
     Performance findById(int id);
     void writeImageToResponse(Integer id, HttpServletResponse response);
+    void writePreviewToResponse(Integer id, HttpServletResponse response);
 }

@@ -17,6 +17,14 @@ insert into polygon.performances(name, date, description, poster) values('film 7
 insert into polygon.performances(name, date, description, poster) values('film 8', '2021-03-11', 'description 4', FILE_READ('src/main/resources/images/cover8.jpg'));
 insert into polygon.performances(name, date, description, poster) values('film 9', '2020-08-15', 'description 5', FILE_READ('src/main/resources/images/cover9.jpg'));
 insert into polygon.performances(name, date, description, poster) values('film 10', '2019-12-19', 'description 6', FILE_READ('src/main/resources/images/cover10.jpg'));
+insert into polygon.previews(image) values (FILE_READ('src/main/resources/images/cover10.jpg'));
+insert into polygon.previews(image) values (FILE_READ('src/main/resources/images/cover10.jpg'))
+insert into POLYGON.PREVIEWS_PERFORMANCES(previews_id, performance_id) values (1,1);
+insert into POLYGON.PREVIEWS_PERFORMANCES(previews_id, performance_id) values (1,2);
+insert into POLYGON.PREVIEWS_PERFORMANCES(previews_id, performance_id) values (2,1);
+insert into POLYGON.PREVIEWS_PERFORMANCES(previews_id, performance_id) values (2,2);
+
+
 insert into polygon.categories(name) values ('Боевик');
 insert into polygon.categories(name) values ('Экшен');
 insert into polygon.categories(name) values ('Мелодрамма');
