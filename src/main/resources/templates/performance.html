@@ -15,7 +15,7 @@
         <div>
             <img th:src="*{'/img/' + perf.id}">
         </div>
-        <iframe width="420" height="315" src="http://www.youtube.com/embed/LwkeMx_OJxg" frameborder="0" allowfullscreen></iframe>
+        <iframe width="560" height="315" th:src="*{perf.trailerLink}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         <div th:each="preview : ${perf.previews}">
             <img th:src="*{'/preview/' + preview.id}">
         </div>
@@ -24,8 +24,9 @@
 
         </div>
     </div>
-
-    <div class="calendar">
+    <span class="imdbRatingPlugin" data-user="ur111314988" th:data-title=${perf.imdbRating} data-style="p4"><a href="https://www.imdb.com/title/tt0076759/?ref_=plg_rt_1"><img src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/images/imdb_31x14.png">
+    </a></span><script>(function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");</script>
+        <div class="calendar">
         <form class="calendarForm" th:attr = "action=@{/performance(id = ${perf.id})}" method = "post">
             Выберите дату:
             <input class="calendarCalendar" type="date" name="day" th:value="${day}"  >

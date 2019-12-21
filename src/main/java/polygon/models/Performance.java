@@ -16,6 +16,12 @@ public class Performance {
     @Column(name = "name")
     private String name;
 
+    @Column(length = 1024)
+    private String trailerLink;
+
+    @Column(length = 1024)
+    private String imdbRating;
+
     @Column(name = "description", length = 1024)
     private String description;
 
@@ -41,6 +47,22 @@ public class Performance {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "performance_id")
     private Set<Session> sessions;
+
+    public String getTrailerLink() {
+        return trailerLink;
+    }
+
+    public void setTrailerLink(String trailerLink) {
+        this.trailerLink = trailerLink;
+    }
+
+    public String getImdbRating() {
+        return imdbRating;
+    }
+
+    public void setImdbRating(String imdbRating) {
+        this.imdbRating = imdbRating;
+    }
 
     public void setId(int id) {
         this.id = id;
