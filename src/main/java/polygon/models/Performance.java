@@ -16,7 +16,7 @@ public class Performance {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 1024)
     private String description;
 
     @Column(name = "poster", length = 1024*1024)

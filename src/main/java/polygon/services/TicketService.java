@@ -10,4 +10,5 @@ public interface TicketService {
     void rollbackTickets(List<Integer> ids);
     Ticket getTicketById(Integer id);
     void addTicket(Ticket ticket);
+    Ticket loadTicket(Integer id);
 }

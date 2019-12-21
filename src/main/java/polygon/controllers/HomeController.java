@@ -12,6 +12,7 @@ import polygon.models.City;
 import polygon.models.Performance;
 import polygon.models.User;
 import polygon.services.CityService;
+import polygon.services.EmailServiceImpl;
 import polygon.services.PerformanceService;
 import polygon.services.PolygonUserDetailsService;
 
@@ -21,6 +22,9 @@ import java.util.List;
 
 @Controller
 public class HomeController {
+
+    @Autowired
+    EmailServiceImpl emailService;
 
     @Autowired
     private PolygonUserDetailsService polygonUserDetailsService;

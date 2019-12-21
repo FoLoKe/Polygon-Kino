@@ -12,34 +12,34 @@
     <div class = "regpage">
 
 <form class = "regform" id = "reg" action="/registration" th:object="${user}" method="POST" enctype="utf8">
-    <p class="regcaption">Registration</p>
+    <p class="regcaption">Регистрация</p>
     <div class="regelem">
-        <label>Username</label>
+        <label>Имя пользователя</label>
         <p th:each="error: ${#fields.errors('username')}"
            th:text="${error}">Validation error</p>
         <input th:field="*{username}"/>
 
     </div>
     <div class="regelem">
-        <label>Email</label>
+        <label>Почта</label>
         <p th:each="error : ${#fields.errors('email')}"
            th:text="${error}">Validation error</p>
         <input type="email" th:field="*{email}"/>
 
     </div>
     <div class="regelem">
-        <label>Password</label>
+        <label>Пароль</label>
         <p th:each="error : ${#fields.errors('password')}"
            th:text="${error}">Validation error</p>
         <input type="password" id = "psw" th:field="*{password}"/>
 
     </div>
     <div class="regelem">
-        <label>Confirm password</label>
+        <label>Повторите пароль</label>
         <p id = "cpswErr">Пароли не совпадают</p>
         <input id = "cpsw" type="password"/>
     </div>
-    <a class="regbutton" href="javascript:check()">Register</a>
+    <a class="regbutton" href="javascript:check()">Зарегистрироваться</a>
 </form>
     </div>
 </center>

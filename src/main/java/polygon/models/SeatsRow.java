@@ -20,6 +20,18 @@ public class SeatsRow {
     @org.hibernate.annotations.OrderBy(clause = "seat")
     private Set<Seat> seats;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
     public int getSeatsRow() {
         return seatsRow;
     }

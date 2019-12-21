@@ -20,6 +20,30 @@ public class Seat {
     @JoinColumn(name = "seat_id")
     private Set<Ticket> tickets;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seatsrow_id")
+    private SeatsRow seatsRow;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public SeatsRow getSeatsRow() {
+        return seatsRow;
+    }
+
+    public void setSeatsRow(SeatsRow seatsRow) {
+        this.seatsRow = seatsRow;
+    }
+
     public int getId() {
         return id;
     }

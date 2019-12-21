@@ -56,7 +56,7 @@
                             </form>
 
                             <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-                                <p class = "etext" th:text="${userBalance}"></p>
+                                <p class = "etext" th:text="'Бонусные баллы: ' + ${userBalance}"></p>
                                 <div><input type="submit" value="Sign Out"/></div>
                             </form>
                         </div>
