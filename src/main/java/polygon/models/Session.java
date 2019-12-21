@@ -19,7 +19,7 @@ public class Session {
     @Column(name = "price")
     private float price;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "session_id")
     private Set<Ticket> tickets;
 
@@ -33,6 +33,18 @@ public class Session {
 
     public int getId() {
         return id;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public Performance getPerformance() {
+        return performance;
+    }
+
+    public void setPerformance(Performance performance) {
+        this.performance = performance;
     }
 
     public Room getRoom() {

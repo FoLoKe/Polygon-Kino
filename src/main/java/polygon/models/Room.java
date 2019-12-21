@@ -15,6 +15,17 @@ public class Room {
     @Column(name = "type")
     private String type;
 
+    @Column(name = "number")
+    private int number;
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
     public int getId() {
         return id;
     }

@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.*;
-import polygon.services.PolygonUserDetailsService;
-import polygon.services.RoomService;
-import polygon.services.SessionService;
-import polygon.services.TicketService;
+import polygon.services.*;
 
 import java.util.*;
 
@@ -34,6 +31,9 @@ public class SelectionController {
     @Autowired
     private PolygonUserDetailsService polygonUserDetailsService;
 
+    @Autowired
+    private EmailServiceImpl emailService;
+
     @RequestMapping(value = "/selectSeat", method = RequestMethod.GET)
     public ModelAndView getPerformance(@RequestParam("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -46,6 +46,8 @@ public class SelectionController {
             Room room = roomService.findBySessions(session);
             Set<SeatsRow> rows = room.getSeatsRows();
             Set<Ticket> tickets = session.getTickets();
+
+            modelAndView.addObject("email", "");
 
             List<Map<Seat, Ticket>> mapArrayList = new LinkedList<>();
             for (SeatsRow sr : rows) {
@@ -79,6 +81,7 @@ public class SelectionController {
     public ModelAndView getPerformance(@RequestParam("byBalance") int byBalance,
                                        @RequestParam("ticketsId") String sids,
                                        @ModelAttribute("purchaseInfo") PurchaseInfo purchaseInfo,
+                                       @ModelAttribute("email") String email,
                                        BindingResult result,
                                        Model model)
     {
@@ -132,6 +135,22 @@ public class SelectionController {
                         user.setBalance(user.getBalance() + price / 10);
                         polygonUserDetailsService.saveUser(user);
                     }
+
+                    Ticket first = ticketService.loadTicket(ids.get(0));
+                    String emailText = "Спасибо за покупку!" +
+                            "\n Ваши билеты на: " + first.getSession().getPerformance().getName() +
+                            "\n Зал №: " + first.getSeat().getSeatsRow().getRoom().getNumber() +
+                            "\n По адресу: " + first.getSeat().getSeatsRow().getRoom().getBuilding().getAddress();
+
+                    for (int id : ids) {
+                        Ticket ticket = ticketService.loadTicket(id);
+                        emailText += "\n\nБилет №" + ticket.getId() +
+                                "\n Ряд: " + ticket.getSeat().getSeatsRow().getRow() +
+                                "\n Место: " + ticket.getSeat().getSeat();
+
+                    }
+
+                    emailService.sendSimpleMessage(email, "Ваши билеты",emailText);
                 }
             } else {
                 ticketService.rollbackTickets(ids);

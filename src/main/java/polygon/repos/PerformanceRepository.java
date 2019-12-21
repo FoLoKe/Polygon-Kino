@@ -20,4 +20,7 @@ public interface PerformanceRepository extends JpaRepository<Performance, Intege
 
     @Query("select p from Performance p join p.categories c where c = :cat")
     List<Performance> getAllFilmsByTag(Category cat);
+
+    @Query("select p from Performance p where p.date <= :date")
+    List<Performance> findAllPresent(@Param("date") Date date);
 }

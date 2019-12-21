@@ -9,4 +9,5 @@ public interface RoomService {
 
     List<Room> allCities();
     Room findBySessions(Session session);
+    Room findById(int id);
 }

@@ -16,7 +16,13 @@ public class Performance {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
+    @Column(length = 1024)
+    private String trailerLink;
+
+    @Column(length = 1024)
+    private String imdbRating;
+
+    @Column(name = "description", length = 1024)
     private String description;
 
     @Column(name = "poster", length = 1024*1024)
@@ -31,10 +37,32 @@ public class Performance {
     @OrderBy(value= "id")
     private Set<Category> categories;
 
+    @Column(name = "previews")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "polygon.previews_performances")
+    @OrderBy(value= "id")
+    private Set<Preview> previews;
+
     @Column(name = "sessions")
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "performance_id")
     private Set<Session> sessions;
+
+    public String getTrailerLink() {
+        return trailerLink;
+    }
+
+    public void setTrailerLink(String trailerLink) {
+        this.trailerLink = trailerLink;
+    }
+
+    public String getImdbRating() {
+        return imdbRating;
+    }
+
+    public void setImdbRating(String imdbRating) {
+        this.imdbRating = imdbRating;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -66,6 +94,14 @@ public class Performance {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public Set<Preview> getPreviews() {
+        return previews;
+    }
+
+    public void setPreviews(Set<Preview> previews) {
+        this.previews = previews;
     }
 
     public Set<Session> getSessions() {
