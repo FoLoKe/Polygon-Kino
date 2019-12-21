@@ -15,6 +15,9 @@
         <div>
             <img th:src="*{'/img/' + perf.id}">
         </div>
+        <div th:each="preview : ${perf.previews}">
+            <img th:src="*{'/preview/' + preview.id}">
+        </div>
         <p  class = "roboto_text" th:text = ${perf.description}></p>
         <div class = "tag" th:each = "tag : ${perf.categories}" th:text="${tag.name}">
 

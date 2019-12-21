@@ -6,15 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.*;
-import polygon.repos.CategoryRepository;
-import polygon.repos.CinemasRepository;
-import polygon.repos.PerformanceRepository;
-import polygon.repos.PreviewRepository;
+import polygon.repos.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Service
 public class PerformanceServiceImpl implements PerformanceService {
@@ -41,6 +38,44 @@ public class PerformanceServiceImpl implements PerformanceService {
     public Performance findById(int id) {
         Performance performance = performanceRepository.findById(id).orElse(new Performance());
         performance.getCategories().size();
+        return performance;
+    }
+
+    @Autowired
+    private BuildingService buildingRepository;
+
+    @Autowired
+    private SessionRepository sessionRepository;
+
+    @Override
+    public Map<Timestamp, Map<Building, List<Session>>> getSchedule(Performance performance, City city) {
+        Date utilDate = new Date();
+        Calendar ac = Calendar.getInstance();
+        ac.setTime(utilDate);
+        Timestamp time = new Timestamp(ac.getTime().getTime());
+        Map<Timestamp, Map<Building, List<Session>>> result = new HashMap<>();
+        List<Building> buildings = buildingRepository.allByCity(city);
+        for (int i = 0; i < 14; i++, ac.add(Calendar.DATE, 1), time.setTime(ac.getTime().getTime())) {
+            Map<Building, List<Session>> byByBuildingSchedule = new HashMap<>();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(time);
+            calendar.add(Calendar.HOUR, 23);
+            calendar.add(Calendar.MINUTE, 59);
+            Timestamp endTime = new Timestamp(calendar.getTime().getTime());
+            for (Building building : buildings) {
+                byByBuildingSchedule.put(building, sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(building, performance, time, endTime));
+            }
+            result.put(time, byByBuildingSchedule);
+        }
+        return result;
+    }
+
+    @Override
+    @Transactional
+    public Performance findByIdFullLoad(int id) {
+        Performance performance = performanceRepository.findById(id).orElse(new Performance());
+        performance.getCategories().size();
+        performance.getPreviews().size();
         return performance;
     }
 

@@ -9,7 +9,7 @@ public class Preview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "image")
+    @Column(name = "image", length = 1024*1024)
     private byte[] image;
 
     public int getId() {

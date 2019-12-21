@@ -74,6 +74,14 @@ public class Performance {
         this.categories = categories;
     }
 
+    public Set<Preview> getPreviews() {
+        return previews;
+    }
+
+    public void setPreviews(Set<Preview> previews) {
+        this.previews = previews;
+    }
+
     public Set<Session> getSessions() {
         return sessions;
     }
