@@ -31,6 +31,17 @@ public class Performance {
     @Column(name = "date")
     private Date date;
 
+    @Column(name ="restriction")
+    private String restriction;
+
+    public String getRestriction() {
+        return restriction;
+    }
+
+    public void setRestriction(String restriction) {
+        this.restriction = restriction;
+    }
+
     @Column(name = "categories")
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "polygon.categories_performances")

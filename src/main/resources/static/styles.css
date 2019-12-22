@@ -1,7 +1,7 @@
 :root
 {
 --white: #eee;
---dkgray: #111;
+--agray: #111;
 --orange: #ff9900;
 background-color: #111;
 font-family: Roboto;
@@ -77,6 +77,8 @@ font-family: Roboto;
 .etext {
     text-decoration: none;
     max-width: fit-content;
+    margin: 0px;
+    padding: 2px;
 }
 .header .wrapper .upper_line .enter:hover {
     background: #555;
@@ -91,7 +93,7 @@ font-family: Roboto;
 }
 .header .wrapper .bottom_line {
     overflow-x: auto;
-    margin: 8px -20px 0 -20px;
+    margin: 8px -20px 0 -10px;
 }
 .header .wrapper .bottom_line .menu {
     min-width: 700px;
@@ -142,6 +144,7 @@ font-family: Roboto;
 .upper_line .geo .cities .list {
     column-count: 5;
     max-width: 950px;
+    list-style-type: none;
 }
 .b-popup .b-popup-content li {
     display: block;
@@ -210,12 +213,12 @@ font-family: Roboto;
     display: inline-block;
     vertical-align: top;
     text-decoration: none;
-    transition: color .3s;
+    transition: .1s;
     min-height: 100px;
 }
 .main_container .tabs_container .tabs_scroller .last_tablet:hover {
-    color: #5faf69;
-    background: #666666;
+    color: #111;
+    background: orange;
 }
 .main_container .tabs_container .tabs_scroller .last_tablet .roboto_text {
     margin: 0px;
@@ -247,7 +250,7 @@ font-family: Roboto;
     margin: 0px;
     margin-left: 12px;
     white-space: nowrap;
-    
+    padding: 5px;
     font-size: 18px;
     font-weight: 500;
     line-height: 1.33;
@@ -257,6 +260,7 @@ font-family: Roboto;
 }
 .geo a:hover{
     color: white;
+    background: #555;
 }
 .geo .list a{
     color: #555;
@@ -407,34 +411,38 @@ font-family: Roboto;
     padding: 10px;
 }
 .session_tab {
-    background: white;
+    background: orange;
     color: #222;
     margin: 2px;
     text-decoration: none;
     box-shadow: 0 3px rgba(0,0,0,0.5);
-    transition: background .3s color .3s;
+    width: fit-content;
+    min-width: 56px;
+    margin-top: 5px;
+    padding: 2px;
+    transition: background .3s, color .3s;
 }
 .session_tab:hover {
-    background: #dkgray;
-    color: #white;
+    background: #111;
+    color: white;
 }
 .session_tab a {
     text-decoration: none;
-    
     font-size: 18px;
     color: inherit;
 }
 .performance {
-    background: #555;
+    background: white;
     margin-bottom: 10px;
     text-decoration: none;
-    
+    padding: 5px;
     font-size: 18px;
     color: white;
 }
 .performance p {
     padding: none;
     margin: 5px;
+    color: #111;
 }
 .seats_rows {
     margin: auto;
@@ -452,8 +460,12 @@ font-family: Roboto;
     margin: 2px;
     border-radius: 5px;
     border-style: solid;
-    
+    height: fit-content;
     width: fit-content;
+    transition: .2s
+}
+.tag:hover {
+    border-color: orange;
 }
 .description {
     color: #333;
@@ -508,8 +520,7 @@ font-family: Roboto;
 }
 .price {
     padding 5px;
-    color: dkgray;
-    
+    color: #111;
 }
 .buyPopup {
     display: block;
@@ -548,7 +559,8 @@ font-family: Roboto;
 .ico {
     display: inline-block;
         width: fit-content;
-    }
+        text-decoration: none;
+
 }
 .tagsContainer {
         display: inline-block;
@@ -597,6 +609,7 @@ font-family: Roboto;
 }
 .bottom {
     display: inline-flex;
+    display: inline-flex;
     perspective: 1000px;
 }
 .screen {
@@ -617,4 +630,62 @@ font-family: Roboto;
     font-size: 100px;
     text-decoration: none;
     color: white;
+}
+.performanceCard {
+    display: inline-flex;
+    padding: 10px;
+}
+.performanceRightContainer {
+    display: grid;
+    padding: 10px;
+}
+.poster {
+
+}
+.performanceDescription {
+    display: inline-flex;
+    color: white;
+    max-width: 512px;
+}
+.perfMainContainer {
+    margin-top: 105px;
+    display: grid;
+}
+.posterContainer {
+
+}
+
+.imdbContainer {
+    position: relative;
+    top: 32px;
+    background: orange;
+    width: fit-content;
+    padding-right: 5px;
+    border-radius: 0px 5px 5px 0px;
+}
+.previewTab {
+    display: -webkit-box;
+    overflow-x: auto;
+    padding: 10px;
+}
+.performancesTabs {
+    min-height: 800px;
+}
+.buildingsTabs {
+    display: -webkit-box;
+    overflow-x: auto;
+}
+.buildingTab {
+    border-right: darkgray;
+    border-right-style: outset;
+    margin: 5px;
+}
+.performanceDate {
+    font-size: 25px;
+}
+.enterButton {
+    text-decoration: none;
+}
+.simpleBody {
+    margin: none;
 }

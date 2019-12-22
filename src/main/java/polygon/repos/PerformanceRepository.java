@@ -23,4 +23,7 @@ public interface PerformanceRepository extends JpaRepository<Performance, Intege
 
     @Query("select p from Performance p where p.date <= :date")
     List<Performance> findAllPresent(@Param("date") Date date);
+
+    @Query("select p from Performance p join p.sessions s join s.room r join r.building b where r.type = 'IMAX' and p.date <= :date and b.city = :city group by p.id ")
+    List<Performance> findIMAX(@Param("date") Date date, City city);
 }

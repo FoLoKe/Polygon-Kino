@@ -48,24 +48,41 @@ public class PerformanceServiceImpl implements PerformanceService {
     private SessionRepository sessionRepository;
 
     @Override
+    @Transactional
     public Map<Timestamp, Map<Building, List<Session>>> getSchedule(Performance performance, City city) {
         Date utilDate = new Date();
         Calendar ac = Calendar.getInstance();
         ac.setTime(utilDate);
+        ac.add(Calendar.HOUR, - utilDate.getHours());
+        ac.add(Calendar.MINUTE, - utilDate.getMinutes());
+        ac.add(Calendar.SECOND, - utilDate.getSeconds());
         Timestamp time = new Timestamp(ac.getTime().getTime());
-        Map<Timestamp, Map<Building, List<Session>>> result = new HashMap<>();
+        Map<Timestamp, Map<Building, List<Session>>> result = new LinkedHashMap<>();
         List<Building> buildings = buildingRepository.allByCity(city);
-        for (int i = 0; i < 14; i++, ac.add(Calendar.DATE, 1), time.setTime(ac.getTime().getTime())) {
-            Map<Building, List<Session>> byByBuildingSchedule = new HashMap<>();
+        for (int i = 0; i < 14; i++) {
+            Map<Building, List<Session>> byByBuildingSchedule = new LinkedHashMap<>();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(time);
-            calendar.add(Calendar.HOUR, 23);
-            calendar.add(Calendar.MINUTE, 59);
+            calendar.add(Calendar.DATE, 1);
             Timestamp endTime = new Timestamp(calendar.getTime().getTime());
             for (Building building : buildings) {
-                byByBuildingSchedule.put(building, sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(building, performance, time, endTime));
+                List<Session> sessions = sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(building, performance, time, endTime);
+                if(sessions.size() == 0)
+                    break;
+                for(Session s: sessions) {
+                    Hibernate.initialize(s);
+                    Room room = s.getRoom();
+                    if (room instanceof HibernateProxy) {
+                        room = (Room) ((HibernateProxy) room).getHibernateLazyInitializer()
+                                .getImplementation();
+                    }
+                }
+                byByBuildingSchedule.put(building, sessions);
             }
+            if(byByBuildingSchedule.size() == 0)
+                break;
             result.put(time, byByBuildingSchedule);
+            time = endTime;
         }
         return result;
     }
@@ -116,24 +133,28 @@ public class PerformanceServiceImpl implements PerformanceService {
     public List<Performance> activeIMAXPerformances(City city) {
         java.util.Date utilDate = new java.util.Date(System.currentTimeMillis());
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        List<Performance> performances = performanceRepository.findAllActivePerformances(sqlDate, city);
-        List<Performance> imax=new ArrayList<>();
+        List<Performance> performances = performanceRepository.findIMAX(sqlDate, city);
         for (Performance p: performances) {
-            p.getSessions().size();
             p.getCategories().size();
-            for (Session s: p.getSessions()) {
-                Room r = s.getRoom();
-                Hibernate.initialize(r);
-                if (r instanceof HibernateProxy) {
-                    r = (Room) ((HibernateProxy) r).getHibernateLazyInitializer()
-                            .getImplementation();
-                }
-                if (r.getType().equals("IMAX")) {
-                    imax.add(p);
-                }
-            }
         }
-        return imax;
+
+//        List<Performance> imax=new ArrayList<>();
+//        for (Performance p: performances) {
+////            p.getSessions().size();
+////            p.getCategories().size();
+//            for (Session s: p.getSessions()) {
+//                Room r = s.getRoom();
+//                Hibernate.initialize(r);
+//                if (r instanceof HibernateProxy) {
+//                    r = (Room) ((HibernateProxy) r).getHibernateLazyInitializer()
+//                            .getImplementation();
+//                }
+//                if (r.getType().equals("IMAX")) {
+//                    imax.add(p);
+//                }
+//            }
+//        }
+        return performances;
     }
 
     @Override

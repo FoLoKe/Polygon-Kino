@@ -6,7 +6,7 @@ INSERT INTO polygon.buildings(city_id, type, address) values (2,'ТЦ', 'Кол�
 INSERT INTO polygon.buildings(city_id, type, address) values (2,'Кинотеатр', 'Вишневая д5');
 INSERT INTO polygon.buildings(city_id, type, address) values (1,'ТЦ', 'Корзинкина д1');
 INSERT INTO polygon.buildings(city_id, type, address) values (1,'Молл', 'Малиновая к1224б');
-insert into polygon.performances(name, date, description, poster, imdbRating, trailerLink) values('Джуманджи: Зов джунглей', '2018-03-08', 'Сиквел суперуспешного блокбастера «Джуманджи: Зов джунглей» о приключениях четверых друзей внутри загадочной и таящей опасности игры.', FILE_READ('src/main/resources/images/1.jpg'), 'tt7975244', 'https://www.youtube.com/embed/J_bMArMJ-f8');
+insert into polygon.performances(name, date, description, poster, imdbRating, trailerLink, restriction) values('Джуманджи: Зов джунглей', '2018-03-08', 'Сиквел суперуспешного блокбастера «Джуманджи: Зов джунглей» о приключениях четверых друзей внутри загадочной и таящей опасности игры.', FILE_READ('src/main/resources/images/1.jpg'), 'tt7975244', 'https://www.youtube.com/embed/J_bMArMJ-f8','18+');
 insert into polygon.performances(name, date, description, poster) values('Достать ножи', '2019-12-1', 'Признанный сценарист и режиссер Райан Джонсон отдает дань уважения детективному гению Агаты Кристи в фильме "Достать ножи", современной истории об убийстве, в которой под подозрением – каждый. ', FILE_READ('src/main/resources/images/2.jpg'));
 insert into polygon.performances(name, date, description, poster) values('Рождество на двоих', '2019-03-14', 'Я обещаю в следующем году: Не влипать в истории. Торжественно завершить карьеру эльфа. Стать суперзвездой, стать певицей, выступать на сцене. Наладить отношения с сестрой. Стать хорошей дочерью. Завязать с вредными привычками.Завязать с мыслями о вредных привычках. Познакомиться с нормальным парнем', FILE_READ('src/main/resources/images/3.jpg'));
 insert into polygon.performances(name, date, description, poster) values('Ржев', '2019-12-2', 'Красная Армия после нескольких месяцев ожесточенных боев, наконец-то выбивает врага из села Овсянниково, что стоит огромных потерь — от роты остается всего треть личного состава. Измотанные до предела бойцы ждут подкрепления…', FILE_READ('src/main/resources/images/4.jpg'));
@@ -92,12 +92,12 @@ insert into polygon.categories_performances(categories_id, performance_id) value
 insert into polygon.categories_performances(categories_id, performance_id) values (9,18);
 
 
-insert into polygon.rooms(building_id, type, number) values (1, 'simple', 1);
-insert into polygon.rooms(building_id, type, number) values (2, 'simple', 1);
+insert into polygon.rooms(building_id, type, number) values (1, '2D', 1);
+insert into polygon.rooms(building_id, type, number) values (2, '3D', 1);
 insert into polygon.rooms(building_id, type, number) values (3, 'IMAX', 1);
 insert into polygon.rooms(building_id, type, number) values (4, 'IMAX', 1);
-insert into polygon.rooms(building_id, type, number) values (4, 'simple', 1);
-insert into polygon.rooms(building_id, type, number) values (5, 'simple', 2);
+insert into polygon.rooms(building_id, type, number) values (4, '3D', 1);
+insert into polygon.rooms(building_id, type, number) values (5, '2D', 2);
 
 -- 1-ый зал (обычный)
 

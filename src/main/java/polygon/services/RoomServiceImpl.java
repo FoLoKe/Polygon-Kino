@@ -18,8 +18,17 @@ public class RoomServiceImpl implements RoomService {
     private RoomRepository roomRepository;
 
     @Override
+    @Transactional
     public List<Room> allCities() {
-        return roomRepository.findAll();
+        List<Room> rooms = roomRepository.findAll();
+        for(Room room : rooms) {
+            room.getSeatsRows().size();
+            Set<SeatsRow> seatsRows = room.getSeatsRows();
+            for (SeatsRow sr : seatsRows) {
+                sr.getSeats().size();
+            }
+        }
+        return rooms;
     }
 
     @Override

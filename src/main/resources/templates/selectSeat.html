@@ -43,9 +43,11 @@
         <div class="buyPopup" id="buyPopup">
             <form class = "infoForm" id = "infoForm" th:object="${purchaseInfo}" method="POST">
                 <div class="element"><label> Телефон: <input type="text" th:field="*{tel}"/> </label></div>
-                <div class="element"><label> Email: <input type="text" th:field="*{email}"/> </label></div>
+                <div class="element"><label> Email: <input type="text" th:value = "${email}" id = "email" name ="email"/> </label></div>
                 <div class="element"><a class="confirmButton" href = # id = "confirmBuy">Купить</a></div>
-                <div class="element" sec:authorize = "isAuthenticated()"><a class="confirmButton" href="#" id = "confirmBalance" >Купить за баллы</a></div>
+                <div class="element" sec:authorize = "isAuthenticated()"><a class="confirmButton" href="#" id = "confirmBalance" >Купить за баллы</a>
+                    <p class="etext" th:text="${balance}"></p>
+                </div>
                 <div class="element"><a class="confirmButton" href="javascript:PopUpSwitch()" id = "rejectBuy">Закрыть</a></div>
             </form>
         </div>

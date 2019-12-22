@@ -8,43 +8,58 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
 </head>
-<body>
+<body class="simpleBody">
     <div th:insert = "~{header :: head}"></div>
-    <div class="main_container">
+    <div class= "perfMainContainer">
         <p  class = "caption" th:text = ${perf.name}></p>
-        <div>
-            <img th:src="*{'/img/' + perf.id}">
-        </div>
-        <iframe width="560" height="315" th:src="*{perf.trailerLink}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <div th:each="preview : ${perf.previews}">
-            <img th:src="*{'/preview/' + preview.id}">
-        </div>
-        <p  class = "roboto_text" th:text = ${perf.description}></p>
-        <div class = "tag" th:each = "tag : ${perf.categories}" th:text="${tag.name}">
+        <div class = "performanceCard">
+            <div class = "posterContainer">
+                <div class = "imdbContainer">
+                    <span class="imdbRatingPlugin" data-user="ur111314988" th:data-title=${perf.imdbRating} data-style="p4">
+                        <a href="https://www.imdb.com/title/tt0076759/?ref_=plg_rt_1"><img src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/images/imdb_31x14.png">
+                        </a>
+                    </span>
+                </div>
+                <script>(function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");</script>
 
+                <img class="poster" th:src="*{'/img/' + perf.id}">
+            </div>
+            <div class = "performanceRightContainer">
+                <p  class = "performanceDescription" th:text = ${perf.restriction}></p>
+                <p  class = "performanceDescription" th:text = ${perf.description}></p>
+                <p  class = "performanceDescription" th:text = ${perf.date}></p>
+                <div class = "tag" th:each = "tag : ${perf.categories}" th:text="${tag.name}">
+            </div>
+            </div>
+        </div>
+        <div class = "previewTab">
+            <iframe width="560" height="315" th:src="*{perf.trailerLink}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div th:each = "preview : ${perf.previews}">
+                <img th:src="*{'/preview/' + preview.id}">
+            </div>
         </div>
     </div>
-    <span class="imdbRatingPlugin" data-user="ur111314988" th:data-title=${perf.imdbRating} data-style="p4"><a href="https://www.imdb.com/title/tt0076759/?ref_=plg_rt_1"><img src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/images/imdb_31x14.png">
-    </a></span><script>(function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");</script>
-        <div class="calendar">
-        <form class="calendarForm" th:attr = "action=@{/performance(id = ${perf.id})}" method = "post">
-            Выберите дату:
-            <input class="calendarCalendar" type="date" name="day" th:value="${day}"  >
-            <input class="calendarButton" type="submit" value="Выбрать">
-        </form>
-    </div>
-    <div class = "performance" th:each = "instance : ${sessions_by_buildings}">
-        <p th:text = "${instance.key.address + ' ' + instance.key.type}">
+    <div class = "performancesTabs">
+        <p class = "caption"> Сеансы </p>
+    <div class = "performance" th:each = "entry : ${schedule}">
+        <center>
+        <p class = "performanceDate" th:text="${#dates.format(entry.key, 'dd-MMM-yyyy')}">
 
         </p>
-        <div class ="sessions">
-        <div class = "session_tab" th:each = "s : ${instance.value}">
-            <a th:text = "${s.getSimpleTime()}" th:href="@{/selectSeat(id = ${s.id})}">
 
-            </a>
+        <div class="buildingsTabs">
+        <div class = "buildingTab" th:each = "building : ${entry.value}">
+            <p th:text = "${building.key.address}">
+            <div class = "session_tab" th:each = "s : ${building.value}" th:href="@{/selectSeat(id = ${s.id})}">
+                <a th:text = "${s.getSimpleTime()}  + ' ' + ${s.room.type}" th:href="@{/selectSeat(id = ${s.id})}">
+
+                </a>
+            </div>
         </div>
         </div>
+        </center>
+
     </div>
-
+    </div>
 </body>
 </html>

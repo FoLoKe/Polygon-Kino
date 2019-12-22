@@ -47,8 +47,25 @@ public class SelectionController {
             Set<SeatsRow> rows = room.getSeatsRows();
             Set<Ticket> tickets = session.getTickets();
 
-            modelAndView.addObject("email", "");
+            String email = "";
+            int balance = 0;
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = null;
+            String username;
+            if (principal instanceof UserDetails) {
+                username = ((UserDetails)principal).getUsername();
+            } else {
+                username = principal.toString();
+            }
 
+            if(username != null && !username.isEmpty() && !(username.equals("anonymousUser"))) {
+                user = polygonUserDetailsService.getUserByUsername(username);
+                email = user.getEmail();
+                balance = user.getBalance();
+            }
+
+            modelAndView.addObject("email", email);
+            modelAndView.addObject("balance", balance);
             List<Map<Seat, Ticket>> mapArrayList = new LinkedList<>();
             for (SeatsRow sr : rows) {
                 Map<Seat, Ticket> map = new LinkedHashMap<>();
