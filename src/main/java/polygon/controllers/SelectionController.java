@@ -36,10 +36,15 @@ public class SelectionController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("purchaseInfo", new PurchaseInfo());
         try {
+            modelAndView.setViewName("selectSeat");
+
             Session session = sessionService.findById(id);
             modelAndView.addObject("ssession", session);
 
-            modelAndView.setViewName("selectSeat");
+            Set<Preview> previews = session.getPerformance().getPreviews();
+            int previewId = ((Preview)session.getPerformance().getPreviews().toArray()[0]).getId();
+            modelAndView.addObject("imgId", previewId);
+
             Room room = roomService.findBySessions(session);
             Set<SeatsRow> rows = room.getSeatsRows();
             Set<Ticket> tickets = session.getTickets();

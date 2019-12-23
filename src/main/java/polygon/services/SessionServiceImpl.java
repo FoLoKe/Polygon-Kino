@@ -1,5 +1,7 @@
 package polygon.services;
 
+import org.hibernate.Hibernate;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +12,10 @@ import polygon.repos.SessionRepository;
 import polygon.repos.TicketRepository;
 
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.Calendar;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class SessionServiceImpl implements SessionService {
@@ -63,27 +68,38 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Map<Timestamp,Map<Performance, List<Session>>> findSessionsInBuilding(Building building) {
-        Timestamp time = new Timestamp(new Date().getTime());
-
+    @Transactional
+    public Map<Performance, List<Session>> findSessionsInBuilding(Building building, Timestamp time) {
         Calendar c = Calendar.getInstance();
-        c.set(time.getYear(), time.getMonth(), time.getDay());
-        Map<Timestamp,Map<Performance, List<Session>>> timestampMapMap = new LinkedHashMap<>();
-        for (int i=1; i < 14; i++) {
-            c.setTime(time);
-            c.add(Calendar.DATE, 14);
-            Timestamp endTime = new Timestamp(c.getTime().getTime());
+        c.setTime(time);
+        c.set(Calendar.HOUR, 23);
+        c.set(Calendar.MINUTE, 59);
+        c.set(Calendar.MILLISECOND, 0);
+        c.add(Calendar.DATE, 1);
+        Timestamp endTime = new Timestamp(c.getTime().getTime());
 
-            Map<Performance, List<Session>> performanceSessionMap = new LinkedHashMap<>();
-            List<Performance> performances = performanceRepository.findAll();
-            for (Performance p : performances) {
-                performanceSessionMap.put(p, sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(building, p, time, endTime));
+        Map<Performance, List<Session>> timestampMap = new LinkedHashMap<>();
+
+        List<Performance> performances = performanceRepository.findAll();
+        for (Performance p : performances) {
+            p.getCategories().size();
+            List<Session> sessions = sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(building, p, time, endTime);
+            if (sessions.size() > 0) {
+                for (Session session : sessions) {
+                    Room room = session.getRoom();
+                    Hibernate.initialize(room);
+
+                    if (room instanceof HibernateProxy) {
+                        room = (Room) ((HibernateProxy) room).getHibernateLazyInitializer()
+                                .getImplementation();
+                    }
+                }
+
+                timestampMap.put(p, sessions);
             }
-
-            timestampMapMap.put(time, performanceSessionMap);
-            time=endTime;
         }
-        return timestampMapMap;
+
+        return timestampMap;
     }
 
     @Override
@@ -92,6 +108,14 @@ public class SessionServiceImpl implements SessionService {
         Session s = sessionRepository.findById(id).orElse(null);
         if(s != null) {
             s.getTickets().size();
+        }
+        Performance performance = s.getPerformance();
+        performance.getPreviews().size();
+
+        Hibernate.initialize(performance);
+        if (performance instanceof HibernateProxy) {
+            performance = (Performance) ((HibernateProxy) performance).getHibernateLazyInitializer()
+                    .getImplementation();
         }
         return s;
     }

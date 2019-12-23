@@ -61,7 +61,7 @@ public class HomeController {
         modelAndView.addObject("filmsList", films);
 
         List<Performance> premiers = new ArrayList<>();
-        List<Performance> tempPremiers = performanceService.premiers(city);
+        List<Performance> tempPremiers = performanceService.allPremiers();
         for (Performance film : tempPremiers) {
             premiers.add(film);
             if(premiers.size() >= 5)

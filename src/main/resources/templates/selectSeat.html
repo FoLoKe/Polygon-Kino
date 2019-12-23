@@ -10,26 +10,24 @@
         <script type="text/javascript" th:src="@{js/selection.js}" src = "js/selection.js"></script>
     </head>
     <body class="buyRoot">
+    <img class = "background" src="images/bg.jpg">
     <div class="buyBody">
         <div class = "buyHeader">
             <a class = "exitCross" th:href = "@{/performance(id = ${ssession.performance.id})}">&#10005;</a>
         </div>
         <div class = "buyFooter">
             <p class = "price" id="price">Цена</p>
-            <a id = buy href="javascript:PopUpSwitch()" class = "buyButton">
-                <p class = "buyCaption" th:text="Приобрести"></p>
-            </a>
-            <form class = "infoForm" id = "infoForm" th:object="${purchaseInfo}" method="POST">
-                <div class="element">
-                    <a class="confirmButton" href = # id = "confirmBuy">Купить</a>
-                </div>
+            <form class = "buyButton" id = "infoForm" th:object="${purchaseInfo}" method="POST">
+                    <a class="buyLink" href = # id = "confirmBuy">
+                        <p class = "buyCaption" th:text="Купить"></p>
+                    </a>
             </form>
         </div>
 
         <div class="room">
             <center>
             <div class="screen">
-                <img class="screenImage" th:src = "*{'/img/' + ssession.performance.id}">
+                <img class="screenImage" th:src = "*{'/preview/' + imgId}">
             </div>
             </center>
             <div class = "bottom">

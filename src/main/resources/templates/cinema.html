@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+>
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+</head>
+<body class="simpleBody">
+<div th:insert = "~{header :: head}">
+
+</div>
+
+    <div class= "perfMainContainer">
+        <p  class = "caption" th:text = "'Фильмы в ' + ${cinema.type} + ' ' + ${cinema.address}"></p>
+        <div class = "performanceCard" th:each = "entry : ${orderedPerformances}">
+            <div class = "posterContainer">
+                <a th:href = "'/performance?id=' + ${entry.key.id}">
+                    <img class="poster" th:src="*{'/img/' + entry.key.id}">
+                </a>
+            </div>
+            <div class = "performanceRightContainer">
+                <p  class = "performanceDescription" th:text = ${entry.key.restriction}></p>
+                <p  class = "performanceDescription" th:text = ${entry.key.description}></p>
+                <p  class = "performanceDescription" th:text = ${entry.key.date}></p>
+                <div class = "tag" th:each = "tag : ${entry.key.categories}" th:text="${tag.name}">
+                </div>
+            </div>
+            <a class = "session_tab" th:each = "s : ${entry.value}" th:href="@{/selectSeat(id = ${s.id})}">
+                <p th:text = "${s.getSimpleTime()}  + ' ' + ${s.room.type}">
+                </p>
+                <p th:text = "${s.price} + '₽'">
+
+                </p>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

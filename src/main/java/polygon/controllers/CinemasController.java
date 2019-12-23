@@ -17,6 +17,7 @@ import polygon.services.SessionService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -78,7 +79,7 @@ public class CinemasController
     public ModelAndView cinemaDetails(@RequestParam("id") int id, HttpServletRequest request,
                                    @CookieValue(value = "city", defaultValue = "1") int cityId) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("cinemas");
+        modelAndView.setViewName("cinema");
 
         List<City> cities;
         cities = cityService.allCities();
@@ -92,7 +93,10 @@ public class CinemasController
         Building cinema = buildingService.getById(id);
         modelAndView.addObject("cinema", cinema);
 
-        Map<Timestamp, Map<Performance,List<Session>>> sessions = sessionService.findSessionsInBuilding(cinema);
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+
+        Map<Performance,List<Session>> sessions = sessionService.findSessionsInBuilding(cinema, timestamp);
         modelAndView.addObject("orderedPerformances", sessions);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

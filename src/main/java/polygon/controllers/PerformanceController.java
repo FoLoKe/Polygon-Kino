@@ -125,6 +125,86 @@ public class PerformanceController {
             ac.add(Calendar.DATE, 1);
         }
 
+        List<Performance> sPerformances = performanceService.allPremiers();
+        for (Performance performance : sPerformances) {
+            Timestamp begin = new Timestamp(performance.getDate().getTime());
+            ac.setTime(begin);
+            for(int d = 0; d < 2; d++) {
+                ac.add(Calendar.HOUR, -time.getHours());
+                ac.add(Calendar.MINUTE, -time.getMinutes());
+                ac.add(Calendar.SECOND, -time.getSeconds());
+                ac.add(Calendar.HOUR, 6);
+
+                for (int m = 0; m < 5; m++) {
+                    time = new Timestamp(ac.getTime().getTime());
+                    for (Room room : rooms) {
+                        Session s = new Session();
+                        s.setTime(time);
+                        s.setPrice(250);
+
+                        s.setRoom(room);
+                        Set<Ticket> tickets = new LinkedHashSet<>();
+                        for (SeatsRow sr : room.getSeatsRows()) {
+                            for (Seat seat : sr.getSeats()) {
+                                if (seat.isSeat()) {
+                                    Ticket ticket = new Ticket();
+                                    ticket.setOccupied(false);
+                                    ticket.setSeat(seat);
+                                    ticket.setSession(s);
+                                    tickets.add(ticket);
+                                }
+                            }
+                        }
+
+                        s.setTickets(tickets);
+                        s.setPerformance(performance);
+                        sessionService.addSession(s);
+                    }
+                    ac.add(Calendar.MINUTE, 130);
+                }
+
+                ac.add(Calendar.DATE, 1);
+            }
+
+        }
+        for(int d = 0; d < 2; d++) {
+            ac.add(Calendar.HOUR, - time.getHours());
+            ac.add(Calendar.MINUTE, - time.getMinutes());
+            ac.add(Calendar.SECOND, - time.getSeconds());
+            ac.add(Calendar.HOUR, 6);
+
+            for (int m = 0; m < 5; m++) {
+                time = new Timestamp(ac.getTime().getTime());
+                for (Room room : rooms) {
+                    for (Performance p : sPerformances) {
+                        Session s = new Session();
+                        s.setTime(time);
+                        s.setPrice(250);
+
+                        s.setRoom(room);
+                        Set<Ticket> tickets = new LinkedHashSet<>();
+                        for (SeatsRow sr : room.getSeatsRows()) {
+                            for (Seat seat : sr.getSeats()) {
+                                if (seat.isSeat()) {
+                                    Ticket ticket = new Ticket();
+                                    ticket.setOccupied(false);
+                                    ticket.setSeat(seat);
+                                    ticket.setSession(s);
+                                    tickets.add(ticket);
+                                }
+                            }
+                        }
+
+                        s.setTickets(tickets);
+                        s.setPerformance(p);
+                        sessionService.addSession(s);
+                    }
+                }
+                ac.add(Calendar.MINUTE, 130);
+            }
+            ac.add(Calendar.DATE, 1);
+        }
+
         User user = new User();
         user.setUsername("FoLoKe");
         user.setPassword("1");

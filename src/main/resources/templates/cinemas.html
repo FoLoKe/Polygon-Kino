@@ -18,8 +18,8 @@
                 Кинотеатры
             </h1>
             <div class = "tabs_scroller">
-                <div class="last_tablet"  th:each="cinema : ${cinemasList}" >
-
+                <a class = "noDeco" th:each="cinema : ${cinemasList}" th:href = "'/cinema?id=' + ${cinema.id}">
+                <div class="last_tablet">
                     <p class = "roboto_text" th:text="${cinema.type}">
                     </p>
                     <p class = "roboto_text" th:text="${cinema.address}">
@@ -27,6 +27,7 @@
                     <p class = "roboto_text" th:text="${cinema.city.name}">
                     </p>
                 </div>
+                </a>
             </div>
         </div>
     </div>

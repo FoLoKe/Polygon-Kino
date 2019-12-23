@@ -6,7 +6,6 @@ import polygon.models.Performance;
 import polygon.models.Session;
 
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +14,7 @@ public interface PerformanceService {
 
     List<Performance> allPerformances();
     List<Performance> activePerformances(City city);
+    List<Performance> allPremiers();
     List<Performance> activeIMAXPerformances(City city);
     List<Performance> premiers(City city);
     List<Performance> allPresentPerformances();

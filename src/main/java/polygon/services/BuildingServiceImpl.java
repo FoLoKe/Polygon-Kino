@@ -36,12 +36,24 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
+    @Transactional
     public List<Building> allByCity(City city) {
-        return buildingRepository.findByCity(city);
+
+        List<Building> buildings = buildingRepository.findByCity(city);
+        for (Building b : buildings) {
+            City cityf = b.getCity();
+            Hibernate.initialize(cityf);
+
+            if (cityf instanceof HibernateProxy) {
+                cityf = (City) ((HibernateProxy) cityf).getHibernateLazyInitializer()
+                        .getImplementation();
+            }
+        }
+        return buildings;
     }
 
     @Override
     public Building getById(int id) {
-        return buildingRepository.getOne(id);
+        return buildingRepository.findById(id).orElse(null);
     }
 }

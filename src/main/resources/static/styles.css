@@ -366,12 +366,12 @@ font-family: Roboto;
     border: 1px solid #999;
     box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
     max-width: 128px;
-    max-height: 32px;
+    max-height: 40px;
+    min-height: 32px;
     color: #333;
     margin-left: auto;
     margin-right: 10px;
-    
-    padding: 5px;
+
     text-decoration: none;
     transition: color background .3s;
     min-height: 32px;
@@ -522,6 +522,7 @@ font-family: Roboto;
 .price {
     padding 5px;
     color: #111;
+    font-size: 20px;
 }
 .buyPopup {
     display: block;
@@ -544,10 +545,12 @@ font-family: Roboto;
     position: absolute;
     width: 100%;
     height: 100%;
+    overflow-x: hidden;
 }
 .buyCaption {
     margin: unset;
-    margin-top: 5px;
+    padding: 10px;
+    color: black;
 }
 .confirmButton {
     background: #666;
@@ -615,13 +618,14 @@ font-family: Roboto;
 }
 .screen {
         width: inherit;
-        max-width: inherit;
         max-height: 250px;
+        max-width: 600px;
 }
 .screenImage {
         width: -webkit-fill-available;
         height: inherit;
         max-height: inherit;
+        max-width: inherit;
 }
 .buyRoot{
     padding: 0;
@@ -702,4 +706,25 @@ font-family: Roboto;
     margin: auto;
     padding-right: 20px;
     padding-left: 20px;
+}
+.previewImage {
+    width: 560px;
+    height: 315px;
+}
+.noDeco {
+    text-decoration: none;
+}
+.buyLink{
+    text-decoration: none;
+}
+.background {
+    position: absolute;
+    width: 100%;
+    filter: blur(3px);
+    height: 100%;
+}
+.buyHeader {
+    margin-left: auto;
+    width: fit-content;
+    padding: 10px;
 }
