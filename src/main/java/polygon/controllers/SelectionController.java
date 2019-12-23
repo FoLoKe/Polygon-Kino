@@ -4,9 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,9 +67,16 @@ public class SelectionController {
             for (SeatsRow sr : rows) {
                 Map<Seat, Ticket> map = new LinkedHashMap<>();
                 for(Seat s : sr.getSeats()) {
+                    boolean found = false;
                     for(Ticket t : tickets) {
-                        if(t.getSeat().getId() == s.getId())
+                        if(t.getSeat().getId() == s.getId()) {
                             map.put(s, t);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        map.put(s, null);
                     }
 
                 }
@@ -95,12 +99,7 @@ public class SelectionController {
     }
 
     @RequestMapping(value = "/selectSeat", method = RequestMethod.POST)
-    public ModelAndView getPerformance(@RequestParam("byBalance") int byBalance,
-                                       @RequestParam("ticketsId") String sids,
-                                       @ModelAttribute("purchaseInfo") PurchaseInfo purchaseInfo,
-                                       @ModelAttribute("email") String email,
-                                       BindingResult result,
-                                       Model model)
+    public ModelAndView reserveTickets(@RequestParam("ticketsId") String sids)
     {
         int price = 0;
         String[] splitIds = sids.split(" ");
@@ -122,56 +121,12 @@ public class SelectionController {
             }
         }
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = null;
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
+        int transaction = ticketService.setTickets(ids);
+        if(transaction != -1) {
+            return new ModelAndView("redirect:/pay?id=" + transaction);
         } else {
-            username = principal.toString();
+            ticketService.rollbackTickets(ids);
         }
-
-        if(username != null && !username.isEmpty()) {
-           user = polygonUserDetailsService.getUserByUsername(username);
-        }
-
-            if(ticketService.setTickets(ids)) {
-                if (byBalance == 1) {
-                    {
-                        if(user!= null && user.getBalance() - price >=0) {
-                            user.setBalance(user.getBalance() - price);
-                            polygonUserDetailsService.saveUser(user);
-                        }
-                        else {
-                            ticketService.rollbackTickets(ids);
-                        }
-                    }
-                } else {
-                    ////API оплаты
-                    if(user != null) {
-                        user.setBalance(user.getBalance() + price / 10);
-                        polygonUserDetailsService.saveUser(user);
-                    }
-
-                    Ticket first = ticketService.loadTicket(ids.get(0));
-                    String emailText = "Спасибо за покупку!" +
-                            "\n Ваши билеты на: " + first.getSession().getPerformance().getName() +
-                            "\n Зал №: " + first.getSeat().getSeatsRow().getRoom().getNumber() +
-                            "\n По адресу: " + first.getSeat().getSeatsRow().getRoom().getBuilding().getAddress();
-
-                    for (int id : ids) {
-                        Ticket ticket = ticketService.loadTicket(id);
-                        emailText += "\n\nБилет №" + ticket.getId() +
-                                "\n Ряд: " + ticket.getSeat().getSeatsRow().getRow() +
-                                "\n Место: " + ticket.getSeat().getSeat();
-
-                    }
-
-                    emailService.sendSimpleMessage(email, "Ваши билеты",emailText);
-                }
-            } else {
-                ticketService.rollbackTickets(ids);
-            }
 
         return new ModelAndView("redirect:/confirmPage");
     }

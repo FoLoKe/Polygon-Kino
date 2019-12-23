@@ -29,7 +29,7 @@ window.onload = function () {
                     this.className = 'seat';
                 }
                 var b = document.querySelectorAll('.sseat');
-                price.textContent = (b.length)*this.attributes.ticketPrice.value;
+                price.textContent = "Цена: " + (b.length)*this.attributes.ticketPrice.value + "₽";
                 return false;
             }
         }
@@ -51,7 +51,7 @@ window.onload = function () {
                                     s += '%20';
                                 });
                                 //a.href = '/buy' + "?byBalance=0&" + s;
-                                form.action = '/selectSeat' + "?byBalance=0&" + s;
+                                form.action = '/selectSeat' + "?" + s;
                                 form.submit();
                            } else {
                                 alert('выбирете места');
@@ -62,30 +62,6 @@ window.onload = function () {
                             return false;
                       }
             }
-    var c = document.getElementById('confirmBalance');
-    if(c!=null) {
-            c.onclick = function() {
-                            var b = document.querySelectorAll('.sseat');
-                                  if(b.length <= 5) {
-                                       if(b.length >= 1) {
-                                            var s = 'ticketsId=';
-                                            [].forEach.call( b, function(el) {
-                                                s += el.attributes.ticket.value;
-                                                s += '%20';
-                                            });
-                                            //a.href = '/buy' + "?byBalance=0&" + s;
-                                            form.action = '/selectSeat' + "?byBalance=1&" + s;
-                                            form.submit();
-                                       } else {
-                                            alert('выбирете места');
-                                            return false;
-                                       }
-                                  } else {
-                                        alert('перестаньте читерить');
-                                        return false;
-                                  }
-               }
-    }
 }
 
 function PopUpSwitch(){

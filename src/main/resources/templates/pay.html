@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+<form th:action="'/charge?id=' + ${id} + '&byBalance=0'" method='POST' id='checkout-form'>
+    <input type='hidden' th:value='${amount}' name='amount' />
+    <h1>Price:<span th:text='${amount}' /></h1>
+    <script
+            src='https://checkout.stripe.com/checkout.js'
+            class='stripe-button'
+            th:attr='data-key=${stripePublicKey},
+         data-amount=${amount},data-email=${email}'
+            data-name='Stripe'
+            data-description='Оплата билетов'
+            data-locale='auto'
+            data-zip-code='false'>
+    </script>
+
+</form>
+<form th:action="'/charge?id=' + ${id} + '&byBalance=1'" method='POST' id='byBalance'>
+    <input type='hidden' th:value='${amount}' name='amount' />
+    <input type="submit" value="Купить за бонусы"/>
+        <p class="etext" th:text="${balance}"></p>
+</form>
+</body>
+</html>

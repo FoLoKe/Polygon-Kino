@@ -15,6 +15,9 @@ public class Seat {
     @Column(name = "seat")
     private int seat;
 
+    @Column
+    private boolean isSeat;
+
     @Column(name = "tickets")
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_id")
@@ -26,6 +29,14 @@ public class Seat {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isSeat() {
+        return isSeat;
+    }
+
+    public void setSeat(boolean seat) {
+        isSeat = seat;
     }
 
     public Set<Ticket> getTickets() {

@@ -105,11 +105,13 @@ public class PerformanceController {
                         Set<Ticket> tickets = new LinkedHashSet<>();
                         for (SeatsRow sr : room.getSeatsRows()) {
                             for (Seat seat : sr.getSeats()) {
-                                Ticket ticket = new Ticket();
-                                ticket.setOccupied(false);
-                                ticket.setSeat(seat);
-                                ticket.setSession(s);
-                                tickets.add(ticket);
+                                if (seat.isSeat()) {
+                                    Ticket ticket = new Ticket();
+                                    ticket.setOccupied(false);
+                                    ticket.setSeat(seat);
+                                    ticket.setSession(s);
+                                    tickets.add(ticket);
+                                }
                             }
                         }
 

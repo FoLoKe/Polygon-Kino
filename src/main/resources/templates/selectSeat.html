@@ -19,6 +19,11 @@
             <a id = buy href="javascript:PopUpSwitch()" class = "buyButton">
                 <p class = "buyCaption" th:text="Приобрести"></p>
             </a>
+            <form class = "infoForm" id = "infoForm" th:object="${purchaseInfo}" method="POST">
+                <div class="element">
+                    <a class="confirmButton" href = # id = "confirmBuy">Купить</a>
+                </div>
+            </form>
         </div>
 
         <div class="room">
@@ -28,23 +33,40 @@
             </div>
             </center>
             <div class = "bottom">
-                <div class="leftWall"></div>
                 <table class = "seats_rows">
-                    <tr class = "seats_row"  th:each = "srow : ${rowsList}">
-                        <td> <p th:text = "1"></p></td>
-                        <td  class = "seat" th:each = "instance : ${srow}" th:value= "${instance.value.occupied}" th:attr = "ticket = ${instance.value.id}" th:attrappend =  "ticketPrice = ${ssession.price}">
-                            <p th:text = "${instance.key.seat}"></p>
+                    <tr class = "seats_row"  th:each = "srow, iterStat : ${rowsList}">
+                        <td>
+                            <p th:text = ${iterStat.count} class = "rowNumber"></p>
+                        </td>
+                        <td class = "sseatsRow">
+                            <center class = "sseatsRow">
+                                <div th:each = "instance : ${srow}">
+                                    <center>
+                                        <div th:if="${instance.key.isSeat()}">
+                                        <div class = "seat" th:value= "${instance.value.occupied}" th:attr = "ticket = ${instance.value.id}" th:attrappend =  "ticketPrice = ${ssession.price}">
+                                            <p th:text = "${instance.key.seat}"></p>
+                                        </div>
+                                        </div>
+                                        <div th:if="${not instance.key.isSeat()}">
+                                            <div class = "void">
+
+                                            </div>
+                                        </div>
+                                    </center>
+                                </div>
+                            </center>
+                        </td>
+                        <td>
+                            <p th:text = ${iterStat.count} class = "rowNumber"></p>
                         </td>
                     </tr>
                 </table>
-                <div class="rightWall"></div>
             </div>
         </div>
         <div class="buyPopup" id="buyPopup">
-            <form class = "infoForm" id = "infoForm" th:object="${purchaseInfo}" method="POST">
-                <div class="element"><label> Телефон: <input type="text" th:field="*{tel}"/> </label></div>
+            <form class = "infoForm" id = "infoForms" th:object="${purchaseInfo}" method="POST">
                 <div class="element"><label> Email: <input type="text" th:value = "${email}" id = "email" name ="email"/> </label></div>
-                <div class="element"><a class="confirmButton" href = # id = "confirmBuy">Купить</a></div>
+
                 <div class="element" sec:authorize = "isAuthenticated()"><a class="confirmButton" href="#" id = "confirmBalance" >Купить за баллы</a>
                     <p class="etext" th:text="${balance}"></p>
                 </div>

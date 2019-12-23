@@ -7,9 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.*;
 import polygon.repos.TicketRepository;
+import polygon.repos.TransactionRepository;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -18,21 +21,32 @@ public class TicketServiceImpl implements TicketService {
     @Autowired
     private TicketRepository ticketRepository;
 
+    @Autowired
+    private TransactionRepository transactionRepository;
+
     @Override
-    public boolean setTickets(List<Integer> ids) {
+    public int setTickets(List<Integer> ids) {
         List<Ticket> tickets = new ArrayList<>();
+        Set<Ticket> transaction = new LinkedHashSet<>();
         for (int id : ids) {
             Ticket ticket = ticketRepository.findById(id).orElse(null);
             if(ticket != null && !ticket.isOccupied()) {
                 ticket.setOccupied(true);
                 tickets.add(ticket);
+                transaction.add(ticket);
             } else {
-                return false;
+                return -1;
             }
         }
+        TicketsTransaction ticketsTransaction = new TicketsTransaction();
+        ticketsTransaction.setEnded(false);
+        ticketsTransaction.setTickets(transaction);
+        transactionRepository.save(ticketsTransaction);
+        transactionRepository.flush();
+
         ticketRepository.saveAll(tickets);
         ticketRepository.flush();
-        return true;
+        return ticketsTransaction.getId();
     }
 
     @Override

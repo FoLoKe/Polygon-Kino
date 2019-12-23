@@ -6,10 +6,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import polygon.models.Ticket;
-import polygon.repos.TicketRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +29,8 @@ public class TicketServiceImplTest {
         List<Integer> list = new ArrayList<Integer>();
         list.add(1);
         list.add(2);
-        boolean setTicketsWorks=ticketService.setTickets(list);
-        Assert.assertTrue(setTicketsWorks);
+        int setTicketsWorks=ticketService.setTickets(list);
+        Assert.assertNotEquals(-1,setTicketsWorks);
     }
 
     @Test
@@ -41,8 +39,8 @@ public class TicketServiceImplTest {
         List<Integer> list = new ArrayList<Integer>();
         list.add(13);
         list.add(14);
-        boolean setTicketsWorks = ticketService.setTickets(list);
-        Assert.assertFalse(setTicketsWorks);
+        int setTicketsWorks=ticketService.setTickets(list);
+        Assert.assertNotEquals(-1,setTicketsWorks);
     }
 
     @Test

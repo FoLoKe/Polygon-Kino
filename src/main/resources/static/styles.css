@@ -451,6 +451,7 @@ font-family: Roboto;
     display: flex;
     margin: auto;
     width: fit-content;
+    width: -webkit-fill-available;
     perspective: 500px;
 }
 .tag {
@@ -688,4 +689,17 @@ font-family: Roboto;
 }
 .simpleBody {
     margin: none;
+}
+.void {
+    min-width: 32px;
+    margin: 5px;
+}
+.rowNumber {
+    color: white;
+}
+.sseatsRow {
+    display: flex;
+    margin: auto;
+    padding-right: 20px;
+    padding-left: 20px;
 }
