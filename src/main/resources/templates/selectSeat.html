@@ -29,8 +29,7 @@
             <div class="screen">
                 <img class="screenImage" th:src = "*{'/preview/' + imgId}">
             </div>
-            </center>
-            <div class = "bottom">
+                <div class = "bottom">
                 <table class = "seats_rows">
                     <tr class = "seats_row"  th:each = "srow, iterStat : ${rowsList}">
                         <td>
@@ -60,6 +59,7 @@
                     </tr>
                 </table>
             </div>
+            </center>
         </div>
         <div class="buyPopup" id="buyPopup">
             <form class = "infoForm" id = "infoForms" th:object="${purchaseInfo}" method="POST">
