@@ -10,6 +10,38 @@
 </head>
 <body>
 <div th:fragment="head">
+    <div id="loginPopup">
+    <div class="noSize">
+        <div class = "userWindow">
+            <div class="login">
+
+                <form sec:authorize="isAnonymous()" th:action="@{/login}" method="post">
+                    <div><label> User Name : <input type="text" name="username"/> </label></div>
+                    <div><label> Password: <input type="password" name="password"/> </label></div>
+                    <center><div><input type="submit" value="Войти"/></div></center>
+                    <center><div><a class="regbutton" th:href="@{/registration}">Регистрация</a></div></center>
+
+                </form>
+
+                <form class ="logged" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+                    <div class="logged">
+                        <div class = "loggedInfo">
+                            <p class = "loggedName" th:text="${user.username}"></p>
+                            <p class = "loggedEmail" th:text="${user.email}"></p>
+                            <input type="submit" value="Sign Out"/>
+                        </div>
+                        <div class = "loggedBalance">
+                            <center>
+                            <p class = "balanceText"> Бонусные баллы</p>
+                            <p class = "balanceValue" th:text="${user.balance}"></p>
+                            </center>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
     <div class = "header">
         <div class = "wrapper">
             <div class = "upper_line">
@@ -44,23 +76,7 @@
                         </div>
                     </a>
 
-                    <div id="loginPopup">
-                        <div class="login">
 
-                            <form sec:authorize="isAnonymous()" th:action="@{/login}" method="post">
-                                <div><label> User Name : <input type="text" name="username"/> </label></div>
-                                <div><label> Password: <input type="password" name="password"/> </label></div>
-                                <center><div><input type="submit" value="Войти"/></div></center>
-                                <center><div><a class="regbutton" th:href="@{/registration}">Регистрация</a></div></center>
-
-                            </form>
-
-                            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-                                <p class = "etext" th:text="'Бонусные баллы: ' + ${userBalance}"></p>
-                                <div><input type="submit" value="Sign Out"/></div>
-                            </form>
-                        </div>
-                    </div>
                 </div>
 
 
@@ -75,7 +91,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>

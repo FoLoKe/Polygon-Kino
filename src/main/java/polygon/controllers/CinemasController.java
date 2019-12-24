@@ -108,14 +108,12 @@ public class CinemasController
             username = principal.toString();
         }
 
+        User user = null;
         if(username != null && !username.isEmpty()) {
-            User user = polygonUserDetailsService.getUserByUsername(username);
-            if(user!= null) {
-                userBalance = user.getBalance();
-            }
+            user = polygonUserDetailsService.getUserByUsername(username);
         }
-        modelAndView.addObject("userBalance", userBalance);
-
+        modelAndView.addObject("user", user);
+        
         return modelAndView;
     }
 }

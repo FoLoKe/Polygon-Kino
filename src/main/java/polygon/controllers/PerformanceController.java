@@ -1,6 +1,8 @@
 package polygon.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,6 +33,9 @@ public class PerformanceController {
     @Autowired
     private TicketService ticketService;
 
+    @Autowired
+    private PolygonUserDetailsService polygonUserDetailsService;
+
     @RequestMapping(value = "/performance", method = RequestMethod.GET)
     public ModelAndView getPerformance(@RequestParam("id") int id, @CookieValue(value = "city", defaultValue = "1") int cityId) {
         ModelAndView modelAndView = new ModelAndView();
@@ -55,6 +60,21 @@ public class PerformanceController {
         List<City> cities;
         cities = cityService.allCities();
         modelAndView.addObject("citiesList", cities);
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int userBalance = 0;
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        User user = null;
+        if(username != null && !username.isEmpty()) {
+            user = polygonUserDetailsService.getUserByUsername(username);
+        }
+        modelAndView.addObject("user", user);
 
         return modelAndView;
     }
