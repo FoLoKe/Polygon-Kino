@@ -37,13 +37,19 @@ public class RoomServiceImplTest {
 
     @Test
     public void findBySessions() {
+//        Set<Ticket> tickets=new HashSet<Ticket>();
+//        Timestamp timestamp = Timestamp.valueOf("2019-12-19 10:30:00");
+//        session.setPrice(100);
+//        session.setTime(timestamp);
+//        session.setTickets(tickets);
         Session session = new Session();
-        Room expected=roomService.findBySessions(session);
-        Assert.assertNotNull(expected);
-//        Mockito.verify(roomRepository,Mockito.times(1)).findBySessions(session);
-//        Assert.assertEquals(2,expected.size());
-//        Room room = roomService.findBySessions(session);
-//        Assert.assertNotNull(room);
-//        Assert.assertEquals(7,room.getSeatsRows().size());
+        Room room = new Room();
+        roomService.findBySessions(session);
+//        RoomService serviceMock = mock(RoomService.class);
+//        Mockito.when(serviceMock.findBySessions(session)).thenReturn(room);
+
+        Assert.assertNotNull(room);
+        Mockito.verify(roomRepository,Mockito.times(1)).findBySessions(session);
+
     }
 }
