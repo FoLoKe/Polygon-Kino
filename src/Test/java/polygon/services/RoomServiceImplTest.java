@@ -14,8 +14,6 @@ import polygon.models.Session;
 import polygon.repos.RoomRepository;
 
 import java.util.List;
-
-import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -24,9 +22,9 @@ public class RoomServiceImplTest {
 
     @Autowired
     private RoomService roomService;
-
-//    @MockBean
-//    private RoomRepository roomRepository;
+    
+    @MockBean
+    private RoomRepository roomRepository;
 
     @Test
     public void allCities() {
