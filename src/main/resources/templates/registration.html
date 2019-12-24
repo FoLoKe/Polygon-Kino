@@ -1,6 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="https://www.thymeleaf.org"
->
+      xmlns:th="https://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
@@ -8,40 +7,36 @@
     <script type="text/javascript" th:src="@{js/cpsw.js}" src="js/cpsw.js"></script>
 </head>
 <body>
-<center>
-    <div class = "regpage">
-
-<form class = "regform" id = "reg" action="/registration" th:object="${user}" method="POST" enctype="utf8">
-    <p class="regcaption">Регистрация</p>
-    <div class="regelem">
-        <label>Имя пользователя</label>
-        <p th:each="error: ${#fields.errors('username')}"
-           th:text="${error}">Validation error</p>
-        <input th:field="*{username}"/>
-
-    </div>
-    <div class="regelem">
-        <label>Почта</label>
-        <p th:each="error : ${#fields.errors('email')}"
-           th:text="${error}">Validation error</p>
-        <input type="email" th:field="*{email}"/>
-
-    </div>
-    <div class="regelem">
-        <label>Пароль</label>
-        <p th:each="error : ${#fields.errors('password')}"
-           th:text="${error}">Validation error</p>
-        <input type="password" id = "psw" th:field="*{password}"/>
-
-    </div>
-    <div class="regelem">
-        <label>Повторите пароль</label>
-        <p id = "cpswErr">Пароли не совпадают</p>
-        <input id = "cpsw" type="password"/>
-    </div>
-    <a class="regbutton" href="javascript:check()">Зарегистрироваться</a>
-</form>
-    </div>
-</center>
+    <center>
+        <div class = "regpage">
+            <form class = "regform" id = "reg" action="/registration" th:object="${user}" method="POST" enctype="utf8">
+                <p class="regcaption">Регистрация</p>
+                <div class="regelem">
+                    <label>Имя пользователя</label>
+                    <p th:each="error: ${#fields.errors('username')}"
+                        th:text="${error}">Validation error</p>
+                    <input th:field="*{username}"/>
+                </div>
+                <div class="regelem">
+                    <label>Почта</label>
+                    <p th:each="error : ${#fields.errors('email')}"
+                        th:text="${error}">Validation error</p>
+                    <input type="email" th:field="*{email}"/>
+                </div>
+                <div class="regelem">
+                    <label>Пароль</label>
+                    <p th:each="error : ${#fields.errors('password')}"
+                        th:text="${error}">Validation error</p>
+                    <input type="password" id = "psw" th:field="*{password}"/>
+                </div>
+                <div class="regelem">
+                    <label>Повторите пароль</label>
+                    <p id = "cpswErr">Пароли не совпадают</p>
+                    <input id = "cpsw" type="password"/>
+                </div>
+                <a class="regbutton" href="javascript:check()">Зарегистрироваться</a>
+            </form>
+        </div>
+    </center>
 </body>
 </html>
