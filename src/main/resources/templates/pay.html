@@ -1,27 +1,39 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{js/cpsw.js}" src="js/cpsw.js"></script>
 </head>
 <body>
-<form th:action="'/charge?id=' + ${id} + '&byBalance=0'" method='POST' id='checkout-form'>
-    <input type='hidden' th:value='${amount}' name='amount' />
-    <h1>Price:<span th:text='${amount}' /></h1>
-    <script
-            src='https://checkout.stripe.com/checkout.js'
-            class='stripe-button'
-            th:attr='data-key=${stripePublicKey},
-         data-amount=${amount},data-email=${email}'
-            data-name='Stripe'
-            data-description='Оплата билетов'
-            data-locale='auto'
-            data-zip-code='false'>
-    </script>
-
-</form>
-<form th:action="'/charge?id=' + ${id} + '&byBalance=1'" method='POST' id='byBalance'>
-    <input type='hidden' th:value='${amount}' name='amount' />
-    <input type="submit" value="Купить за бонусы"/>
-        <p class="etext" th:text="${balance}"></p>
-</form>
+<center>
+    <div class="regpsage">
+        <div class = "buyHeader">
+            <a class = "exitCross" href = "/">&#10005;</a>
+        </div>
+        <div class = "regform">
+            <form th:action="'/charge?id=' + ${id} + '&byBalance=0'" method='POST' id='checkout-form'>
+                <input type='hidden' th:value='${amount}' name='amount' />
+                <h1 class = "regcaption">Цена билетов: <span th:text="${amount} + 'Р'" /></h1>
+                <script
+                    src='https://checkout.stripe.com/checkout.js'
+                    class='stripe-button'
+                    th:attr='data-key=${stripePublicKey},
+                    data-amount=${amount},data-email=${email}'
+                    data-name='Stripe'
+                    data-description='Оплата билетов'
+                    data-locale='auto'
+                    data-zip-code='false'>
+                </script>
+            </form>
+            <form sec:authorize = "isAuthenticated()" th:action="'/charge?id=' + ${id} + '&byBalance=1'" method='POST' id='byBalance'>
+                <input type='hidden' th:value='${amount}' name='amount' />
+                <input type="submit" value="Купить за бонусы"/>
+                <p class="etext" th:text="${balance}"></p>
+            </form>
+        </div>
+    </div>
+</center>
 </body>
 </html>
