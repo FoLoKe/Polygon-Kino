@@ -26,7 +26,7 @@ public class PerformanceControllerTest {
     String performance;
     String geoCity;
     @Test
-    public void getPerformance() throws Exception {
+    public void connectionTest() throws Exception {
         this.mockMvc.perform(get("/performance?id=1"))
                 .andDo(print())
                 .andExpect(status().isOk())

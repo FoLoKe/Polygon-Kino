@@ -2,6 +2,7 @@ package polygon.controllers;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,18 +34,22 @@ public class SelectionControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Autowired
+    private SelectionController controller;
+
+    @Mock
     private RoomService roomService;
 
-    @MockBean
+    @Mock
     private SessionService sessionService;
 
-    @MockBean
+    @Mock
     private TicketService ticketService;
     Room room;
+
     @Test
     public void getPerformance() throws Exception {
-        this.mockMvc.perform(get("/selectSeat?id=1"))
+        this.mockMvc.perform(get("//selectSeat?id=1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("room",room));
@@ -52,7 +57,7 @@ public class SelectionControllerTest {
 
     @Test
     public void buyTickets() throws Exception {
-        this.mockMvc.perform(get("/buy?ticketsId=21%20"))
+        this.mockMvc.perform(get("//pay?id=2"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }

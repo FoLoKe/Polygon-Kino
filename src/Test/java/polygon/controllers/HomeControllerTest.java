@@ -2,6 +2,7 @@ package polygon.controllers;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -31,27 +32,20 @@ public class HomeControllerTest {
     @Autowired
     private HomeController controller;
 
-    @MockBean
+    @Mock
     private CityService cityService;
 
-//    @Test
-//    public void allCities() throws Exception {
-//        String geoCity = "Москва";
-//        this.mockMvc.perform(get("/"))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(content().string(containsString("КИНО УЖЕ СЕГОДНЯ")))
-////                .andExpect(model().size(3))
-//                .andExpect(model().attribute("geoCity",geoCity));
-//
-////        Mockito.verify(cityService,Mockito.times(1)).allCities();
-//    }
-
     @Test
-    public void RightAuthentificated() throws Exception {
+    public void connectionTest() throws Exception {
+        String geoCity = "Москва";
         this.mockMvc.perform(get("/"))
                 .andDo(print())
-                .andExpect(SecurityMockMvcResultMatchers.authenticated());
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("КИНО УЖЕ СЕГОДНЯ")))
+//                .andExpect(model().size(3))
+                .andExpect(model().attribute("geoCity",geoCity));
 
+//        Mockito.verify(cityService,Mockito.times(1)).allCities();
     }
+
 }

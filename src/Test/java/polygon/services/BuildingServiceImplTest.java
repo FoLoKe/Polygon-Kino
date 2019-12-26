@@ -36,7 +36,6 @@ public class BuildingServiceImplTest {
 
     @Test
     public void getById() {
-//        Building building;
         Object object;
         int id = 1;
         object=buildingService.getById(id);
