@@ -64,6 +64,7 @@ public class FilmsController
         modelAndView.addObject("tagsList", tags);
 
         List<Performance> films = new ArrayList<>();
+        Category selectedCategory = null;
 
         if(sids != null && !sids.isEmpty()) {
             String[] splitIds = sids.split(" ");
@@ -72,6 +73,7 @@ public class FilmsController
                 if (s != null && !s.isEmpty()) {
                     ids.add(Integer.parseInt(s));
                     films.addAll(performanceService.activePerformances(Integer.parseInt(s)));
+                    selectedCategory = categoryService.findById(Integer.parseInt(s));
                 }
             }
         } else {
@@ -80,7 +82,7 @@ public class FilmsController
 
         modelAndView.addObject("filmsList", films);
 
-        //modelAndView.addObject("linkAppend"," 2");
+        modelAndView.addObject("selectedCategory", selectedCategory);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userBalance = 0;

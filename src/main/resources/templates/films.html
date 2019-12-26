@@ -15,13 +15,20 @@
     <div class = "tabs_container">
         <div class = "tabs_list">
             <div class = "up_col">
-            <h1 class = "caption">
-                Фильмы
-            </h1>
+                <div th:if="${selectedCategory} == null">
+                    <h1 class = "caption">
+                        Все фильмы на сегодня в вашем городе
+                    </h1>
+                </div>
+                <div th:unless="${selectedCategory} == null">
+                    <h1 class = "caption" th:text="'Все фильмы в категории ' + ${selectedCategory.name}">
+
+                    </h1>
+                </div>
 
             </div>
             <div class="tagsContainer">
-                <div th:each="eTag : ${tagsList}">
+                <div class="blocks" th:each="eTag : ${tagsList}">
                 <a class="ico" th:href = "@{/films(cats = ${eTag.id})}" method="post">
                     <p class = "tag" th:text="${eTag.name}"></p>
                 </a>

@@ -108,7 +108,7 @@ public class PerformanceController {
 
         List<Performance> performances = performanceService.allPresentPerformances();
         List<Room> rooms = roomService.allCities();
-        for(int d = 0; d < 2; d++) {
+        for(int d = 0; d < 14; d++) {
             ac.add(Calendar.HOUR, - time.getHours());
             ac.add(Calendar.MINUTE, - time.getMinutes());
             ac.add(Calendar.SECOND, - time.getSeconds());
@@ -188,7 +188,7 @@ public class PerformanceController {
             }
 
         }
-        for(int d = 0; d < 2; d++) {
+        for(int d = 0; d < 14; d++) {
             ac.add(Calendar.HOUR, - time.getHours());
             ac.add(Calendar.MINUTE, - time.getMinutes());
             ac.add(Calendar.SECOND, - time.getSeconds());

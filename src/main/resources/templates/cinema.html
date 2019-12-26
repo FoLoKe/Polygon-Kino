@@ -14,7 +14,7 @@
 </div>
 
     <div class= "perfMainContainer">
-        <p  class = "caption" th:text = "'Фильмы в ' + ${cinema.type} + ' ' + ${cinema.address}"></p>
+        <p  class = "caption" th:text = "'Фильмы на ' + ${cinema.address}"></p>
         <div class = "performanceCard" th:each = "entry : ${orderedPerformances}">
             <div class = "posterContainer">
                 <a th:href = "'/performance?id=' + ${entry.key.id}">

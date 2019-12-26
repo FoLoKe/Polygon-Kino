@@ -40,7 +40,14 @@
         </div>
     </div>
     <div class = "performancesTabs">
+        <div th:if = "${schedule.size()}>0">
         <p class = "caption"> Сеансы </p>
+        </div>
+        <div th:unless = "${schedule.size()}>0">
+            <h1 class = "caption" th:text="'Нет запланированных сеансов'">
+
+            </h1>
+        </div>
     <div class = "performance" th:each = "entry : ${schedule}">
         <center>
         <p class = "performanceDate" th:text="${#dates.format(entry.key, 'dd-MMM-yyyy')}">

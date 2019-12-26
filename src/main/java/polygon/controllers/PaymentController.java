@@ -65,7 +65,7 @@ public class PaymentController {
 
         int price = 0;
         TicketsTransaction ticketsTransaction = transactionService.findById(id);
-        if (!ticketsTransaction.isEnded()) {
+        if (!ticketsTransaction.isEnded() && !ticketsTransaction.isTerminated()) {
             Set<Ticket> tickets = ticketsTransaction.getTickets();
             for (Ticket ticket : tickets) {
                 price += ticket.getSession().getPrice();
@@ -113,7 +113,7 @@ public class PaymentController {
         int price = 0;
         TicketsTransaction ticketsTransaction = transactionService.findById(id);
 
-        if (!ticketsTransaction.isEnded()) {
+        if (!ticketsTransaction.isEnded()  && !ticketsTransaction.isTerminated()) {
             for (Ticket ticket : ticketsTransaction.getTickets()) {
                 price += ticket.getSession().getPrice();
             }

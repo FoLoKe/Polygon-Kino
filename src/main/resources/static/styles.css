@@ -202,20 +202,43 @@ font-family: Roboto;
     text-decoration: none;
 }
 .main_container .tabs_container .tabs_scroller .last_tablet {
-    background: white;
-    border: 1px solid #999;
-    box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
-    max-width: 160px;
-    max-height: 540px;
-    width: 100%;
-    margin-top: 38px;
-    margin-right: 10px;
-    display: inline-block;
-    vertical-align: top;
-    text-decoration: none;
-    transition: .1s;
-    min-height: 100px;
-}
+     background: white;
+     border: 1px solid #999;
+     box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
+     max-width: 160px;
+     max-height: 540px;
+     width: 100%;
+     margin-top: 38px;
+     margin-right: 10px;
+     display: inline-block;
+     vertical-align: top;
+     text-decoration: none;
+     transition: .1s;
+     min-height: 100px;
+ }
+
+ .main_container .tabs_container .tabs_scroller .last_tablet_c {
+     background: white;
+     color: black;
+     border: 1px solid #999;
+     box-shadow: 0 4px 2px 0 rgba(0,0,0,0.4);
+     max-width: 200px;
+     max-height: 540px;
+     width: 100%;
+     margin-top: 38px;
+     margin-right: 10px;
+     display: inline-block;
+     vertical-align: top;
+     text-decoration: none;
+     transition: .1s;
+     min-height: 100px;
+     padding: 10px;
+     transition: .3s;
+ }
+ .main_container .tabs_container .tabs_scroller .last_tablet_c:hover {
+      background: orange;
+
+  }
 .main_container .tabs_container .tabs_scroller .last_tablet:hover {
     color: #111;
     background: orange;
@@ -232,6 +255,18 @@ font-family: Roboto;
     margin-left: 12px;
     white-space: nowrap;
     
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.33;
+    color: #333;
+    text-decoration: none;
+    transition: color .3s;
+}
+.main_container .tabs_container .tabs_scroller .last_tablet_c .roboto_text {
+    margin: 0px;
+    margin-left: 12px;
+    white-space: nowrap;
+
     font-size: 18px;
     font-weight: 500;
     line-height: 1.33;
@@ -290,7 +325,7 @@ font-family: Roboto;
 .caption {
     margin: 0px;
     margin-left: 12px;
-    white-space: nowrap;
+    white-space: normal;
     
     font-size: 60px;
     font-weight: 500;
@@ -793,4 +828,7 @@ font-family: Roboto;
 }
 .loginLogin {
     width: 100%;
+}
+.blocks {
+    display: inline-block;
 }

@@ -19,12 +19,15 @@
             </h1>
             <div class = "tabs_scroller">
                 <a class = "noDeco" th:each="cinema : ${cinemasList}" th:href = "'/cinema?id=' + ${cinema.id}">
-                <div class="last_tablet">
-                    <p class = "roboto_text" th:text="${cinema.type}">
+                <div class="last_tablet_c">
+                    <p class="roboto_text">
+                        Залы по адресу:
+                    </p>
+                    <p class = "roboto_text" th:text="${cinema.city.name}">
                     </p>
                     <p class = "roboto_text" th:text="${cinema.address}">
                     </p>
-                    <p class = "roboto_text" th:text="${cinema.city.name}">
+                    <p class = "roboto_text" th:text="'(' + ${cinema.type}+')'">
                     </p>
                 </div>
                 </a>
