@@ -403,7 +403,8 @@ font-family: Roboto;
     border-style: none;
     padding: 5px;
     margin-bottom: 5px;
-    
+    border-style: solid;
+    border-width: 0.5px;
     font-size: 15px;
     display: flex;
     background: white;
@@ -789,4 +790,7 @@ font-family: Roboto;
     font-weight: bold;
     font-family: Roboto;
     margin-bottom: 100%;
+}
+.loginLogin {
+    width: 100%;
 }

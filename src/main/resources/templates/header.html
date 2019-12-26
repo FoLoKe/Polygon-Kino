@@ -14,14 +14,15 @@
     <div class="noSize">
         <div class = "userWindow">
             <div class="login">
-
-                <form sec:authorize="isAnonymous()" th:action="@{/login}" method="post">
-                    <div><label> User Name : <input type="text" name="username"/> </label></div>
-                    <div><label> Password: <input type="password" name="password"/> </label></div>
+                <center sec:authorize="isAnonymous()" class = "loginLogin">
+                <form  th:action="@{/login}" method="post">
+                    <center><div><label> User Name : <input class = "loginLoginInput" type="text" name="username"/> </label></div></center>
+                    <center><div><label> Password: <input class = "loginLoginInput" type="password" name="password"/> </label></div></center>
                     <center><div><input type="submit" value="Войти"/></div></center>
                     <center><div><a class="regbutton" th:href="@{/registration}">Регистрация</a></div></center>
 
                 </form>
+                </center>
 
                 <form class ="logged" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
                     <div class="logged">
