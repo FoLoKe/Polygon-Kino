@@ -10,6 +10,7 @@ import polygon.repos.BuildingRepository;
 import polygon.repos.PerformanceRepository;
 import polygon.repos.SessionRepository;
 import polygon.repos.TicketRepository;
+import polygon.services.interfaces.SessionService;
 
 import java.sql.Timestamp;
 import java.util.Calendar;

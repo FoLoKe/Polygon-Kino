@@ -15,7 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 import polygon.models.Ticket;
 import polygon.models.TicketsTransaction;
 import polygon.models.User;
-import polygon.services.*;
+import polygon.services.EmailServiceImpl;
+import polygon.services.PolygonUserDetailsService;
+import polygon.services.StripeService;
+import polygon.services.TransactionServiceImpl;
+import polygon.services.interfaces.TicketService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedList;
@@ -24,21 +28,21 @@ import java.util.Set;
 
 @Controller
 public class PaymentController {
-    // Reading the value from the application.properties file
+
     @Value("${STRIPE_PUBLIC_KEY}")
     private String stripePublicKey;
 
     @Autowired
-    TicketService ticketService;
+    private TicketService ticketService;
 
     @Autowired
-    EmailServiceImpl emailService;
+    private EmailServiceImpl emailService;
 
     @Autowired
     private PolygonUserDetailsService polygonUserDetailsService;
 
     @Autowired
-    private TransactionService transactionService;
+    private TransactionServiceImpl transactionService;
 
     @RequestMapping("/pay")
     public String pay(@RequestParam("id") int id, Model model) {
@@ -61,20 +65,23 @@ public class PaymentController {
 
         int price = 0;
         TicketsTransaction ticketsTransaction = transactionService.findById(id);
-        Set<Ticket> tickets = ticketsTransaction.getTickets();
-        for (Ticket ticket : tickets) {
-            price += ticket.getSession().getPrice();
+        if (!ticketsTransaction.isEnded()) {
+            Set<Ticket> tickets = ticketsTransaction.getTickets();
+            for (Ticket ticket : tickets) {
+                price += ticket.getSession().getPrice();
+            }
+
+            model.addAttribute("email", email);
+            model.addAttribute("id", ticketsTransaction.getId());
+            model.addAttribute("tickets", tickets);
+            model.addAttribute("balance", balance);
+            model.addAttribute("amount", price);
+            model.addAttribute("stripePublicKey", stripePublicKey);
+
+
+            return "pay";
         }
-
-        model.addAttribute("email",email);
-        model.addAttribute("id", ticketsTransaction.getId());
-        model.addAttribute("tickets", tickets);
-        model.addAttribute("balance", balance);
-        model.addAttribute("amount", price);
-        model.addAttribute("stripePublicKey", stripePublicKey);
-
-
-        return "pay";
+        return "failPayment";
     }
 
     @Autowired
@@ -83,7 +90,7 @@ public class PaymentController {
     @RequestMapping(value = "/charge", method = RequestMethod.POST)
     public ModelAndView chargeCard(@RequestParam("id") int id, @RequestParam("byBalance") int byBalance, HttpServletRequest request) throws Exception {
         String token = request.getParameter("stripeToken");
-        Double amount = Double.parseDouble(request.getParameter("amount"));
+        double amount = Double.parseDouble(request.getParameter("amount"));
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("failPayment");
@@ -105,42 +112,45 @@ public class PaymentController {
 
         int price = 0;
         TicketsTransaction ticketsTransaction = transactionService.findById(id);
-        for (Ticket ticket : ticketsTransaction.getTickets()) {
-            price += ticket.getSession().getPrice();
-        }
 
-        if (byBalance == 1) {
-            {
-                if(user!= null && balance - price >=0) {
-                    user.setBalance(balance - price);
-                    polygonUserDetailsService.saveUser(user);
+        if (!ticketsTransaction.isEnded()) {
+            for (Ticket ticket : ticketsTransaction.getTickets()) {
+                price += ticket.getSession().getPrice();
+            }
+
+            if (byBalance == 1) {
+                {
+                    if (user != null && balance - price >= 0) {
+                        user.setBalance(balance - price);
+                        polygonUserDetailsService.saveUser(user);
+                        List<Integer> ids = new LinkedList<>();
+                        for (Ticket ticket : ticketsTransaction.getTickets()) {
+                            ids.add(ticket.getId());
+                        }
+                        sendEmail(user.getEmail(), ids);
+                        ticketsTransaction.setEnded(true);
+                        transactionService.save(ticketsTransaction);
+                        modelAndView.setViewName("successPayment");
+                    }
+                }
+            } else {
+                ////API оплаты
+                Charge charge = stripeService.chargeNewCard(token, amount);
+                if (charge.getStatus().equals("succeeded")) {
+                    if (user != null) {
+                        user.setBalance(user.getBalance() + price / 10);
+                        polygonUserDetailsService.saveUser(user);
+                    }
+
                     List<Integer> ids = new LinkedList<>();
                     for (Ticket ticket : ticketsTransaction.getTickets()) {
                         ids.add(ticket.getId());
                     }
-                    sendEmail(user.getEmail(), ids);
+                    sendEmail(((Card) charge.getSource()).getName(), ids);
                     ticketsTransaction.setEnded(true);
                     transactionService.save(ticketsTransaction);
                     modelAndView.setViewName("successPayment");
                 }
-            }
-        } else {
-            ////API оплаты
-            Charge charge = stripeService.chargeNewCard(token, amount);
-            if(charge.getStatus().equals("succeeded")) {
-                if (user != null) {
-                    user.setBalance(user.getBalance() + price / 10);
-                    polygonUserDetailsService.saveUser(user);
-                }
-
-                List<Integer> ids = new LinkedList<>();
-                for (Ticket ticket : ticketsTransaction.getTickets()) {
-                    ids.add(ticket.getId());
-                }
-                sendEmail(((Card)charge.getSource()).getName(), ids);
-                ticketsTransaction.setEnded(true);
-                transactionService.save(ticketsTransaction);
-                modelAndView.setViewName("successPayment");
             }
         }
 

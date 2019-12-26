@@ -1,4 +1,4 @@
-package polygon.services;
+package polygon.services.interfaces;
 
 import polygon.models.City;
 

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import polygon.models.Building;
 import polygon.models.City;
 import polygon.repos.BuildingRepository;
+import polygon.services.interfaces.BuildingService;
 
 import java.util.List;
 

@@ -9,17 +9,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import polygon.models.Room;
-import polygon.models.Seat;
-import polygon.models.Ticket;
-import polygon.services.RoomService;
-import polygon.services.SessionService;
-import polygon.services.TicketService;
+import polygon.services.interfaces.RoomService;
+import polygon.services.interfaces.SessionService;
+import polygon.services.interfaces.TicketService;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;

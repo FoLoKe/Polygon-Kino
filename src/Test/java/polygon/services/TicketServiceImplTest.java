@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import polygon.models.Ticket;
+import polygon.services.interfaces.TicketService;
 
 import java.util.ArrayList;
 import java.util.List;

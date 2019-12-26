@@ -7,7 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.*;
-import polygon.services.*;
+import polygon.services.PolygonUserDetailsService;
+import polygon.services.interfaces.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;

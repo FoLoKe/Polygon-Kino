@@ -9,14 +9,17 @@ import polygon.models.Session;
 import polygon.models.Ticket;
 import polygon.models.TicketsTransaction;
 import polygon.repos.TransactionRepository;
+import polygon.services.interfaces.TransactionService;
 
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Service
-public class TransactionService {
+public class TransactionServiceImpl implements TransactionService {
     @Autowired
     TransactionRepository transactionRepository;
 
+    @Override
     @Transactional
     public TicketsTransaction findById(int id){
         TicketsTransaction ticketsTransaction = transactionRepository.findById(id).orElse(null);
@@ -35,9 +38,20 @@ public class TransactionService {
         return ticketsTransaction;
     }
 
+    @Override
     @Transactional
     public void save(TicketsTransaction ticketsTransaction) {
         transactionRepository.save(ticketsTransaction);
         transactionRepository.flush();
+    }
+
+    @Override
+    @Transactional
+    public Set<TicketsTransaction> findExpired(Timestamp date) {
+        Set<TicketsTransaction> ticketsTransactions = transactionRepository.findExpired(date);
+        for (TicketsTransaction ticketsTransaction : ticketsTransactions) {
+            ticketsTransaction.getTickets().size();
+        }
+        return ticketsTransactions;
     }
 }

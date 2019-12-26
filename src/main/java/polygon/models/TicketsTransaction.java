@@ -1,6 +1,7 @@
 package polygon.models;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -13,6 +14,12 @@ public class TicketsTransaction {
 
     @Column(name = "ended")
     private boolean ended;
+
+    @Column(name = "date")
+    private Timestamp date;
+
+    @Column(name = "terminated")
+    private boolean terminated;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "transaction_id")
@@ -40,5 +47,21 @@ public class TicketsTransaction {
 
     public void setTickets(Set<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
+    public boolean isTerminated() {
+        return terminated;
+    }
+
+    public void setTerminated(boolean terminated) {
+        this.terminated = terminated;
     }
 }

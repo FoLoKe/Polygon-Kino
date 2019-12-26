@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import polygon.models.Room;
 import polygon.models.Session;
 import polygon.repos.RoomRepository;
+import polygon.services.interfaces.RoomService;
 
 import java.util.List;
 @RunWith(SpringRunner.class)

@@ -7,6 +7,7 @@ import polygon.models.Room;
 import polygon.models.SeatsRow;
 import polygon.models.Session;
 import polygon.repos.RoomRepository;
+import polygon.services.interfaces.RoomService;
 
 import java.util.List;
 import java.util.Set;

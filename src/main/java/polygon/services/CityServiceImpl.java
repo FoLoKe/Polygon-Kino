@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.City;
 import polygon.repos.CityRepository;
+import polygon.services.interfaces.CityService;
 
 import java.util.List;
 

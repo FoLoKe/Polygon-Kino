@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.City;
-import polygon.services.BuildingService;
-import polygon.services.CityService;
+import polygon.services.interfaces.BuildingService;
+import polygon.services.interfaces.CityService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;

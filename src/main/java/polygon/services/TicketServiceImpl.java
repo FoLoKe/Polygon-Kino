@@ -8,11 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import polygon.models.*;
 import polygon.repos.TicketRepository;
 import polygon.repos.TransactionRepository;
+import polygon.services.interfaces.TicketService;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -41,6 +39,9 @@ public class TicketServiceImpl implements TicketService {
         TicketsTransaction ticketsTransaction = new TicketsTransaction();
         ticketsTransaction.setEnded(false);
         ticketsTransaction.setTickets(transaction);
+        ticketsTransaction.setDate(new java.sql.Timestamp(new Date().getTime()));
+        ticketsTransaction.setTerminated(false);
+
         transactionRepository.save(ticketsTransaction);
         transactionRepository.flush();
 
@@ -113,6 +114,15 @@ public class TicketServiceImpl implements TicketService {
                 ticketRepository.save(ticket);
                 ticketRepository.flush();
             }
+        }
+    }
+
+    @Override
+    public void rollbackTickets(Set<Ticket> tickets) {
+        for (Ticket ticket : tickets) {
+            ticket.setOccupied(false);
+            ticketRepository.save(ticket);
+            ticketRepository.flush();
         }
     }
 

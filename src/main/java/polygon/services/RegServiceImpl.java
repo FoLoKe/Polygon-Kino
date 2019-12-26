@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.User;
 import polygon.repos.UserRepository;
+import polygon.services.interfaces.RegService;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

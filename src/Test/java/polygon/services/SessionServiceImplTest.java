@@ -3,7 +3,6 @@ package polygon.services;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,12 +15,12 @@ import polygon.models.Performance;
 import polygon.models.Session;
 import polygon.repos.BuildingRepository;
 import polygon.repos.SessionRepository;
+import polygon.services.interfaces.SessionService;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc

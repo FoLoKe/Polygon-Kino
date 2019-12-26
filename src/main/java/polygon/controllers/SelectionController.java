@@ -9,8 +9,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.*;
-import polygon.services.*;
+import polygon.services.EmailServiceImpl;
+import polygon.services.PolygonUserDetailsService;
+import polygon.services.interfaces.RoomService;
+import polygon.services.interfaces.SessionService;
+import polygon.services.interfaces.TicketService;
+import polygon.services.interfaces.TransactionService;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 @Controller
@@ -31,76 +37,78 @@ public class SelectionController {
     @Autowired
     private EmailServiceImpl emailService;
 
+    @Autowired
+    private TransactionService transactionService;
+
     @RequestMapping(value = "/selectSeat", method = RequestMethod.GET)
     public ModelAndView getPerformance(@RequestParam("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("purchaseInfo", new PurchaseInfo());
-        try {
-            modelAndView.setViewName("selectSeat");
 
-            Session session = sessionService.findById(id);
-            modelAndView.addObject("ssession", session);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, -1);
+        Timestamp date = new Timestamp(calendar.getTime().getTime());
+        Set<TicketsTransaction> ticketsTransactions = transactionService.findExpired(date);
 
-            Set<Preview> previews = session.getPerformance().getPreviews();
-            int previewId = ((Preview)session.getPerformance().getPreviews().toArray()[0]).getId();
-            modelAndView.addObject("imgId", previewId);
+        for(TicketsTransaction ticketsTransaction : ticketsTransactions) {
+            ticketService.rollbackTickets(ticketsTransaction.getTickets());
+            ticketsTransaction.setTerminated(true);
+            transactionService.save(ticketsTransaction);
+        }
+        modelAndView.setViewName("selectSeat");
 
-            Room room = roomService.findBySessions(session);
-            Set<SeatsRow> rows = room.getSeatsRows();
-            Set<Ticket> tickets = session.getTickets();
+        Session session = sessionService.findById(id);
+        modelAndView.addObject("ssession", session);
 
-            String email = "";
-            int balance = 0;
-            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User user = null;
-            String username;
-            if (principal instanceof UserDetails) {
-                username = ((UserDetails)principal).getUsername();
-            } else {
-                username = principal.toString();
-            }
+        int previewId = ((Preview) session.getPerformance().getPreviews().toArray()[0]).getId();
+        modelAndView.addObject("imgId", previewId);
 
-            if(username != null && !username.isEmpty() && !(username.equals("anonymousUser"))) {
-                user = polygonUserDetailsService.getUserByUsername(username);
-                email = user.getEmail();
-                balance = user.getBalance();
-            }
+        Room room = roomService.findBySessions(session);
+        Set<SeatsRow> rows = room.getSeatsRows();
+        Set<Ticket> tickets = session.getTickets();
 
-            modelAndView.addObject("email", email);
-            modelAndView.addObject("balance", balance);
-            List<Map<Seat, Ticket>> mapArrayList = new LinkedList<>();
-            for (SeatsRow sr : rows) {
-                Map<Seat, Ticket> map = new LinkedHashMap<>();
-                for(Seat s : sr.getSeats()) {
-                    boolean found = false;
-                    for(Ticket t : tickets) {
-                        if(t.getSeat().getId() == s.getId()) {
-                            map.put(s, t);
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        map.put(s, null);
-                    }
-
-                }
-                mapArrayList.add(map);
-            }
-
-            modelAndView.addObject("rowsList",mapArrayList);
-            modelAndView.addObject("room", room);
-
-        } catch (Exception e) {
-            System.out.println(e.toString());
+        String email = "";
+        int balance = 0;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user;
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
         }
 
-        return  modelAndView;
-    }
+        if (username != null && !username.isEmpty() && !(username.equals("anonymousUser"))) {
+            user = polygonUserDetailsService.getUserByUsername(username);
+            email = user.getEmail();
+            balance = user.getBalance();
+        }
 
-    public class SeatWithState {
-        public Seat seat;
-        public Boolean state;
+        modelAndView.addObject("email", email);
+        modelAndView.addObject("balance", balance);
+        List<Map<Seat, Ticket>> mapArrayList = new LinkedList<>();
+        for (SeatsRow sr : rows) {
+            Map<Seat, Ticket> map = new LinkedHashMap<>();
+            for (Seat s : sr.getSeats()) {
+                boolean found = false;
+                for (Ticket t : tickets) {
+                    if (t.getSeat().getId() == s.getId()) {
+                        map.put(s, t);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    map.put(s, null);
+                }
+
+            }
+            mapArrayList.add(map);
+        }
+
+        modelAndView.addObject("rowsList", mapArrayList);
+        modelAndView.addObject("room", room);
+
+        return modelAndView;
     }
 
     @RequestMapping(value = "/selectSeat", method = RequestMethod.POST)
@@ -117,11 +125,11 @@ public class SelectionController {
                     if(ticket != null) {
                         price += ticket.getSession().getPrice();
                     } else {
-                        return new ModelAndView("redirect:/confirmPage");
+                        return new ModelAndView("redirect:/failPayment");
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("bad link" + e.toString());
-                    return new ModelAndView("redirect:/confirmPage");
+                    return new ModelAndView("redirect:/failPayment");
                 }
             }
         }
@@ -133,7 +141,7 @@ public class SelectionController {
             ticketService.rollbackTickets(ids);
         }
 
-        return new ModelAndView("redirect:/confirmPage");
+        return new ModelAndView("redirect:/failPayment");
     }
 
     @RequestMapping(value = "/confirmPage", method = RequestMethod.GET)

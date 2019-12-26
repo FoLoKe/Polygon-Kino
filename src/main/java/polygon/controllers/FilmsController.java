@@ -14,10 +14,10 @@ import polygon.models.Category;
 import polygon.models.City;
 import polygon.models.Performance;
 import polygon.models.User;
-import polygon.services.CategoryService;
-import polygon.services.CityService;
-import polygon.services.PerformanceService;
 import polygon.services.PolygonUserDetailsService;
+import polygon.services.interfaces.CategoryService;
+import polygon.services.interfaces.CityService;
+import polygon.services.interfaces.PerformanceService;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;

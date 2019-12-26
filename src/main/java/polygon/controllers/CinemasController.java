@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.*;
-import polygon.services.BuildingService;
-import polygon.services.CityService;
 import polygon.services.PolygonUserDetailsService;
-import polygon.services.SessionService;
+import polygon.services.interfaces.BuildingService;
+import polygon.services.interfaces.CityService;
+import polygon.services.interfaces.SessionService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;

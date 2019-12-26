@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.*;
 import polygon.repos.*;
+import polygon.services.interfaces.BuildingService;
+import polygon.services.interfaces.PerformanceService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
