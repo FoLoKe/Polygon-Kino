@@ -207,12 +207,12 @@ insert into polygon.categories_performances(categories_id, performance_id) value
 insert into polygon.categories_performances(categories_id, performance_id) values (9,18);
 
 
-insert into polygon.rooms(building_id, type, number) values (1, 'simple', 1);
-insert into polygon.rooms(building_id, type, number) values (2, 'simple', 1);
+insert into polygon.rooms(building_id, type, number) values (1, '2D', 1);
+insert into polygon.rooms(building_id, type, number) values (2, '3D', 1);
 insert into polygon.rooms(building_id, type, number) values (3, 'IMAX', 1);
 insert into polygon.rooms(building_id, type, number) values (4, 'IMAX', 1);
-insert into polygon.rooms(building_id, type, number) values (4, 'simple', 1);
-insert into polygon.rooms(building_id, type, number) values (5, 'simple', 2);
+insert into polygon.rooms(building_id, type, number) values (4, '2D', 1);
+insert into polygon.rooms(building_id, type, number) values (5, '3D', 2);
 
 -- 1-ый зал (обычный)
 
