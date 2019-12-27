@@ -3,16 +3,13 @@ package polygon.services;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import polygon.models.Room;
-import polygon.repos.RoomRepository;
-
-import java.util.Optional;
-
-import static org.mockito.Mockito.mock;
+import polygon.services.interfaces.RoomService;
+import polygon.services.interfaces.SessionService;
+import polygon.services.interfaces.TicketService;
+import polygon.services.interfaces.TransactionService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

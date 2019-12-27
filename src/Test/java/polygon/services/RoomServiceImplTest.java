@@ -9,13 +9,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import polygon.models.*;
+import polygon.models.Room;
+import polygon.models.Session;
 import polygon.repos.RoomRepository;
 import polygon.repos.SessionRepository;
+import polygon.services.interfaces.RoomService;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 @RunWith(SpringRunner.class)

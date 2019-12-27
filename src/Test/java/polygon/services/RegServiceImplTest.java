@@ -11,8 +11,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import polygon.models.User;
 import polygon.repos.UserRepository;
+import polygon.services.interfaces.RegService;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 @RunWith(SpringRunner.class)

@@ -20,7 +20,7 @@
                     src='https://checkout.stripe.com/checkout.js'
                     class='stripe-button'
                     th:attr='data-key=${stripePublicKey},
-                    data-amount=${amount},data-email=${email}'
+                    data-amount=${amount*100},data-email=${email}'
                     data-name='Stripe'
                     data-description='Оплата билетов'
                     data-locale='auto'
