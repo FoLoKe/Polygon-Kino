@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Polygon-Kino" target="1.8" />
+      <module name="Polygon-Kino" target="9" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

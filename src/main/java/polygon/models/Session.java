@@ -31,6 +31,10 @@ public class Session {
     @JoinColumn(name = "performance_id")
     private Performance performance;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
