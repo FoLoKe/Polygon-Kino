@@ -51,22 +51,22 @@ public class HomeController {
         geoCity = city.getName();
         modelAndView.addObject("geoCity", geoCity);
 
-        List<Performance> films = new ArrayList<>();
-        List<Performance> tempFilms = performanceService.activePerformances(city);
-        for (Performance film : tempFilms) {
-            films.add(film);
-            if(films.size() >= 5)
-                break;
-        }
+        List<Performance> films =  performanceService.activePerformances(city);
+//        List<Performance> tempFilms = performanceService.activePerformances(city);
+//        for (Performance film : tempFilms) {
+//            films.add(film);
+//            if(films.size() >= 5)
+//                break;
+//        }
         modelAndView.addObject("filmsList", films);
 
-        List<Performance> premiers = new ArrayList<>();
-        List<Performance> tempPremiers = performanceService.allPremiers();
-        for (Performance film : tempPremiers) {
-            premiers.add(film);
-            if(premiers.size() >= 5)
-                break;
-        }
+        List<Performance> premiers =  performanceService.allPremiers();
+//        List<Performance> tempPremiers = performanceService.allPremiers();
+//        for (Performance film : tempPremiers) {
+//            premiers.add(film);
+//            if(premiers.size() >= 5)
+//                break;
+//        }
         modelAndView.addObject("premiersList", premiers);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
