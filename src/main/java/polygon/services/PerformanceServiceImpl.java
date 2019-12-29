@@ -55,8 +55,6 @@ public class PerformanceServiceImpl implements PerformanceService {
         Date utilDate = new Date();
         Calendar ac = Calendar.getInstance();
         ac.setTime(utilDate);
-        //ac.add(Calendar.HOUR, - utilDate.getHours());
-        //ac.add(Calendar.MINUTE, - utilDate.getMinutes());
         ac.set(Calendar.SECOND, 0);
         ac.set(Calendar.MILLISECOND, 0);
         Timestamp time = new Timestamp(ac.getTime().getTime());
@@ -66,7 +64,7 @@ public class PerformanceServiceImpl implements PerformanceService {
             Map<Building, List<Session>> byByBuildingSchedule = new LinkedHashMap<>();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(time);
-            calendar.set(Calendar.HOUR, 23);
+            calendar.set(Calendar.HOUR_OF_DAY, 23);
             calendar.set(Calendar.MINUTE, 59);
             //calendar.add(Calendar.DATE, 1);
             Timestamp endTime = new Timestamp(calendar.getTime().getTime());

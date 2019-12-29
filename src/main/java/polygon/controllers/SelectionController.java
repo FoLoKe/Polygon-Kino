@@ -57,6 +57,11 @@ public class SelectionController {
         modelAndView.setViewName("selectSeat");
 
         Session session = sessionService.findById(id);
+
+        Timestamp now = new Timestamp(new Date().getTime());
+        if(session.getTime().before(now))
+            return new ModelAndView("failPayment");
+
         modelAndView.addObject("ssession", session);
 
         int previewId = ((Preview) session.getPerformance().getPreviews().toArray()[0]).getId();
@@ -137,11 +142,9 @@ public class SelectionController {
         int transaction = ticketService.setTickets(ids);
         if(transaction != -1) {
             return new ModelAndView("redirect:/pay?id=" + transaction);
-        } else {
-            ticketService.rollbackTickets(ids);
         }
 
-        return new ModelAndView("redirect:/failPayment");
+        return new ModelAndView("failPayment");
     }
 
     @RequestMapping(value = "/confirmPage", method = RequestMethod.GET)
