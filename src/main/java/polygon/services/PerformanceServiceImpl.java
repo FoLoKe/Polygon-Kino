@@ -55,9 +55,10 @@ public class PerformanceServiceImpl implements PerformanceService {
         Date utilDate = new Date();
         Calendar ac = Calendar.getInstance();
         ac.setTime(utilDate);
-        ac.add(Calendar.HOUR, - utilDate.getHours());
-        ac.add(Calendar.MINUTE, - utilDate.getMinutes());
-        ac.add(Calendar.SECOND, - utilDate.getSeconds());
+        //ac.add(Calendar.HOUR, - utilDate.getHours());
+        //ac.add(Calendar.MINUTE, - utilDate.getMinutes());
+        ac.set(Calendar.SECOND, 0);
+        ac.set(Calendar.MILLISECOND, 0);
         Timestamp time = new Timestamp(ac.getTime().getTime());
         Map<Timestamp, Map<Building, List<Session>>> result = new LinkedHashMap<>();
         List<Building> buildings = buildingRepository.allByCity(city);
@@ -65,7 +66,9 @@ public class PerformanceServiceImpl implements PerformanceService {
             Map<Building, List<Session>> byByBuildingSchedule = new LinkedHashMap<>();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(time);
-            calendar.add(Calendar.DATE, 1);
+            calendar.set(Calendar.HOUR, 23);
+            calendar.set(Calendar.MINUTE, 59);
+            //calendar.add(Calendar.DATE, 1);
             Timestamp endTime = new Timestamp(calendar.getTime().getTime());
             for (Building building : buildings) {
                 List<Session> sessions = sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(building, performance, time, endTime);
@@ -81,10 +84,10 @@ public class PerformanceServiceImpl implements PerformanceService {
                 }
                 byByBuildingSchedule.put(building, sessions);
             }
-            if(byByBuildingSchedule.size() == 0)
-                break;
-            result.put(time, byByBuildingSchedule);
-            time = endTime;
+            if(byByBuildingSchedule.size() != 0)
+                result.put(time, byByBuildingSchedule);
+            calendar.add(Calendar.MINUTE, 1);
+            time = new Timestamp(calendar.getTime().getTime());
         }
         return result;
     }
