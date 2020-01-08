@@ -6,17 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.*;
-import polygon.repos.BuildingRepository;
-import polygon.repos.PerformanceRepository;
-import polygon.repos.SessionRepository;
-import polygon.repos.TicketRepository;
+import polygon.repos.*;
 import polygon.services.interfaces.SessionService;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class SessionServiceImpl implements SessionService {
@@ -51,7 +45,7 @@ public class SessionServiceImpl implements SessionService {
         Map<Building, List<Session>> orderedSessions = new LinkedHashMap<>();
         Calendar ac = Calendar.getInstance();
         ac.setTime(time);
-        ac.add(Calendar.HOUR, - time.getHours());
+        ac.add(Calendar.HOUR_OF_DAY, - time.getHours());
         ac.add(Calendar.MINUTE, - time.getMinutes());
         time = new Timestamp(ac.getTime().getTime());
 
@@ -73,10 +67,10 @@ public class SessionServiceImpl implements SessionService {
     public Map<Performance, List<Session>> findSessionsInBuilding(Building building, Timestamp time) {
         Calendar c = Calendar.getInstance();
         c.setTime(time);
-        c.set(Calendar.HOUR, 23);
+        c.set(Calendar.HOUR_OF_DAY, 23);
         c.set(Calendar.MINUTE, 59);
         c.set(Calendar.MILLISECOND, 0);
-        c.add(Calendar.DATE, 1);
+        //c.add(Calendar.DATE, 1);
         Timestamp endTime = new Timestamp(c.getTime().getTime());
 
         Map<Performance, List<Session>> timestampMap = new LinkedHashMap<>();
@@ -119,5 +113,41 @@ public class SessionServiceImpl implements SessionService {
                     .getImplementation();
         }
         return s;
+    }
+
+    @Autowired
+    TransactionRepository transactionRepository;
+
+    @Autowired
+    EmailServiceImpl emailService;
+
+    @Override
+    @Transactional
+    public boolean cancel(int id) {
+        Session session = sessionRepository.findById(id).orElse(null);
+        if(session != null) {
+            Set<Ticket> tickets = session.getTickets();
+            ///RETURN MONEY
+            List<TicketsTransaction> ticketsTransactions = transactionRepository.findWithTickets(tickets);
+            for (TicketsTransaction ticketsTransaction : ticketsTransactions) {
+                ticketsTransaction.setTerminated(true);
+                if(ticketsTransaction.isEnded()) {
+                    ticketsTransaction.getTickets().size();
+                    Ticket ticket = (Ticket) ticketsTransaction.getTickets().toArray()[0];
+
+                    emailService.sendSimpleMessage(ticketsTransaction.getEmail(), "Сеанс отменен",
+                            "Сеанс на " + ticket.getSession().getTime() +
+                                    " " + ticket.getSession().getPerformance().getName() +
+                                    "\nбыл отменен, обратитесь за возвратом средств."
+                            );
+                }
+                transactionRepository.save(ticketsTransaction);
+                transactionRepository.flush();
+            }
+
+            sessionRepository.delete(session);
+            sessionRepository.flush();
+        }
+        return false;
     }
 }

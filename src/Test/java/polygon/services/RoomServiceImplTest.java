@@ -42,7 +42,7 @@ public class RoomServiceImplTest {
         List<Room> rooms =List.of(room);
         RoomRepository roomRepositoryMock = mock(RoomRepository.class);
         Mockito.when(roomRepositoryMock.findAll()).thenReturn(rooms);
-        List<Room> expected=roomService.allCities();
+        List<Room> expected=roomService.allRooms();
         Assert.assertNotNull(expected);
         Mockito.verify(roomRepository,Mockito.times(1)).findAll();
     }

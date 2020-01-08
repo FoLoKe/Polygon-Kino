@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
+</head>
+<body>
+<div class="calendar">
+    <form class="calendarForm" th:attr = "action=@{/management/manageSessions}" method = "post">
+        Выберите дату:
+        <input class="calendarCalendar" type="date" name="day" th:value="${day}"  >
+        <input class="calendarButton" type="submit" value="Выбрать">
+        <select name = "selectedBuilding" >
+            <option th:each = "building : ${buildings}" th:selected = "${defaultBuilding.id == building.id}" th:text = "${building.address}" th:value = "${building.id}">
+
+            </option>
+        </select>
+    </form>
+</div>
+<table>
+    <tr th:each ="instance : ${sessions}">
+        <td>
+            <table>
+                <tr th:each = "ssession : ${instance.value}">
+                    <td>
+                        <p th:text = "${instance.key.name}"></p>
+                    </td>
+                    <td>
+                        <p th:text = ${ssession.time}>
+
+                        </p>
+                    </td>
+                    <td>
+                        <a th:href="'/management/manageSessions/delete?id=' + ${ssession.id}"> Удалить</a>
+                    </td>
+                    <td>
+                        <a th:href="'/management/manageSessions/manage?id=' + ${ssession.id}"> Изменить</a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+</table>
+</body>
+</html>

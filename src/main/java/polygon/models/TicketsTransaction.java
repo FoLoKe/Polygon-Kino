@@ -21,9 +21,20 @@ public class TicketsTransaction {
     @Column(name = "terminated")
     private boolean terminated;
 
+    @Column(name = "email")
+    private String email;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "transaction_id")
     private Set<Ticket> tickets;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public int getId() {
         return id;

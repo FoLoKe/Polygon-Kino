@@ -42,9 +42,16 @@ public class ImaxController
         cities = cityService.allCities();
         modelAndView.addObject("citiesList", cities);
 
-        String geoCity = "Москва";
+        String geoCity="";
         City city = cityService.findById(cityId);
-        geoCity = city.getName();
+        if(city == null && cities.size() > 0) {
+            city = (City) cities.toArray()[0];
+        }
+
+        if(city != null) {
+            geoCity = city.getName();
+        }
+
         modelAndView.addObject("geoCity", geoCity);
 
         List<Performance> films;

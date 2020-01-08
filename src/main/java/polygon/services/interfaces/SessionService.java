@@ -11,9 +11,10 @@ import java.util.Map;
 
 public interface SessionService {
 
-    public List<Session> findSessionsInCity(City city);
-    public Map<Performance, List<Session>> findSessionsInBuilding(Building building, Timestamp timestamp);
+    List<Session> findSessionsInCity(City city);
+    Map<Performance, List<Session>> findSessionsInBuilding(Building building, Timestamp timestamp);
     Session findById(int id);
     void addSession(Session session);
     Map<Building, List<Session>> findBuildingsWithSessionsInCity(Performance performance, City city, Timestamp time);
+    boolean cancel(int id);
 }

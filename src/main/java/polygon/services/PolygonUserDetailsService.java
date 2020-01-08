@@ -2,6 +2,7 @@ package polygon.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +13,8 @@ import polygon.models.User;
 import polygon.repos.UserRepository;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -39,6 +42,7 @@ public class PolygonUserDetailsService implements UserDetailsService {
         userRepository.flush();
     }
 
+
     public class PolyUser implements UserDetails {
         private User user;
 
@@ -52,7 +56,9 @@ public class PolygonUserDetailsService implements UserDetailsService {
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            return null;
+            Set<GrantedAuthority> authorities = new HashSet<>();
+            authorities.add(new SimpleGrantedAuthority(user.getRole()));
+            return authorities;
         }
 
         @Override

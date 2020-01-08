@@ -70,8 +70,6 @@ public class PerformanceServiceImpl implements PerformanceService {
             Timestamp endTime = new Timestamp(calendar.getTime().getTime());
             for (Building building : buildings) {
                 List<Session> sessions = sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(building, performance, time, endTime);
-                if(sessions.size() == 0)
-                    break;
                 for(Session s: sessions) {
                     Hibernate.initialize(s);
                     Room room = s.getRoom();
@@ -80,6 +78,7 @@ public class PerformanceServiceImpl implements PerformanceService {
                                 .getImplementation();
                     }
                 }
+                if(sessions.size() > 0)
                 byByBuildingSchedule.put(building, sessions);
             }
             if(byByBuildingSchedule.size() != 0)
@@ -231,5 +230,22 @@ public class PerformanceServiceImpl implements PerformanceService {
     public void add(List<Performance> performance) {
         performanceRepository.saveAll(performance);
         performanceRepository.flush();
+    }
+
+    @Override
+    @Transactional
+    public boolean cancel(int id) {
+        try {
+            performanceRepository.deleteById(id);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public void save(Performance performance) {
+        performanceRepository.saveAndFlush(performance);
     }
 }

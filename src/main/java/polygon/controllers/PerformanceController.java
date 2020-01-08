@@ -50,17 +50,25 @@ public class PerformanceController {
         Performance performance = performanceService.findByIdFullLoad(id);
         modelAndView.addObject("perf", performance);
 
-        String geoCity;
-        City city = cityService.findById(cityId);
-        geoCity = city.getName();
-        modelAndView.addObject("geoCity", geoCity);
-
-        Map<Timestamp, Map<Building, List<Session>>> schedule = performanceService.getSchedule(performance, city);
-        modelAndView.addObject("schedule", schedule);
 
         List<City> cities;
         cities = cityService.allCities();
         modelAndView.addObject("citiesList", cities);
+
+        String geoCity="";
+        City city = cityService.findById(cityId);
+        if(city == null && cities.size() > 0) {
+            city = (City) cities.toArray()[0];
+        }
+
+        if(city != null) {
+            geoCity = city.getName();
+        }
+
+        modelAndView.addObject("geoCity", geoCity);
+
+        Map<Timestamp, Map<Building, List<Session>>> schedule = performanceService.getSchedule(performance, city);
+        modelAndView.addObject("schedule", schedule);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userBalance = 0;
@@ -107,14 +115,14 @@ public class PerformanceController {
         ac.setTime(time);
 
         List<Performance> performances = performanceService.allPresentPerformances();
-        List<Room> rooms = roomService.allCities();
+        List<Room> rooms = roomService.allRooms();
         for(int d = 0; d < 2; d++) {
-            ac.add(Calendar.HOUR, - time.getHours());
+            ac.add(Calendar.HOUR_OF_DAY, - time.getHours());
             ac.add(Calendar.MINUTE, - time.getMinutes());
             ac.add(Calendar.SECOND, - time.getSeconds());
-            ac.add(Calendar.HOUR, 6);
+            ac.add(Calendar.HOUR_OF_DAY, 6);
 
-            for (int m = 0; m < 5; m++) {
+            for (int m = 0; m < 8; m++) {
                 time = new Timestamp(ac.getTime().getTime());
                 for (Room room : rooms) {
                     for (Performance p : performances) {
@@ -150,13 +158,13 @@ public class PerformanceController {
         for (Performance performance : sPerformances) {
             Timestamp begin = new Timestamp(performance.getDate().getTime());
             ac.setTime(begin);
-            for(int d = 0; d < 2; d++) {
-                ac.add(Calendar.HOUR, -time.getHours());
+            for(int d = 0; d < 1; d++) {
+                ac.add(Calendar.HOUR_OF_DAY, -time.getHours());
                 ac.add(Calendar.MINUTE, -time.getMinutes());
                 ac.add(Calendar.SECOND, -time.getSeconds());
-                ac.add(Calendar.HOUR, 6);
+                ac.add(Calendar.HOUR_OF_DAY, 6);
 
-                for (int m = 0; m < 5; m++) {
+                for (int m = 0; m < 1; m++) {
                     time = new Timestamp(ac.getTime().getTime());
                     for (Room room : rooms) {
                         Session s = new Session();
@@ -193,8 +201,17 @@ public class PerformanceController {
         User user = new User();
         user.setUsername("FoLoKe");
         user.setPassword("1");
+        user.setRole("USER");
         user.setBalance(999);
         user.setEmail("foloke@yandex.ru");
+        regService.registerNewUserAccount(user);
+
+        user = new User();
+        user.setUsername("Admin");
+        user.setPassword("1");
+        user.setRole("ADMIN");
+        user.setBalance(999);
+        user.setEmail("tr12354@yandex.ru");
         regService.registerNewUserAccount(user);
 
         ModelAndView modelAndView = new ModelAndView();

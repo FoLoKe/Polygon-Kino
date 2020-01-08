@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
+</head>
+<body>
+    <table>
+        <tr th:each ="city : ${cities}">
+            <td>
+               <p th:text = "${city.name}"></p>
+            </td>
+            <td>
+                <a th:href="'/management/manageCities/manage?id=' + ${city.id}"> Изменить</a>
+            </td>
+            <td>
+                <a th:href="'/management/manageCities/delete?id=' + ${city.id}"> Удалить</a>
+            </td>
+        </tr>
+    </table>
+    <a href="/management/manageCities/manage"> Добавить </a>
+</body>
+</html>

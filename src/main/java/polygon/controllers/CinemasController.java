@@ -46,14 +46,17 @@ public class CinemasController
         cities = cityService.allCities();
         modelAndView.addObject("citiesList", cities);
 
-        String geoCity = "Москва";
+        String geoCity="";
         City city = cityService.findById(cityId);
-        geoCity = city.getName();
-        modelAndView.addObject("geoCity", geoCity);
+        if(city == null && cities.size() > 0) {
+            city = (City) cities.toArray()[0];
+        }
 
-        List<Building> cinemas;
-        cinemas = buildingService.allByCity(city);
-        modelAndView.addObject("cinemasList", cinemas);
+        if(city != null) {
+            geoCity = city.getName();
+        }
+
+        modelAndView.addObject("geoCity", geoCity);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userBalance = 0;
@@ -83,9 +86,16 @@ public class CinemasController
         cities = cityService.allCities();
         modelAndView.addObject("citiesList", cities);
 
-        String geoCity = "Москва";
+        String geoCity="";
         City city = cityService.findById(cityId);
-        geoCity = city.getName();
+        if(city == null && cities.size() > 0) {
+            city = (City) cities.toArray()[0];
+        }
+
+        if(city != null) {
+            geoCity = city.getName();
+        }
+
         modelAndView.addObject("geoCity", geoCity);
 
         Building cinema = buildingService.getById(id);

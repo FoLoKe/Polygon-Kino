@@ -48,16 +48,21 @@ public class FilmsController
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("films");
 
-        //String linkAppend=
-
-        String geoCity = "Москва";
-        City city = cityService.findById(cityId);
-        geoCity = city.getName();
-        modelAndView.addObject("geoCity", geoCity);
-
         List<City> cities;
         cities = cityService.allCities();
         modelAndView.addObject("citiesList", cities);
+
+        String geoCity="";
+        City city = cityService.findById(cityId);
+        if(city == null && cities.size() > 0) {
+            city = (City) cities.toArray()[0];
+        }
+
+        if(city != null) {
+            geoCity = city.getName();
+        }
+
+        modelAndView.addObject("geoCity", geoCity);
 
         List<Category> tags;
         tags = categoryService.allCategories();

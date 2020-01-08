@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/mroom.js}" src="/js/mroom.js"></script>
+</head>
+<body>
+<form class="calendarForm" th:attr = "action=@{/management/manageRooms/save}" method = "post">
+    <input type="hidden" value="0" name = "rowsCount" id = "rowsCount">
+    <table id = "rowsTable">
+        <tr>
+            <th> ЗАЛ</th>
+        </tr>
+    </table>
+    <input type="button" th:onclick="addRow();">
+    <input type="submit" value="Сохранить">
+</form>
+</body>
+</html>

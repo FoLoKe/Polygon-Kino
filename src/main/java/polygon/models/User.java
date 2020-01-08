@@ -11,6 +11,9 @@ public class User {
     private int id;
 
     @Column
+    private String role;
+
+    @Column
     private String username;
 
     @Column
@@ -21,6 +24,14 @@ public class User {
 
     @Column
     private Integer balance;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public Integer getBalance() {
         return balance;

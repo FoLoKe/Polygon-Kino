@@ -17,7 +17,6 @@ import polygon.services.interfaces.CityService;
 import polygon.services.interfaces.PerformanceService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -46,9 +45,16 @@ public class HomeController {
         cities = cityService.allCities();
         modelAndView.addObject("citiesList", cities);
 
-        String geoCity = "Москва";
+        String geoCity="";
         City city = cityService.findById(cityId);
-        geoCity = city.getName();
+        if(city == null && cities.size() > 0) {
+            city = (City) cities.toArray()[0];
+        }
+
+        if(city != null) {
+            geoCity = city.getName();
+        }
+
         modelAndView.addObject("geoCity", geoCity);
 
         List<Performance> films =  performanceService.activePerformances(city);

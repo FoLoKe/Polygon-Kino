@@ -32,4 +32,29 @@ public class CityServiceImpl implements CityService {
     public City findById(int id) {
         return cityRepository.findById(id).orElse(null);
     }
+
+    @Override
+    @Transactional
+    public boolean safeDelete(int id) {
+        try {
+            cityRepository.deleteById(id);
+            cityRepository.flush();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean save(City city) {
+        try {
+            cityRepository.save(city);
+            cityRepository.flush();
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
 }

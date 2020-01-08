@@ -8,4 +8,6 @@ public interface CityService {
 
     List<City> allCities();
     City findById(int id);
+    boolean safeDelete(int id);
+    boolean save(City city);
 }

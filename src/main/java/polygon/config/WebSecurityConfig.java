@@ -19,19 +19,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
-        http.csrf().ignoringAntMatchers("/console/**");
-        http.csrf().ignoringAntMatchers("/registration/**");
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/img/**","/console/**","/registration/**","/**").permitAll().anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login").loginProcessingUrl("/login").successHandler(urlRedirect())
-                .permitAll()
-                .and()
-                .logout().logoutSuccessUrl("/")
-                .permitAll();
+//        http.authorizeRequests()
+//                .antMatchers( "/management/**","/management").hasAnyAuthority("ADMIN")
+//                .and().formLogin()
+//                .loginPage("/login").loginProcessingUrl("/login").successHandler(urlRedirect())
+//                .permitAll()
+//                .and().logout().logoutSuccessUrl("/")
+//                .and().exceptionHandling().accessDeniedPage("/");
+
     }
 
     @Override

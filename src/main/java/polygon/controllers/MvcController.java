@@ -1,7 +1,12 @@
 package polygon.controllers;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.support.MultipartFilter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -19,6 +24,23 @@ public class MvcController implements WebMvcConfigurer {
         registry.addViewController("/cinemas").setViewName("cinemas");
         registry.addViewController("/imax").setViewName("imax");
         registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/management").setViewName("management");
+    }
+
+    @Bean(name = "multipartResolver")
+    public MultipartResolver getCommonsMultipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(20971520);   // 20MB
+        multipartResolver.setMaxInMemorySize(1048576);  // 1MB
+        return multipartResolver;
+    }
+
+    @Bean
+    @Order(0)
+    public MultipartFilter multipartFilter() {
+        MultipartFilter multipartFilter = new MultipartFilter();
+        multipartFilter.setMultipartResolverBeanName("multipartResolver");
+        return multipartFilter;
     }
 
     @Override

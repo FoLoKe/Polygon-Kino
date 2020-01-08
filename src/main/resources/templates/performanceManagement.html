@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
+</head>
+<body>
+<form class="calendarForm" th:attr = "action=@{/management/managePerformances/save}" method = "post" enctype="multipart/form-data">
+    <input type="hidden" name="id" th:value="${id}">
+    <input type="text" name="name" th:value="${name}">
+    <input type="text" name="link" th:value="${link}">
+    <input type="text" name="imdb" th:value="${imdbID}">
+    <input type="text" name="description" th:value="${description}">
+    <input type="file" name="file"  >
+    <input type="file" name="files" multiple>
+    <input type="date" name="date" th:value="${date}">
+    <div th:each="instance : ${cats}">
+        <input type = "checkbox" th:text = "${instance.key.name}" id="cats" name="cats" th:value="${instance.key.id}" th:checked="${instance.value}" >
+    </div>
+    <input type="submit" value="Сохранить">
+</form>
+</body>
+</html>

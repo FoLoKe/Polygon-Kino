@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface RoomService {
 
-    List<Room> allCities();
+    List<Room> allRooms();
     Room findBySessions(Session session);
     Room findById(int id);
+
+    boolean safeDelete(int id);
+    void save(Room room);
 }

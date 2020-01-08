@@ -46,14 +46,6 @@ public class Room {
         this.type = type;
     }
 
-    public Set<SeatsRow> getSeats() {
-        return seatsRows;
-    }
-
-    public void setSeats(Set<SeatsRow> seats) {
-        this.seatsRows = seats;
-    }
-
     public Set<Session> getSessions() {
         return sessions;
     }

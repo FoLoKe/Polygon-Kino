@@ -129,6 +129,7 @@ public class PaymentController {
                         }
                         sendEmail(user.getEmail(), ids);
                         ticketsTransaction.setEnded(true);
+                        ticketsTransaction.setEmail(user.getEmail());
                         transactionService.save(ticketsTransaction);
                         modelAndView.setViewName("successPayment");
                     }
@@ -148,6 +149,7 @@ public class PaymentController {
                     }
                     sendEmail(((Card) charge.getSource()).getName(), ids);
                     ticketsTransaction.setEnded(true);
+                    ticketsTransaction.setEmail(((Card) charge.getSource()).getName());
                     transactionService.save(ticketsTransaction);
                     modelAndView.setViewName("successPayment");
                 }

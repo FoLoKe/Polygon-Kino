@@ -27,4 +27,7 @@ public interface PerformanceService {
 
     void writeImageToResponse(Integer id, HttpServletResponse response);
     void writePreviewToResponse(Integer id, HttpServletResponse response);
+
+    boolean cancel(int id);
+    void save(Performance performance);
 }
