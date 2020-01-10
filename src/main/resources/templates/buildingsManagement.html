@@ -9,16 +9,18 @@
 </head>
 <body>
 <table>
-    <tr th:each ="room : ${rooms}">
+    <tr th:each ="building : ${buildings}">
         <td>
-            <p th:text = "${room.building.city.name} + ', ' + ${room.building.address} + ', Зал № ' + ${room.number} +
-            ' (' +  ${room.type} + ')'"></p>
+            <p th:text = "${building.city.name} + ', ' + ${building.address}"></p>
         </td>
         <td>
-            <a th:href="'/management/manageRooms/delete?id=' + ${room.id}"> Удалить</a>
+            <a th:href="'/management/manageBuildings/manage?id=' + ${building.id}"> Изменить</a>
+        </td>
+        <td>
+            <a th:href="'/management/manageBuildings/delete?id=' + ${building.id}"> Удалить</a>
         </td>
     </tr>
 </table>
-<a href="/management/manageRooms/manage"> Добавить </a>
+<a href="/management/manageBuildings/manage"> Добавить </a>
 </body>
 </html>

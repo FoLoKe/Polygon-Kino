@@ -33,7 +33,7 @@ public class BuildingServiceImplTest {
     public void getById() {
         Object object;
         int id = 1;
-        object=buildingService.getById(id);
+        object=buildingService.findById(id);
         Assert.assertNotNull(object);
 
     }

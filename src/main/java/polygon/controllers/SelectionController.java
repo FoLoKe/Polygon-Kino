@@ -139,7 +139,20 @@ public class SelectionController {
             }
         }
 
-        int transaction = ticketService.setTickets(ids);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = null;
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        if(username != null && !username.isEmpty() && !(username.equals("anonymousUser"))) {
+            user = polygonUserDetailsService.getUserByUsername(username);
+        }
+
+        int transaction = ticketService.setTickets(ids, user);
         if(transaction != -1) {
             return new ModelAndView("redirect:/pay?id=" + transaction);
         }

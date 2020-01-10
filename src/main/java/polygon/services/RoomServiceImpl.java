@@ -1,12 +1,11 @@
 package polygon.services;
 
+import org.hibernate.Hibernate;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import polygon.models.Room;
-import polygon.models.Seat;
-import polygon.models.SeatsRow;
-import polygon.models.Session;
+import polygon.models.*;
 import polygon.repos.RoomRepository;
 import polygon.repos.SeatsRepository;
 import polygon.repos.SeatsRowRepository;
@@ -36,6 +35,22 @@ public class RoomServiceImpl implements RoomService {
             Set<SeatsRow> seatsRows = room.getSeatsRows();
             for (SeatsRow sr : seatsRows) {
                 sr.getSeats().size();
+            }
+
+            Building building = room.getBuilding();
+            Hibernate.initialize(building);
+
+            if (building instanceof HibernateProxy) {
+                building = (Building) ((HibernateProxy) building).getHibernateLazyInitializer()
+                        .getImplementation();
+                City city = building.getCity();
+
+                Hibernate.initialize(city);
+
+                if (city instanceof HibernateProxy) {
+                    city = (City) ((HibernateProxy) city).getHibernateLazyInitializer()
+                            .getImplementation();
+                }
             }
         }
         return rooms;

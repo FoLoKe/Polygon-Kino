@@ -1,6 +1,7 @@
 package polygon.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "polygon.users")
@@ -24,6 +25,18 @@ public class User {
 
     @Column
     private Integer balance;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Set<TicketsTransaction> buildings;
+
+    public Set<TicketsTransaction> getBuildings() {
+        return buildings;
+    }
+
+    public void setBuildings(Set<TicketsTransaction> buildings) {
+        this.buildings = buildings;
+    }
 
     public String getRole() {
         return role;

@@ -70,7 +70,6 @@ public class SessionServiceImpl implements SessionService {
         c.set(Calendar.HOUR_OF_DAY, 23);
         c.set(Calendar.MINUTE, 59);
         c.set(Calendar.MILLISECOND, 0);
-        //c.add(Calendar.DATE, 1);
         Timestamp endTime = new Timestamp(c.getTime().getTime());
 
         Map<Performance, List<Session>> timestampMap = new LinkedHashMap<>();
@@ -103,14 +102,14 @@ public class SessionServiceImpl implements SessionService {
         Session s = sessionRepository.findById(id).orElse(null);
         if(s != null) {
             s.getTickets().size();
-        }
-        Performance performance = s.getPerformance();
-        performance.getPreviews().size();
+            Performance performance = s.getPerformance();
+            performance.getPreviews().size();
 
-        Hibernate.initialize(performance);
-        if (performance instanceof HibernateProxy) {
-            performance = (Performance) ((HibernateProxy) performance).getHibernateLazyInitializer()
-                    .getImplementation();
+            Hibernate.initialize(performance);
+            if (performance instanceof HibernateProxy) {
+                performance = (Performance) ((HibernateProxy) performance).getHibernateLazyInitializer()
+                        .getImplementation();
+            }
         }
         return s;
     }

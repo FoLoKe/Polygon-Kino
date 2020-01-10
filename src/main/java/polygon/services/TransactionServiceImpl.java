@@ -8,10 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 import polygon.models.Session;
 import polygon.models.Ticket;
 import polygon.models.TicketsTransaction;
+import polygon.models.User;
 import polygon.repos.TransactionRepository;
 import polygon.services.interfaces.TransactionService;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -51,6 +53,24 @@ public class TransactionServiceImpl implements TransactionService {
         Set<TicketsTransaction> ticketsTransactions = transactionRepository.findExpired(date);
         for (TicketsTransaction ticketsTransaction : ticketsTransactions) {
             ticketsTransaction.getTickets().size();
+        }
+        return ticketsTransactions;
+    }
+
+    @Override
+    @Transactional
+    public List<TicketsTransaction> allTransactions() {
+        List<TicketsTransaction> ticketsTransactions = transactionRepository.findAll();
+        for (TicketsTransaction ticketsTransaction : ticketsTransactions) {
+            User user = ticketsTransaction.getUser();
+            if(ticketsTransaction.getUser() != null) {
+                Hibernate.initialize(user);
+
+                if (user instanceof HibernateProxy) {
+                    user = (User) ((HibernateProxy) user).getHibernateLazyInitializer()
+                            .getImplementation();
+                }
+            }
         }
         return ticketsTransactions;
     }

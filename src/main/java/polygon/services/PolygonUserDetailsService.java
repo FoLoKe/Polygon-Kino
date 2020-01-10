@@ -14,6 +14,7 @@ import polygon.repos.UserRepository;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -42,6 +43,30 @@ public class PolygonUserDetailsService implements UserDetailsService {
         userRepository.flush();
     }
 
+    @Transactional
+    public List<User> allUsers(){
+        return userRepository.findAll();
+    }
+
+    @Transactional
+    public User findById(int userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
+
+    @Transactional
+    public boolean delete(int userId) {
+        try {
+            userRepository.deleteById(userId);
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
+
+    public void save(User user) {
+        userRepository.saveAndFlush(user);
+    }
 
     public class PolyUser implements UserDetails {
         private User user;

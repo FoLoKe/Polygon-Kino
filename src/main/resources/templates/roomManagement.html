@@ -10,6 +10,15 @@
 <body>
 <form class="calendarForm" th:attr = "action=@{/management/manageRooms/save}" method = "post">
     <input type="hidden" value="0" name = "rowsCount" id = "rowsCount">
+    <select name = "selectedBuilding" >
+        <option th:each = "building : ${buildings}"
+                th:selected = "${defaultBuilding.id == building.id}"
+                th:text = "${building.city.name} + ', ' + ${building.address}"
+                th:value = "${building.id}">
+        </option>
+    </select>
+    <input type="text" value="2D" name = "type">
+    <input type="text" value="1" name = "number">
     <table id = "rowsTable">
         <tr>
             <th> ЗАЛ</th>

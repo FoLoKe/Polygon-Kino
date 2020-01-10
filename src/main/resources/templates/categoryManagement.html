@@ -8,17 +8,10 @@
     <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 </head>
 <body>
-<table>
-    <tr th:each ="room : ${rooms}">
-        <td>
-            <p th:text = "${room.building.city.name} + ', ' + ${room.building.address} + ', Зал № ' + ${room.number} +
-            ' (' +  ${room.type} + ')'"></p>
-        </td>
-        <td>
-            <a th:href="'/management/manageRooms/delete?id=' + ${room.id}"> Удалить</a>
-        </td>
-    </tr>
-</table>
-<a href="/management/manageRooms/manage"> Добавить </a>
+<form class="calendarForm" th:attr = "action=@{/management/manageCategories/save}" method = "post">
+    <input type="text" name="name" th:value="${name}">
+    <input type="hidden" name="id" th:value="${id}">
+    <input type="submit" value="Сохранить">
+</form>
 </body>
 </html>

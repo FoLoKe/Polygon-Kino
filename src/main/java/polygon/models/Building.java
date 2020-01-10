@@ -26,6 +26,10 @@ public class Building {
     @JoinColumn(name = "city_id")
     private City city;
 
+    public void setCity(City city) {
+        this.city = city;
+    }
+
     public int getId() {
         return id;
     }

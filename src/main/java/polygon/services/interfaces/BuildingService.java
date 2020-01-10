@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface BuildingService {
     List<Building> allBuildings();
-    Building getById(int id);
+    Building findById(int id);
     List<Building> allByCity(City city);
+
+    void save(Building building);
+    boolean safeDelete(int id);
 }

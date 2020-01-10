@@ -42,7 +42,7 @@ public class TicketServiceImplTest {
         List<Integer> list = new ArrayList<Integer>();
         list.add(1);
         list.add(2);
-        int setTicketsWorks=ticketService.setTickets(list);
+        int setTicketsWorks=ticketService.setTickets(list, null);
         Assert.assertNotEquals(-1,setTicketsWorks);
     }
 
@@ -52,7 +52,7 @@ public class TicketServiceImplTest {
         List<Integer> list = new ArrayList<Integer>();
         list.add(13);
         list.add(14);
-        int setTicketsWorks=ticketService.setTickets(list);
+        int setTicketsWorks=ticketService.setTickets(list, null);
         Assert.assertNotEquals(-1,setTicketsWorks);
     }
 

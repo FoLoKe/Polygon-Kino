@@ -9,16 +9,26 @@
 </head>
 <body>
 <table>
-    <tr th:each ="room : ${rooms}">
+    <tr th:each ="transaction : ${transactions}">
         <td>
-            <p th:text = "${room.building.city.name} + ', ' + ${room.building.address} + ', Зал № ' + ${room.number} +
-            ' (' +  ${room.type} + ')'"></p>
+            <p th:text = "${transaction.id}"></p>
         </td>
         <td>
-            <a th:href="'/management/manageRooms/delete?id=' + ${room.id}"> Удалить</a>
+            <p th:text = "${transaction.email}"></p>
+        </td>
+        <td>
+            <p th:text = "${transaction.date}"></p>
+        </td>
+        <td>
+            <p th:text = "${transaction.ended}"></p>
+        </td>
+        <td>
+            <p th:text = "${transaction.terminated}"></p>
+        </td>
+        <td th:if = "${transaction.user} != null">
+            <p th:text = "${transaction.user.username}"></p>
         </td>
     </tr>
 </table>
-<a href="/management/manageRooms/manage"> Добавить </a>
 </body>
 </html>

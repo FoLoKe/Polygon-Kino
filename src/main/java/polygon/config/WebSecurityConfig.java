@@ -21,13 +21,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
-//        http.authorizeRequests()
-//                .antMatchers( "/management/**","/management").hasAnyAuthority("ADMIN")
-//                .and().formLogin()
-//                .loginPage("/login").loginProcessingUrl("/login").successHandler(urlRedirect())
-//                .permitAll()
-//                .and().logout().logoutSuccessUrl("/")
-//                .and().exceptionHandling().accessDeniedPage("/");
+        http.authorizeRequests()
+                .antMatchers( "/management/**","/management").hasAnyAuthority("ADMIN")
+                .and().formLogin()
+                .loginPage("/login").loginProcessingUrl("/login").successHandler(urlRedirect())
+                .permitAll()
+                .and().logout().logoutSuccessUrl("/")
+                .and().exceptionHandling().accessDeniedPage("/error");
 
     }
 

@@ -54,7 +54,23 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public Building getById(int id) {
+    public Building findById(int id) {
         return buildingRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void save(Building building) {
+        buildingRepository.saveAndFlush(building);
+    }
+
+    @Override
+    public boolean safeDelete(int id) {
+        try {
+            buildingRepository.deleteById(id);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return false;
+        }
+        return false;
     }
 }

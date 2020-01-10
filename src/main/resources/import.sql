@@ -210,8 +210,8 @@ insert into polygon.rooms(building_id, type, number) values (1, '2D', 1);
 insert into polygon.rooms(building_id, type, number) values (2, '3D', 1);
 insert into polygon.rooms(building_id, type, number) values (3, 'IMAX', 1);
 insert into polygon.rooms(building_id, type, number) values (4, 'IMAX', 1);
-insert into polygon.rooms(building_id, type, number) values (4, '2D', 1);
-insert into polygon.rooms(building_id, type, number) values (5, '3D', 2);
+insert into polygon.rooms(building_id, type, number) values (4, '2D', 2);
+insert into polygon.rooms(building_id, type, number) values (5, '3D', 1);
 
 -- 1-ый зал (обычный)
 

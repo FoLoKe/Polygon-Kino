@@ -37,7 +37,7 @@ public class CinemasController
     private SessionService sessionService;
 
     @RequestMapping(value="/cinemas", method = RequestMethod.GET)
-    public ModelAndView allcinemas(HttpServletRequest request,
+    public ModelAndView allCinemas(HttpServletRequest request,
                                    @CookieValue(value = "city", defaultValue = "1") int cityId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("cinemas");
@@ -54,7 +54,10 @@ public class CinemasController
 
         if(city != null) {
             geoCity = city.getName();
+            List<Building> cinemasList = buildingService.allByCity(city);
+            modelAndView.addObject("cinemasList", cinemasList);
         }
+
 
         modelAndView.addObject("geoCity", geoCity);
 
@@ -98,7 +101,7 @@ public class CinemasController
 
         modelAndView.addObject("geoCity", geoCity);
 
-        Building cinema = buildingService.getById(id);
+        Building cinema = buildingService.findById(id);
         modelAndView.addObject("cinema", cinema);
 
         Date date = new Date();

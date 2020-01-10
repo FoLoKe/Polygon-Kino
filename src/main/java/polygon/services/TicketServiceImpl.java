@@ -23,7 +23,7 @@ public class TicketServiceImpl implements TicketService {
     private TransactionRepository transactionRepository;
 
     @Override
-    public int setTickets(List<Integer> ids) {
+    public int setTickets(List<Integer> ids, User user) {
         List<Ticket> tickets = new ArrayList<>();
         Set<Ticket> transaction = new LinkedHashSet<>();
         for (int id : ids) {
@@ -36,10 +36,12 @@ public class TicketServiceImpl implements TicketService {
                 return -1;
             }
         }
+
         TicketsTransaction ticketsTransaction = new TicketsTransaction();
         ticketsTransaction.setEnded(false);
         ticketsTransaction.setTickets(transaction);
         ticketsTransaction.setDate(new java.sql.Timestamp(new Date().getTime()));
+        ticketsTransaction.setUser(user);
         ticketsTransaction.setTerminated(false);
 
         transactionRepository.save(ticketsTransaction);

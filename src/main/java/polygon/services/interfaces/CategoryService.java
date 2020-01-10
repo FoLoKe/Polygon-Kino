@@ -11,4 +11,7 @@ public interface CategoryService
     List<Category> allCategories();
     Category findById(int id);
 
+    void save(Category category);
+    boolean safeDelete(int id);
+
 }

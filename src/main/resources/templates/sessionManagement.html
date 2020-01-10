@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
+</head>
+<body>
+<form class="calendarForm" th:attr = "action=@{/management/manageSessions/save}" method = "post">
+    <select name = "selectedPerformance" >
+        <option th:each = "performance : ${performances}"
+                th:selected = "${defaultPerformance.id == performance.id}"
+                th:text = "${performance.name}"
+                th:value = "${performance.id}">
+        </option>
+    </select>
+    <input type="text" name="price" th:value="${price}">
+    <select name = "selectedRoom" >
+        <option th:each = "room : ${rooms}"
+                th:selected = "${defaultRoom.id == room.id}"
+                th:text = "${room.building.address} + ', зал №' + ${room.number}"
+                th:value = "${room.id}">
+        </option>
+    </select>
+    <input type="hidden" name="id" th:value="${id}">
+    <input type="datetime-local" name="date" th:value="${date}">
+    <input type="submit" value="Сохранить">
+</form>
+</body>
+</html>

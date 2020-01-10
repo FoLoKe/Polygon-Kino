@@ -12,6 +12,7 @@ import polygon.models.*;
 import polygon.repos.PreviewRepository;
 import polygon.repos.SeatsRepository;
 import polygon.repos.SeatsRowRepository;
+import polygon.services.PolygonUserDetailsService;
 import polygon.services.interfaces.*;
 
 import java.io.File;
@@ -19,6 +20,9 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -80,10 +84,132 @@ public class ManagementController {
     }
 
     @Autowired
-    private SessionService sessionService;
+    private CategoryService categoryService;
+
+    @RequestMapping(value = "/management/manageCategories", method = RequestMethod.GET)
+    public ModelAndView mangeCategories() {
+        ModelAndView modelAndView = new ModelAndView("categoriesManagement");
+        List<Category> categories = categoryService.allCategories();
+        modelAndView.addObject("categories", categories);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/management/manageCategories/delete", method = RequestMethod.GET)
+    public ModelAndView deleteCategory(@RequestParam("id") int id) {
+        categoryService.safeDelete(id);
+
+        return new ModelAndView("redirect:/management/manageCategories");
+    }
+
+    @RequestMapping(value = "/management/manageCategories/manage", method = RequestMethod.GET)
+    public ModelAndView manageCategory(@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
+        ModelAndView modelAndView = new ModelAndView("categoryManagement");
+
+        String name = "";
+        if(id != 0) {
+            Category category = categoryService.findById(id);
+            if (category != null) {
+                name = category.getName();
+            }
+        }
+
+        modelAndView.addObject("name", name);
+        modelAndView.addObject("id", id);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/management/manageCategories/save", method = RequestMethod.POST)
+    public ModelAndView saveCategory(@ModelAttribute("id") int id,
+                                 @ModelAttribute("name") String name) {
+        if (name != null && name.length() > 0) {
+            Category category = new Category();
+            if (id != 0) {
+                category = categoryService.findById(id);
+            }
+
+            if (category != null) {
+                category.setName(name);
+                categoryService.save(category);
+            }
+
+        }
+        return new ModelAndView("redirect:/management/manageCategories");
+    }
+
+    @RequestMapping(value = "/management/manageBuildings", method = RequestMethod.GET)
+    public ModelAndView manageBuildings() {
+        ModelAndView modelAndView = new ModelAndView("buildingsManagement");
+        List<Building> buildings = buildingService.allBuildings();
+        modelAndView.addObject("buildings", buildings);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/management/manageBuildings/delete", method = RequestMethod.GET)
+    public ModelAndView deleteBuilding(@RequestParam("id") int id) {
+        buildingService.safeDelete(id);
+
+        return new ModelAndView("redirect:/management/manageBuildings");
+    }
+
+    @RequestMapping(value = "/management/manageBuildings/manage", method = RequestMethod.GET)
+    public ModelAndView manageBuilding(@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
+        ModelAndView modelAndView = new ModelAndView("buildingManagement");
+
+        String address = "";
+        String type = "";
+        List<City> cities = cityService.allCities();
+        City defaultCity = null;
+        if(cities.size() > 0) {
+            defaultCity = cities.get(0);
+        }
+        if(id != 0) {
+            Building building = buildingService.findById(id);
+            if (building != null) {
+                address = building.getAddress();
+                type = building.getType();
+                defaultCity = building.getCity();
+            }
+        }
+
+        modelAndView.addObject("address", address);
+        modelAndView.addObject("id", id);
+        modelAndView.addObject("type", type);
+        modelAndView.addObject("cities", cities);
+        modelAndView.addObject("defaultCity", defaultCity);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/management/manageBuildings/save", method = RequestMethod.POST)
+    public ModelAndView manageBuilding(@ModelAttribute("id") int id,
+                                     @ModelAttribute("address") String address,
+                                       @ModelAttribute("type") String type,
+                                       @ModelAttribute("selectedCity") int cityId)
+    {
+        City city = cityService.findById(cityId);
+        if (address != null && address.length() > 0 && type.length() > 0 && city != null) {
+            Building building = new Building();
+            if (id != 0) {
+                building = buildingService.findById(id);
+            }
+
+            if (building != null) {
+                building.setAddress(address);
+                building.setCity(city);
+                building.setType(type);
+                buildingService.save(building);
+            }
+
+        }
+        return new ModelAndView("redirect:/management/manageBuildings");
+    }
 
     @Autowired
     private BuildingService buildingService;
+
+    @Autowired
+    private SessionService sessionService;
 
     @RequestMapping(value = "/management/manageSessions", method = RequestMethod.GET)
     public ModelAndView mangeSessions() {
@@ -129,7 +255,7 @@ public class ManagementController {
 
         if (buildings != null) {
             modelAndView.addObject("buildings", buildings);
-            Building building = buildingService.getById(Integer.parseInt(id));
+            Building building = buildingService.findById(Integer.parseInt(id));
             modelAndView.addObject("defaultBuilding", building);
             sessions = sessionService.findSessionsInBuilding(building, time);
         }
@@ -150,21 +276,80 @@ public class ManagementController {
     public ModelAndView manageSession(@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
         ModelAndView modelAndView = new ModelAndView("sessionManagement");
 
+        Performance defaultPerformance = null;
+        List<Performance> performances = performanceService.allPerformances();
+        if(performances.size() > 0) {
+            defaultPerformance = performances.get(0);
+        }
+
+        Room defaultRoom = null;
+        List<Room> rooms = roomService.allRooms();
+        if(rooms.size() > 0) {
+            defaultRoom = rooms.get(0);
+        }
+
+        LocalDateTime date = LocalDateTime.now();
+        float price = 0;
+
+        if (id != 0) {
+            Session session = sessionService.findById(id);
+            if (session != null) {
+
+                date = session.getTime().toLocalDateTime();
+                price = session.getPrice();
+            }
+        }
+
+        DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        String sDate = "";
+        try {
+            sDate = date.format(sdf);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+        modelAndView.addObject("performances", performances);
+        modelAndView.addObject("defaultPerformance", defaultPerformance);
+        modelAndView.addObject("rooms", rooms);
+        modelAndView.addObject("defaultRoom", defaultRoom);
+
+        modelAndView.addObject("date", sDate);
+        modelAndView.addObject("price", price);
+        modelAndView.addObject("id", id);
+
         return modelAndView;
     }
 
     @RequestMapping(value = "/management/manageSessions/save", method = RequestMethod.POST)
-    public ModelAndView saveSession(@RequestParam(value = "id") int id) {
-        sessionService.cancel(id);
+    public ModelAndView saveSession(@RequestParam(value = "id") int id,
+                                    @ModelAttribute("price") float price,
+                                    @ModelAttribute("selectedRoom") int selectedRoom,
+                                    @ModelAttribute("selectedPerformance") int selectedPerformance,
+                                    @ModelAttribute("date") String date)
+    {
+        Room room = roomService.findById(selectedRoom);
+        Performance performance = performanceService.findById(selectedPerformance);
+        if(price > 0 && room != null && performance != null) {
+            Session session = sessionService.findById(id);
+            if (session == null) {
+                session = new Session();
+            }
 
+            session.setRoom(room);
+            session.setPerformance(performance);
+            session.setPrice(price);
+
+            DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            LocalDateTime localDateTime = LocalDateTime.from(sdf.parse(date));
+
+            session.setTime(new Timestamp(Date.from(localDateTime.atZone( ZoneId.systemDefault()).toInstant()).getTime()));
+            sessionService.addSession(session);
+        }
         return new ModelAndView("redirect:/management/manageSessions");
     }
 
     @Autowired
     private PerformanceService performanceService;
-
-    @Autowired
-    private CategoryService categoryService;
 
     @Autowired
     private PreviewRepository previewRepository;
@@ -318,14 +503,27 @@ public class ManagementController {
     @RequestMapping(value = "/management/manageRooms/manage", method = RequestMethod.GET)
     public ModelAndView manageRoom() {
         ModelAndView modelAndView = new ModelAndView("roomManagement");
+        Building defaultBuilding = null;
+        List<Building> buildings = buildingService.allBuildings();
+        if(buildings.size() > 0) {
+            defaultBuilding = buildings.get(0);
+        }
 
+        modelAndView.addObject("defaultBuilding", defaultBuilding);
+        modelAndView.addObject("buildings", buildings);
         return modelAndView;
     }
 
     @RequestMapping(value = "/management/manageRooms/save", method = RequestMethod.POST)
-    public ModelAndView saveRoom(@ModelAttribute("rowsCount") int rowsCount, @RequestParam("seatsCount") List<Integer> seatsCountList, @RequestParam(value = "seat", required = false) List<String> seats) {
-
-        if(rowsCount > 0 && seats != null) {
+    public ModelAndView saveRoom(@ModelAttribute("rowsCount") int rowsCount,
+                                 @ModelAttribute("selectedBuilding") int buildingId,
+                                 @ModelAttribute("number") int number,
+                                 @ModelAttribute("type") String type,
+                                 @RequestParam("seatsCount") List<Integer> seatsCountList,
+                                 @RequestParam(value = "seat", required = false) List<String> seats)
+    {
+        Building building = buildingService.findById(buildingId);
+        if(rowsCount > 0 && seats != null && building != null && number > 0 && type.length() > 0) {
             Room room = new Room();
             Set<SeatsRow> seatsRowSet = new LinkedHashSet<>();
             for (int iRow = 1; iRow <= rowsCount; iRow++) {
@@ -354,12 +552,99 @@ public class ManagementController {
 
             room.setSeatsRows(seatsRowSet);
 
-            room.setNumber(0);
-            room.setType("DEBUG");
+            room.setBuilding(building);
+            room.setNumber(number);
+            room.setType(type);
             roomService.save(room);
 
 
         }
         return new ModelAndView("redirect:/management/manageRooms");
     }
+
+    @Autowired
+    private PolygonUserDetailsService polygonUserDetailsService;
+
+    @RequestMapping(value = "/management/manageUsers", method = RequestMethod.GET)
+    public ModelAndView mangeUsers() {
+        ModelAndView modelAndView = new ModelAndView("usersManagement");
+        List<User> users = polygonUserDetailsService.allUsers();
+        modelAndView.addObject("users", users);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/management/manageUsers/delete", method = RequestMethod.GET)
+    public ModelAndView deleteUser(@RequestParam("id") int id) {
+        polygonUserDetailsService.delete(id);
+
+        return new ModelAndView("redirect:/management/manageUsers");
+    }
+
+    @RequestMapping(value = "/management/manageUsers/manage", method = RequestMethod.GET)
+    public ModelAndView manageUser(@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
+        ModelAndView modelAndView = new ModelAndView("userManagement");
+
+        String username = "";
+        String email = "";
+        String password = "";
+        String role = "";
+        int balance = 0;
+        if(id != 0) {
+            User user = polygonUserDetailsService.findById(id);
+            if (user != null) {
+                username = user.getUsername();
+                email = user.getEmail();
+                password = user.getPassword();
+                role = user.getRole();
+            }
+        }
+
+        modelAndView.addObject("username", username);
+        modelAndView.addObject("email", email);
+        modelAndView.addObject("id", id);
+        modelAndView.addObject("password", password);
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("balance", balance);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/management/manageUsers/save", method = RequestMethod.POST)
+    public ModelAndView saveUser(@ModelAttribute("id") int id,
+                                 @ModelAttribute("username") String username,
+                                 @ModelAttribute("email") String email,
+                                 @ModelAttribute("password") String password,
+                                 @ModelAttribute("balance") int balance,
+                                 @ModelAttribute("role") String role) {
+        if ( username.length() > 0 && email.length() > 0 && password.length() > 0 && balance >= 0 && role.length() > 0) {
+            User user = new User();
+            if (id != 0) {
+                user = polygonUserDetailsService.findById(id);
+            }
+
+            if (user != null) {
+                user.setUsername(username);
+                user.setEmail(email);
+                user.setBalance(balance);
+                user.setRole(role);
+                user.setPassword(password);
+                polygonUserDetailsService.save(user);
+            }
+
+        }
+        return new ModelAndView("redirect:/management/manageUsers");
+    }
+
+
+    @Autowired
+    TransactionService transactionService;
+    @RequestMapping(value = "/management/manageTransactions", method = RequestMethod.GET)
+    public ModelAndView mangeTransactions() {
+        ModelAndView modelAndView = new ModelAndView("transactionsManagement");
+        List<TicketsTransaction> ticketsTransactions = transactionService.allTransactions();
+        modelAndView.addObject("transactions", ticketsTransactions);
+
+        return modelAndView;
+    }
+
 }
