@@ -829,6 +829,37 @@ font-family: Roboto;
 .loginLogin {
     width: 100%;
 }
+
+.ManagmentForm
+{
+     display: inline-table;
+    background: white;
+    padding: 10px;
+    position: absolute;
+    border-bottom-color: orange;
+        border-bottom-style: solid;
+        border-bottom-width: 15px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.ManagmentText
+{
+
+    font-size: 20px;
+    color: #333333;
+    font-weight bold 100;
+    font: Roboto;
+
+    text-decoration: none;
+
+}
+.ManagmentText:hover
+{
+    background: orange;
+    color: black;
+}
+
 .blocks {
     display: inline-block;
 }

@@ -2,16 +2,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <form class="calendarForm" th:attr = "action=@{/management/manageCities/save}" method = "post">
-        <input type="text" name="name" th:value="${name}">
-        <input type="hidden" name="id" th:value="${id}">
-        <input type="submit" value="Сохранить">
-    </form>
+<center>
+    <div>
+        <form class="ManagmentForm" th:attr = "action=@{/management/manageCities/save}" method = "post">
+            <input type="text" name="name" th:value="${name}">
+            <input type="hidden" name="id" th:value="${id}">
+            <input type="submit" value="Сохранить">
+            <div>
+                <a class="ManagmentText" onclick="history.back();"> Назад</a>
+            </div>
+        </form>
+    </div>
+</center>
 </body>
 </html>
