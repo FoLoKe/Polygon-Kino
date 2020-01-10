@@ -8,11 +8,12 @@
     <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 </head>
 <body>
-<div class="calendar">
-    <form class="calendarForm" th:attr = "action=@{/management/manageSessions}" method = "post">
+<div class="ManagmentForm">
+<div>
+    <form  th:attr = "action=@{/management/manageSessions}" method = "post">
         Выберите дату:
-        <input class="calendarCalendar" type="date" name="day" th:value="${day}"  >
-        <input class="calendarButton" type="submit" value="Выбрать">
+        <input  type="date" name="day" th:value="${day}"  >
+        <input  type="submit" value="Выбрать">
         <select name = "selectedBuilding" >
             <option th:each = "building : ${buildings}" th:selected = "${defaultBuilding.id == building.id}" th:text = "${building.address}" th:value = "${building.id}">
 
@@ -34,10 +35,10 @@
                         </p>
                     </td>
                     <td>
-                        <a th:href="'/management/manageSessions/delete?id=' + ${ssession.id}"> Удалить</a>
+                        <a class="ManagmentText" th:href="'/management/manageSessions/delete?id=' + ${ssession.id}"> Удалить</a>
                     </td>
                     <td>
-                        <a th:href="'/management/manageSessions/manage?id=' + ${ssession.id}"> Изменить</a>
+                        <a class="ManagmentText" th:href="'/management/manageSessions/manage?id=' + ${ssession.id}"> Изменить</a>
                     </td>
                 </tr>
             </table>
@@ -45,5 +46,9 @@
 
     </tr>
 </table>
+    <div>
+        <a class="ManagmentText" onclick="history.back();"> Назад</a>
+    </div>
+</div>
 </body>
 </html>
