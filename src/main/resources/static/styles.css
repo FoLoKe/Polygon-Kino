@@ -845,7 +845,8 @@ font-family: Roboto;
 }
 .ManagmentText
 {
-
+padding: 5px;
+margin: 2px;
     font-size: 20px;
     color: #333333;
     font-weight bold 100;
