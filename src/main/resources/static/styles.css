@@ -829,6 +829,16 @@ font-family: Roboto;
 .loginLogin {
     width: 100%;
 }
+.refunds {
+    height: -webkit-fill-available;
+        display: table;
+        width: -webkit-fill-available;
+}
+.refunds_table {
+    height: 80%;
+    overflow-y: scroll;
+    width: -webkit-fill-available;
+}
 
 .ManagmentForm
 {

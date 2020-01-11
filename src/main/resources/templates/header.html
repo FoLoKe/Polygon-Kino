@@ -10,6 +10,46 @@
 </head>
 <body>
 <div th:fragment="head">
+    <div id="refundsPopup" >
+        <div class="noSize" sec:authorize="isAuthenticated()">
+            <div class = "userWindow">
+                <div class="login">
+                    <div class="refunds">
+                        <div class = "refunds_table">
+                            <table>
+                                <caption>Билеты</caption>
+                                <tr>
+                                    <th>ID операции</th>
+                                    <th>Сеанс</th>
+                                    <th>Возврат</th>
+                                </tr>
+                                <tr th:each = "transaction : ${transactions}" th:if="${transaction.tickets.size() > 0}">
+                                    <td th:text="${transaction.id}">
+
+                                    </td>
+                                    <td th:text="${#dates.format(transaction.tickets.toArray()[0].session.time, 'dd-MMM-yyyy HH:mm')}">
+
+                                    </td>
+                                    <td>
+                                        <p th:if="${transaction.ended} == false">Операция не была завершена</p>
+                                        <p th:if="${transaction.ended == true && transaction.refunded == true}">Оформлен возврат</p>
+                                        <p th:if="${transaction.ended == true && transaction.tickets.toArray()[0].session.time.before(#dates.createNow()) }">Сеанс уже завершен</p>
+                                        <p th:if="${transaction.ended == true && transaction.tickets.toArray()[0].session.time.after(#dates.createNow()) && transaction.byBalance == true}">Оплачено бонусами</p>
+                                        <form th:action="@{'/refund?id=' + ${transaction.id}}" method="post">
+                                        <input th:if="${transaction.ended == true && transaction.tickets.toArray()[0].session.time.after(#dates.createNow()) && transaction.refunded == false && transaction.byBalance == false}"
+                                            type="submit" value="вернуть">
+                                        </form>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    <input type="button" value="Назад" onclick="rPopUpSwitch()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="loginPopup">
     <div class="noSize">
         <div class = "userWindow">
@@ -29,6 +69,8 @@
                         <div class = "loggedInfo">
                             <p class = "loggedName" th:text="${user.username}"></p>
                             <p class = "loggedEmail" th:text="${user.email}"></p>
+                            <input type="button" value="Возврат билетов"
+                                   onclick="rPopUpSwitch()"/>
                             <input type="submit" value="Выйти"/>
                         </div>
                         <div class = "loggedBalance">
@@ -64,23 +106,15 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
                 <div class="second_column">
                     <a class ="enterButton" href="javascript:lPopUpSwitch()">
                         <div class="enter">
-
                             <p class = "etext" sec:authorize="isAnonymous()"> Вход</p>
                             <p class = "etext" sec:authorize="isAuthenticated()">[[${#httpServletRequest.remoteUser}]] </p>
-
                         </div>
                     </a>
-
-
                 </div>
-
-
             </div>
 
             <div class="bottom_line">

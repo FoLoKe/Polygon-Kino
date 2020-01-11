@@ -74,4 +74,30 @@ public class TransactionServiceImpl implements TransactionService {
         }
         return ticketsTransactions;
     }
+
+    @Override
+    @Transactional
+    public List<TicketsTransaction> findByUser(User user) {
+        List<TicketsTransaction> ticketsTransactions = transactionRepository.findWithUser(user);
+        for(TicketsTransaction ticketsTransaction : ticketsTransactions) {
+            Set<Ticket> tickets = ticketsTransaction.getTickets();
+            tickets.size();
+            for (Ticket ticket : tickets) {
+                Hibernate.initialize(ticket);
+
+                if (ticket instanceof HibernateProxy) {
+                    ticket = (Ticket) ((HibernateProxy) ticket).getHibernateLazyInitializer()
+                            .getImplementation();
+                }
+                Session session = ticket.getSession();
+                Hibernate.initialize(session);
+
+                if (session instanceof HibernateProxy) {
+                    session = (Session) ((HibernateProxy) session).getHibernateLazyInitializer()
+                            .getImplementation();
+                }
+            }
+        }
+        return ticketsTransactions;
+    }
 }

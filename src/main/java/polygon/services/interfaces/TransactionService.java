@@ -1,6 +1,7 @@
 package polygon.services.interfaces;
 
 import polygon.models.TicketsTransaction;
+import polygon.models.User;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -12,4 +13,5 @@ public interface TransactionService {
     Set<TicketsTransaction> findExpired(Timestamp date);
 
     List<TicketsTransaction> allTransactions();
+    List<TicketsTransaction> findByUser(User user);
 }

@@ -115,10 +115,13 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Autowired
-    TransactionRepository transactionRepository;
+    private TransactionRepository transactionRepository;
 
     @Autowired
-    EmailServiceImpl emailService;
+    private EmailServiceImpl emailService;
+
+    @Autowired
+    private StripeService stripeService;
 
     @Override
     @Transactional
@@ -137,8 +140,12 @@ public class SessionServiceImpl implements SessionService {
                     emailService.sendSimpleMessage(ticketsTransaction.getEmail(), "Сеанс отменен",
                             "Сеанс на " + ticket.getSession().getTime() +
                                     " " + ticket.getSession().getPerformance().getName() +
-                                    "\nбыл отменен, обратитесь за возвратом средств."
+                                    "\nбыл отменен, оформлен возврат средств."
                             );
+                    if(ticketsTransaction.getChargeId() != null
+                            && ticketsTransaction.getChargeId().length() > 0) {
+                        stripeService.refund(ticketsTransaction);
+                    }
                 }
                 transactionRepository.save(ticketsTransaction);
                 transactionRepository.flush();

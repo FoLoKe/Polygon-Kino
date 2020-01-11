@@ -130,6 +130,9 @@ public class PaymentController {
                         sendEmail(user.getEmail(), ids);
                         ticketsTransaction.setEnded(true);
                         ticketsTransaction.setEmail(user.getEmail());
+                        ticketsTransaction.setTerminated(false);
+                        ticketsTransaction.setRefunded(false);
+                        ticketsTransaction.setByBalance(true);
                         transactionService.save(ticketsTransaction);
                         modelAndView.setViewName("successPayment");
                     }
@@ -150,6 +153,9 @@ public class PaymentController {
                     sendEmail(((Card) charge.getSource()).getName(), ids);
                     ticketsTransaction.setEnded(true);
                     ticketsTransaction.setEmail(((Card) charge.getSource()).getName());
+                    ticketsTransaction.setChargeId(charge.getId());
+                    ticketsTransaction.setByBalance(false);
+                    ticketsTransaction.setRefunded(false);
                     transactionService.save(ticketsTransaction);
                     modelAndView.setViewName("successPayment");
                 }
@@ -174,6 +180,36 @@ public class PaymentController {
 
         }
         emailService.sendSimpleMessage(email, "Ваши билеты", emailText);
+    }
+
+    @RequestMapping(value = "/refund", method = RequestMethod.POST)
+    public ModelAndView refund(@RequestParam("id") int id) {
+        TicketsTransaction ticketsTransaction = transactionService.findById(id);
+
+        if(ticketsTransaction.getUser() != null) {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            int userBalance = 0;
+            String username;
+            if (principal instanceof UserDetails) {
+                username = ((UserDetails) principal).getUsername();
+            } else {
+                username = principal.toString();
+            }
+
+            User user = null;
+            if (username != null && !username.isEmpty()) {
+                user = polygonUserDetailsService.getUserByUsername(username);
+                if (ticketsTransaction.isEnded() && !ticketsTransaction.isRefunded() && ticketsTransaction.getUser().getId() == user.getId()) {
+                    stripeService.refund(ticketsTransaction);
+                    transactionService.save(ticketsTransaction);
+                    emailService.sendSimpleMessage(ticketsTransaction.getEmail(), "Возврат билетов",
+                            "С вашего аккаунта был оформлен возврат средств."
+                    );
+                }
+            }
+        }
+
+        return new ModelAndView("redirect:/");
     }
 }
 
