@@ -25,7 +25,7 @@ public class PolygonUserDetailsServiceTest {
     @Autowired
     private PolygonUserDetailsService polygonUserDetailsService;
 
-    @Mock
+    @MockBean
     UserRepository userRepository;
 
     @Test
@@ -33,8 +33,8 @@ public class PolygonUserDetailsServiceTest {
         User user = new User();
         String username = "Vitalik";
         user.setUsername(username);
-        UserRepository userRepositoryMock = mock(UserRepository.class);
-        Mockito.when(userRepositoryMock.findByUsername(username)).thenReturn(user);
+//        UserRepository userRepositoryMock = mock(UserRepository.class);
+        Mockito.when(userRepository.findByUsername(username)).thenReturn(user);
         polygonUserDetailsService.loadUserByUsername(username);
         Mockito.verify(userRepository,Mockito.times(1)).findByUsername(username);
     }
@@ -44,8 +44,8 @@ public class PolygonUserDetailsServiceTest {
         User user = new User();
         String username = "Vitalik";
         user.setUsername(username);
-        UserRepository userRepositoryMock = mock(UserRepository.class);
-        Mockito.when(userRepositoryMock.findByUsername(username)).thenReturn(user);
+//        UserRepository userRepositoryMock = mock(UserRepository.class);
+        Mockito.when(userRepository.findByUsername(username)).thenReturn(user);
         User expected = polygonUserDetailsService.getUserByUsername(username);
 //        Mockito.verify(userRepository,Mockito.times(1)).findByUsername(username);
         Assert.assertEquals("Vitalik",expected.getUsername());

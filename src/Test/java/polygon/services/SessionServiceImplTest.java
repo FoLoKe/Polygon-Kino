@@ -9,19 +9,17 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import polygon.models.Building;
-import polygon.models.City;
-import polygon.models.Performance;
-import polygon.models.Session;
+import polygon.models.*;
 import polygon.repos.BuildingRepository;
 import polygon.repos.PerformanceRepository;
+import polygon.repos.RoomRepository;
 import polygon.repos.SessionRepository;
 import polygon.services.interfaces.SessionService;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static org.mockito.Mockito.mock;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -38,6 +36,14 @@ public class SessionServiceImplTest {
     private PerformanceRepository performanceRepository;
 
     @Test
+    public void addSession() {
+        Session session = new Session();
+        sessionService.addSession(session);
+        Mockito.verify(sessionRepository,Mockito.times(1)).save(session);
+        Mockito.verify(sessionRepository,Mockito.times(1)).flush();
+    }
+
+    @Test
     public void findSessionsInCity() {
         City city = new City();
         sessionService.findSessionsInCity(city);
@@ -48,19 +54,27 @@ public class SessionServiceImplTest {
     public void findBuildingsWithSessionsInCity() {
         Performance performance = new Performance();
         City city = new City();
-        Building b = new Building();
-         java.util.Date utilDate = new java.util.Date(System.currentTimeMillis());
-         java.sql.Timestamp time = new java.sql.Timestamp(utilDate.getTime());
-         Calendar c = Calendar.getInstance();
-         c.setTime(time);
-         c.add(Calendar.DATE, 1);
-         Timestamp endTime = new Timestamp(c.getTime().getTime());
-        Map<Building, List<Session>> orderedTest;
-        orderedTest = sessionService.findBuildingsWithSessionsInCity(performance,city,time);
+        Building building = new Building();
+        Session session = new Session();
+        building.setId(1);
+        city.setId(1);
+        building.setCity(city);
+        List<Building> buildings = List.of(building);
+        List<Session> sessions = List.of(session);
+        java.util.Date utilDate = new java.util.Date(System.currentTimeMillis());
+        java.sql.Timestamp time = new java.sql.Timestamp(utilDate.getTime());
+        Calendar c = Calendar.getInstance();
+        c.setTime(time);
+        c.add(Calendar.DATE, 1);
+        Timestamp endTime = new Timestamp(c.getTime().getTime());
+
+        Mockito.when(buildingRepository.findByCity(city)).thenReturn(buildings);
+        Mockito.when(sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(building, performance, time, endTime)).thenReturn(sessions);
+
+        Map<Building, List<Session>> orderedTest = sessionService.findBuildingsWithSessionsInCity(performance,city,time);
         Mockito.verify(buildingRepository,Mockito.times(1)).findByCity(city);
-        Mockito.verify(sessionRepository,Mockito.times(0)).findAllActiveSessionsOnPerformanceForBuilding(b,performance,time,endTime);
+        Mockito.verify(sessionRepository,Mockito.times(0)).findAllActiveSessionsOnPerformanceForBuilding(building,performance,time,endTime);
         Assert.assertNotNull(orderedTest);
-//        Assert.assertEquals(0,orderedTest.size());
     }
 
     @Test
@@ -75,15 +89,23 @@ public class SessionServiceImplTest {
         Mockito.verify(performanceRepository,Mockito.times(1)).findAll();
     }
 
-//    @Test
-//    public void findById() {
-//        Session session = new Session();
-//        Object object;
-//        int i = session.id();
-//
-//        SessionService serviceMock = mock(SessionService.class);
-//        Mockito.when(serviceMock.findById(1)).thenReturn(session);
-//        object = sessionService.findById(1);
-//        Assert.assertNotNull(object);
-//    }
+    @Test
+    public void findById() {
+        Session session = new Session();
+        Ticket ticket = new Ticket();
+        Performance performance = new Performance();
+        Preview preview = new Preview();
+        session.setId(1);
+        ticket.setId(1);
+        performance.setId(1);
+        Set<Ticket> tickets =Set.of(ticket);
+        Set<Preview> previews =Set.of(preview);
+        performance.setPreviews(previews);
+        session.setPrice(250);
+        session.setTickets(tickets);
+        session.setPerformance(performance);
+        Mockito.when(sessionRepository.findById(1)).thenReturn(Optional.of(session));
+        Session expected = sessionService.findById(1);
+        Assert.assertNotNull(expected);
+    }
 }

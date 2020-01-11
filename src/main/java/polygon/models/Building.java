@@ -46,6 +46,14 @@ public class Building {
         return address;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }
