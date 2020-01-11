@@ -9,12 +9,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import polygon.models.Ticket;
+import polygon.models.*;
 import polygon.repos.TicketRepository;
 import polygon.services.interfaces.TicketService;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -39,9 +38,23 @@ public class TicketServiceImplTest {
 //        Mockito.when(ticketRepositoryMock.findById(1)).thenReturn(ticket);
 //        int setTicketsWorks=ticketService.setTickets(list);
 //        Assert.assertNotEquals(-1,setTicketsWorks);
+        Ticket ticket1 = new Ticket();
+        Ticket ticket2 = new Ticket();
+        ticket1.setId(1);
+        ticket2.setId(2);
+        ticket1.setOccupied(false);
+        ticket2.setOccupied(false);
         List<Integer> list = new ArrayList<Integer>();
         list.add(1);
-        list.add(2);
+//        list.add(2);
+
+        TicketsTransaction ticketsTransaction = new TicketsTransaction();
+        ticketsTransaction.setEnded(false);
+        ticketsTransaction.setDate(new java.sql.Timestamp(new Date().getTime()));
+        ticketsTransaction.setTerminated(false);
+
+        Mockito.when(ticketRepository.findById(1)).thenReturn(Optional.of(ticket1));
+//        Mockito.when(ticketRepository.findById(2)).thenReturn(Optional.of(ticket2));
         int setTicketsWorks=ticketService.setTickets(list, null);
         Assert.assertNotEquals(-1,setTicketsWorks);
     }
@@ -53,24 +66,81 @@ public class TicketServiceImplTest {
         list.add(13);
         list.add(14);
         int setTicketsWorks=ticketService.setTickets(list, null);
-        Assert.assertNotEquals(-1,setTicketsWorks);
+        Assert.assertEquals(-1,setTicketsWorks);
     }
 
 
     @Test
-    public void rollbackTickets() {
+    public void getTicketById() {
+        Ticket ticket = new Ticket();
+        Session session = new Session();
+        session.setPrice(250);
+        ticket.setId(1);
+        ticket.setSession(session);
+        Mockito.when(ticketRepository.findById(1)).thenReturn(Optional.of(ticket));
+        Ticket expected = ticketService.getTicketById(1);
+        Assert.assertNotNull(expected);
+        Mockito.verify(ticketRepository,Mockito.times(1)).findById(1);
+    }
+
+
+    @Test
+    public void rollbackTickets1() {
         Ticket ticket=new Ticket();
+        ticket.setId(1);
+        ticket.setOccupied(true);
         List<Integer> list = new ArrayList<Integer>();
-        list.add(13);
-        list.add(14);
+        list.add(1);
+        Mockito.when(ticketRepository.findById(1)).thenReturn(Optional.of(ticket));
         ticketService.rollbackTickets(list);
         Assert.assertFalse(ticket.isOccupied());
+        Mockito.verify(ticketRepository,Mockito.times(1)).save(ticket);
+        Mockito.verify(ticketRepository,Mockito.times(1)).flush();
+    }
+
+    @Test
+    public void rollbackTickets2() {
+        Ticket ticket=new Ticket();
+        ticket.setId(1);
+        ticket.setOccupied(true);
+        Set<Ticket> tickets = Set.of(ticket);
+        Mockito.when(ticketRepository.findById(1)).thenReturn(Optional.of(ticket));
+        ticketService.rollbackTickets(tickets);
+        Assert.assertFalse(ticket.isOccupied());
+        Mockito.verify(ticketRepository,Mockito.times(1)).save(ticket);
+        Mockito.verify(ticketRepository,Mockito.times(1)).flush();
     }
 
     @Test
     public void loadTicket() {
-        Ticket ticket = ticketService.loadTicket(1);
-        Assert.assertNull(ticket);
+        Ticket ticket = new Ticket();
+        Session session = new Session();
+        Room room = new Room();
+        SeatsRow seatsRow = new SeatsRow();
+        Seat seat = new Seat();
+        Building building = new Building();
+        Performance performance = new Performance();
+
+        session.setPrice(250);
+        session.setId(1);
+        ticket.setId(1);
+        seatsRow.setId(1);
+        seat.setId(1);
+        room.setId(1);
+        building.setId(1);
+        performance.setId(1);
+
+        room.setBuilding(building);
+        seatsRow.setRoom(room);
+        seat.setSeatsRow(seatsRow);
+        session.setPerformance(performance);
+        ticket.setSession(session);
+        ticket.setSeat(seat);
+
+        Mockito.when(ticketRepository.findById(1)).thenReturn(Optional.of(ticket));
+        Ticket expected = ticketService.loadTicket(1);
+        Assert.assertNotNull(expected);
+        Mockito.verify(ticketRepository,Mockito.times(1)).findById(1);
     }
 
     @Test

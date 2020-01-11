@@ -24,18 +24,6 @@ public class IdTest {
     @Autowired
     private TransactionService transactionService;
 
-    @Test
-    public void findById_Room() {
-        Object object = roomService.findById(1);
-        Assert.assertNotNull(object);
-    }
-
-    @Test
-    public void findById_Session() {
-        Object object;
-        object = sessionService.findById(1);
-        Assert.assertNotNull(object);
-    }
 
     @Test
     public void getTicketByIdTest() {
@@ -45,9 +33,4 @@ public class IdTest {
         Assert.assertNull(object);
     }
 
-    @Test
-    public void findById_Transaction() {
-        Object object = transactionService.findById(1);
-        Assert.assertNotNull(object);
-    }
 }
