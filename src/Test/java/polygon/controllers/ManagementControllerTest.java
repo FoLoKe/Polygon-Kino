@@ -3,11 +3,11 @@ package polygon.controllers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,7 +18,6 @@ import polygon.services.interfaces.*;
 import java.sql.Timestamp;
 import java.util.*;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,28 +37,28 @@ public class ManagementControllerTest {
     @Autowired
     private ManagementController controller;
 
-    @MockBean
+    @Mock
     private CityService cityService;
 
-    @MockBean
+    @Mock
     private CategoryService categoryService;
 
-    @MockBean
+    @Mock
     private BuildingService buildingService;
 
-    @MockBean
+    @Mock
     private SessionService sessionService;
 
-    @MockBean
+    @Mock
     private RoomService roomService;
 
-    @MockBean
+    @Mock
     private PerformanceService performanceService;
 
-    @MockBean
+    @Mock
     private PolygonUserDetailsService userService;
 
-    @MockBean
+    @Mock
     private TransactionService transactionService;
 
     @Test
@@ -78,7 +77,7 @@ public class ManagementControllerTest {
         city.setId(1);
         List<City> cities = List.of(city);
         Mockito.when(cityService.allCities()).thenReturn(cities);
-        ModelAndView expected = controller.mangeCities();
+        ModelAndView expected = controller.manageCities();
         Assert.assertNotNull(expected);
     }
 
@@ -115,7 +114,7 @@ public class ManagementControllerTest {
         category.setId(1);
         List<Category> categories = List.of(category);
         Mockito.when(categoryService.allCategories()).thenReturn(categories);
-        ModelAndView expected = controller.mangeCategories();
+        ModelAndView expected = controller.manageCategories();
         Assert.assertNotNull(expected);
     }
 
@@ -203,7 +202,7 @@ public class ManagementControllerTest {
         Mockito.when(buildingService.allBuildings()).thenReturn(buildings);
         Mockito.when(sessionService.findSessionsInBuilding(building,timestamp)).thenReturn(performances_sessions);
 
-        ModelAndView expected = controller.mangeSessions();
+        ModelAndView expected = controller.manageSessions(0,"0");
         Assert.assertNotNull(expected);
     }
 
@@ -275,7 +274,7 @@ public class ManagementControllerTest {
         Mockito.when(sessionService.findById(1)).thenReturn(session);
         Mockito.when(roomService.findById(1)).thenReturn(room);
         Mockito.when(performanceService.findById(1)).thenReturn(performance);
-        controller.saveSession(1,1000,1,1,"2017-03-08 12:30");
+        controller.saveSession(1,1000,1,1,"2017-03-08T12:30");
         Mockito.verify(sessionService,Mockito.times(1)).addSession(session);
     }
 
@@ -329,7 +328,7 @@ public class ManagementControllerTest {
         room.setId(1);
         List<Room> rooms = List.of(room);
         Mockito.when(roomService.allRooms()).thenReturn(rooms);
-        ModelAndView expected = controller.mangeRooms();
+        ModelAndView expected = controller.manageRooms();
         Assert.assertNotNull(expected);
     }
 
@@ -378,7 +377,7 @@ public class ManagementControllerTest {
         user.setId(1);
         List<User> users = List.of(user);
         Mockito.when(userService.allUsers()).thenReturn(users);
-        ModelAndView expected = controller.mangeUsers();
+        ModelAndView expected = controller.manageUsers();
         Assert.assertNotNull(expected);
     }
 
@@ -417,7 +416,7 @@ public class ManagementControllerTest {
         ticketsTransaction.setId(1);
         List<TicketsTransaction> ticketsTransactions = List.of(ticketsTransaction);
         Mockito.when(transactionService.allTransactions()).thenReturn(ticketsTransactions);
-        ModelAndView expected = controller.mangeTransactions();
+        ModelAndView expected = controller.manageTransactions();
         Assert.assertNotNull(expected);
     }
 }

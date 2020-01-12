@@ -1,19 +1,17 @@
 package polygon.controllers;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.servlet.ModelAndView;
 import polygon.models.*;
 import polygon.services.EmailServiceImpl;
 import polygon.services.interfaces.TicketService;
@@ -22,7 +20,6 @@ import polygon.services.interfaces.TransactionService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,13 +35,13 @@ public class PaymentControllerTest {
     @Autowired
     private PaymentController controller;
 
-    @MockBean
+    @Mock
     private TicketService ticketService;
 
-    @MockBean
+    @Mock
     private EmailServiceImpl emailService;
 
-    @MockBean
+    @Mock
     private TransactionService transactionService;
 
     @Test
