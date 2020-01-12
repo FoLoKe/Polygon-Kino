@@ -8,16 +8,27 @@
     <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 </head>
 <body>
+<div class="ManagmentForm">
 <form class="calendarForm" th:attr = "action=@{/management/manageBuildings/save}" method = "post">
     <select name = "selectedCity" >
-        <option th:each = "city : ${cities}" th:selected = "${defaultCity.id == city.id}" th:text = "${city.name}" th:value = "${city.id}">
+        <option class="ManagmentText2" th:each = "city : ${cities}" th:selected = "${defaultCity.id == city.id}" th:text = "${city.name}" th:value = "${city.id}">
 
         </option>
     </select>
-    <input type="text" name="address" th:value="${address}">
-    <input type="text" name="type" th:value="${type}">
-    <input type="hidden" name="id" th:value="${id}">
-    <input type="submit" value="Сохранить">
+    <div>
+    <input class="ManagmentText2" type="text" name="address" th:value="${address}">
+</div>
+    <div>
+    <input class="ManagmentText2" type="text" name="type" th:value="${type}">
+</div>
+    <div>
+    <input class="ManagmentText2" type="hidden" name="id" th:value="${id}">
+</div>
+    <div>
+    <input class="ManagmentText2" type="submit" value="Сохранить">
+</div>
+
 </form>
+</div>
 </body>
 </html>

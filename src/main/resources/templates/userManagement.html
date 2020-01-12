@@ -2,20 +2,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 </head>
 <body>
+<div class = "ManagmentForm">
 <form class="calendarForm" th:attr = "action=@{/management/manageUsers/save}" method = "post">
-    <input type="text" name="username" th:value="${username}">
-    <input type="text" name="password" th:value="${password}">
-    <input type="text" name="email" th:value="${email}">
-    <input type="text" name="role" th:value="${role}">
-    <input type="text" name="balance" th:value="${balance}">
-    <input type="hidden" name="id" th:value="${id}">
-    <input type="submit" value="Сохранить">
+    <div>
+    <input class="ManagmentText2"  type="text" name="username" th:value="${username}">
+    </div>
+    <div>
+    <input class="ManagmentText2"  type="text" name="password" th:value="${password}">
+    </div>
+        <div>
+    <input class="ManagmentText2"  type="text" name="email" th:value="${email}">
+        </div>
+            <div>
+    <input class="ManagmentText2"  type="text" name="role" th:value="${role}">
+            </div>
+                <div>
+    <input class="ManagmentText2"  type="text" name="balance" th:value="${balance}">
+                </div>
+                    <div>
+    <input class="ManagmentText2"  type="hidden" name="id" th:value="${id}">
+                    </div>
+                        <div>
+    <input class="ManagmentText" type="submit" value="Сохранить">
+                        </div>
 </form>
+    <div>
+        <a class="ManagmentText" class="ManagmentText" onclick="history.back();"> Назад</a>
+    </div>
+</div>
 </body>
 </html>

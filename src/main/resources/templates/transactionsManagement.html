@@ -2,33 +2,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 </head>
 <body>
-<table>
-    <tr th:each ="transaction : ${transactions}">
-        <td>
-            <p th:text = "${transaction.id}"></p>
-        </td>
-        <td>
-            <p th:text = "${transaction.email}"></p>
-        </td>
-        <td>
-            <p th:text = "${transaction.date}"></p>
-        </td>
-        <td>
-            <p th:text = "${transaction.ended}"></p>
-        </td>
-        <td>
-            <p th:text = "${transaction.terminated}"></p>
-        </td>
-        <td th:if = "${transaction.user} != null">
-            <p th:text = "${transaction.user.username}"></p>
-        </td>
-    </tr>
-</table>
+<div class = "ManagmentForm">
+    <table>
+        <tr th:each ="transaction : ${transactions}">
+            <td>
+                <p  th:text = "${transaction.id}"></p>
+            </td>
+            <td>
+                <p  th:text = "${transaction.email}"></p>
+            </td>
+            <td>
+                <p  th:text = "${transaction.date}"></p>
+            </td>
+            <td>
+                <p  th:text = "${transaction.ended}"></p>
+            </td>
+            <td>
+                <p  th:text = "${transaction.terminated}"></p>
+            </td>
+            <td th:if = "${transaction.user} != null">
+                <p  th:text = "${transaction.user.username}"></p>
+            </td>
+        </tr>
+    </table>
+    <div>
+        <a class="ManagmentText" onclick="history.back();"> Назад</a>
+    </div>
+</div>
 </body>
 </html>

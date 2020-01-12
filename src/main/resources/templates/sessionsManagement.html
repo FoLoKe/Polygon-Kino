@@ -2,12 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 </head>
 <body>
+<div class="ManagmentForm">
 <div class="calendar">
     <form class="calendarForm" th:attr = "action=@{/management/manageSessions}" method = "post">
         Выберите дату:
@@ -26,18 +27,18 @@
             <table>
                 <tr th:each = "ssession : ${instance.value}">
                     <td>
-                        <p th:text = "${instance.key.name}"></p>
+                        <p class="ManagmentText2" th:text = "${instance.key.name}"></p>
                     </td>
                     <td>
-                        <p th:text = ${ssession.time}>
+                        <p class="ManagmentText2" th:text = ${ssession.time}>
 
                         </p>
                     </td>
                     <td>
-                        <a th:href="'/management/manageSessions/delete?id=' + ${ssession.id}"> Удалить</a>
+                        <a class="ManagmentText" th:href="'/management/manageSessions/delete?id=' + ${ssession.id}"> Удалить</a>
                     </td>
                     <td>
-                        <a th:href="'/management/manageSessions/manage?id=' + ${ssession.id}"> Изменить</a>
+                        <a class="ManagmentText" th:href="'/management/manageSessions/manage?id=' + ${ssession.id}"> Изменить</a>
                     </td>
                 </tr>
             </table>
@@ -48,6 +49,7 @@
 <a href="/management/manageSessions/manage"> Добавить </a>
 <div>
     <a class="ManagmentText" onclick="history.back();"> Назад</a>
+</div>
 </div>
 </body>
 </html>

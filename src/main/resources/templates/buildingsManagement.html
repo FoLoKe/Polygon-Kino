@@ -2,25 +2,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 </head>
 <body>
+<div class = "ManagmentForm">
 <table>
     <tr th:each ="building : ${buildings}">
         <td>
-            <p th:text = "${building.city.name} + ', ' + ${building.address}"></p>
+            <p class="ManagmentText2"  th:text = "${building.city.name} + ', ' + ${building.address}"></p>
         </td>
         <td>
-            <a th:href="'/management/manageBuildings/manage?id=' + ${building.id}"> Изменить</a>
+            <a class="ManagmentText" th:href="'/management/manageBuildings/manage?id=' + ${building.id}"> Изменить</a>
         </td>
         <td>
-            <a th:href="'/management/manageBuildings/delete?id=' + ${building.id}"> Удалить</a>
+            <a class="ManagmentText" th:href="'/management/manageBuildings/delete?id=' + ${building.id}"> Удалить</a>
         </td>
     </tr>
 </table>
-<a href="/management/manageBuildings/manage"> Добавить </a>
+<a class="ManagmentText"  href="/management/manageBuildings/manage"> Добавить </a>
+    <div>
+        <a class="ManagmentText" class="ManagmentText" onclick="history.back();"> Назад</a>
+    </div>
+</div>
 </body>
 </html>

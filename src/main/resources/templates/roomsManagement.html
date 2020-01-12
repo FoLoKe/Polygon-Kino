@@ -14,7 +14,7 @@
 <table>
     <tr th:each ="room : ${rooms}">
         <td>
-            <p th:text = "${room.building.city.name} + ', ' + ${room.building.address} + ', Зал № ' + ${room.number} +
+            <p class="ManagmentText2" th:text = "${room.building.city.name} + ', ' + ${room.building.address} + ', Зал № ' + ${room.number} +
             ' (' +  ${room.type} + ')'"></p>
         </td>
         <td>
