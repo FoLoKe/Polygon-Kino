@@ -105,4 +105,24 @@ public class SessionServiceImplTest {
         Session expected = sessionService.findById(1);
         Assert.assertNotNull(expected);
     }
+
+    @Test
+    public void cancel() {
+        Session session = new Session();
+        Ticket ticket = new Ticket();
+        Performance performance = new Performance();
+        Preview preview = new Preview();
+        session.setId(1);
+        ticket.setId(1);
+        performance.setId(1);
+        Set<Ticket> tickets =Set.of(ticket);
+        Set<Preview> previews =Set.of(preview);
+        performance.setPreviews(previews);
+        session.setPrice(250);
+        session.setTickets(tickets);
+        session.setPerformance(performance);
+        Mockito.when(sessionRepository.findById(1)).thenReturn(Optional.of(session));
+        sessionService.cancel(1);
+        Mockito.verify(sessionRepository,Mockito.times(1)).flush();
+    }
 }

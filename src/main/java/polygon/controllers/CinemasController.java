@@ -41,8 +41,8 @@ public class CinemasController
     private TransactionService transactionService;
 
     @RequestMapping(value="/cinemas", method = RequestMethod.GET)
-    public ModelAndView allCinemas(HttpServletRequest request,
-                                   @CookieValue(value = "city", defaultValue = "1") int cityId) {
+    public ModelAndView allCinemas(
+            @CookieValue(value = "city", defaultValue = "1") int cityId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("cinemas");
 
@@ -85,7 +85,7 @@ public class CinemasController
     }
 
     @RequestMapping(value="/cinema", method = RequestMethod.GET)
-    public ModelAndView cinemaDetails(@RequestParam("id") int id, HttpServletRequest request,
+    public ModelAndView cinemaDetails(@RequestParam("id") int id,
                                    @CookieValue(value = "city", defaultValue = "1") int cityId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("cinema");

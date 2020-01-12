@@ -29,7 +29,7 @@ public class RegServiceImplTest {
     public void registerNewUserAccount() {
         User user = new User();
         user.setPassword("password");
-        User expected = regService.registerNewUserAccount(user);
+        regService.registerNewUserAccount(user);
         Mockito.verify(userRepository,Mockito.times(1)).save(user);
     }
 

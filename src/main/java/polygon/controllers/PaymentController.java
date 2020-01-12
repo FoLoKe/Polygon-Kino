@@ -165,7 +165,7 @@ public class PaymentController {
         return modelAndView;
     }
 
-    private void sendEmail(String email, List<Integer> ids) {
+    public void sendEmail(String email, List<Integer> ids) {
         Ticket first = ticketService.loadTicket(ids.get(0));
         String emailText = "Спасибо за покупку!" +
                 "\n Ваши билеты на: " + first.getSession().getPerformance().getName() +

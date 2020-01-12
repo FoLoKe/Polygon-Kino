@@ -9,11 +9,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import polygon.models.Ticket;
-import polygon.models.TicketsTransaction;
+import polygon.models.*;
 import polygon.repos.TransactionRepository;
 import polygon.services.interfaces.TransactionService;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -62,6 +62,41 @@ public class TransactionServiceTest {
         java.sql.Timestamp time = new java.sql.Timestamp(utilDate.getTime());
         Mockito.when(transactionRepository.findExpired(time)).thenReturn(ticketsTransactions);
         Set<TicketsTransaction> expected = transactionService.findExpired(time);
+        Assert.assertNotNull(expected);
+        Assert.assertEquals(1,expected.size());
+    }
+
+    @Test
+    public void allTransactions() {
+        TicketsTransaction ticketsTransaction = new TicketsTransaction();
+        User user = new User();
+        ticketsTransaction.setId(1);
+        user.setId(1);
+        ticketsTransaction.setUser(user);
+        List<TicketsTransaction> ticketsTransactions = List.of(ticketsTransaction);
+        Mockito.when(transactionRepository.findAll()).thenReturn(ticketsTransactions);
+        List<TicketsTransaction> expected=transactionService.allTransactions();
+        Assert.assertNotNull(expected);
+        Assert.assertEquals(1,expected.size());
+    }
+
+    @Test
+    public void findByUser() {
+        TicketsTransaction ticketsTransaction = new TicketsTransaction();
+        User user = new User();
+        Ticket ticket = new Ticket();
+        Session session = new Session();
+        ticket.setId(1);
+        ticketsTransaction.setId(1);
+        user.setId(1);
+        session.setId(1);
+        ticket.setSession(session);
+        ticketsTransaction.setUser(user);
+        Set<Ticket> tickets =Set.of(ticket);
+        ticketsTransaction.setTickets(tickets);
+        List<TicketsTransaction> ticketsTransactions = List.of(ticketsTransaction);
+        Mockito.when(transactionRepository.findWithUser(user)).thenReturn(ticketsTransactions);
+        List<TicketsTransaction> expected=transactionService.findByUser(user);
         Assert.assertNotNull(expected);
         Assert.assertEquals(1,expected.size());
     }

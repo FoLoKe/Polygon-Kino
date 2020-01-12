@@ -3,6 +3,7 @@ package polygon.services;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,6 +16,7 @@ import polygon.repos.PerformanceRepository;
 import polygon.repos.SessionRepository;
 import polygon.services.interfaces.BuildingService;
 import polygon.services.interfaces.PerformanceService;
+
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -232,8 +234,6 @@ public class PerformanceServiceImplTest {
 
     @Test
     public void writePreviewToResponse() {
-        //Найти объявление http респонса
-        //Ту ли картинку подгружает
         Performance performance = new Performance();
     }
 
@@ -245,5 +245,22 @@ public class PerformanceServiceImplTest {
         performanceService.add(performances);
         Mockito.verify(performanceRepository,Mockito.times(1)).saveAll(performances);
         Mockito.verify(performanceRepository,Mockito.times(1)).flush();
+    }
+
+    @Test
+    public void cancel() {
+        Performance performance = new Performance();
+        performance.setId(1);
+        boolean expected = performanceService.cancel(1);
+        Assert.assertTrue(expected);
+        Mockito.verify(performanceRepository,Mockito.times(1)).deleteById(1);
+    }
+
+    @Test
+    public void save() {
+        Performance performance = new Performance();
+        performance.setId(1);
+        performanceService.save(performance);
+        Mockito.verify(performanceRepository,Mockito.times(1)).saveAndFlush(performance);
     }
 }

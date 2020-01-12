@@ -9,6 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.ModelAndView;
 import polygon.models.User;
 
 import static org.hamcrest.core.StringContains.containsString;
@@ -30,14 +33,17 @@ public class RegControllerTest {
 
 
     @Test
-    public void showRegistrationForm() throws Exception{
+    public void registrationConnection() throws Exception{
         User user = new User();
         this.mockMvc.perform(get("/registration"))
                 .andDo(print())
                 .andExpect(status().isOk());
 //                .andExpect(model().size(3))
 //                .andExpect(model().attribute("polygon.models.User@3152d449",user));
+    }
 
+    @Test
+    public void showRegistrationForm() {
     }
 
     @Test
@@ -47,12 +53,8 @@ public class RegControllerTest {
                 .andExpect(status().is3xxRedirection());
     }
 
-//    @Test
-//    public void registerUserAccount() throws Exception {
-//        this.mockMvc.perform(get("/registration"))
-//                .andDo(print())
-//                .andExpect(status().isOk());
-//        Mockito.verify(user,Mockito.times(0)).getUsername().isEmpty();
-//
-//    }
+    @Test
+    public void registerUserAccount() {
+
+    }
 }

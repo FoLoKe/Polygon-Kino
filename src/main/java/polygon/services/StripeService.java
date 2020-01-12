@@ -32,7 +32,7 @@ public class StripeService {
         return charge;
     }
 
-    public boolean refund(TicketsTransaction ticketsTransaction) {
+    public void refund(TicketsTransaction ticketsTransaction) {
         try {
             if (ticketsTransaction.isRefunded()
                     || ticketsTransaction.isByBalance()

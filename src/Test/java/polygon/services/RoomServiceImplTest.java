@@ -14,6 +14,8 @@ import polygon.models.Seat;
 import polygon.models.SeatsRow;
 import polygon.models.Session;
 import polygon.repos.RoomRepository;
+import polygon.repos.SeatsRepository;
+import polygon.repos.SeatsRowRepository;
 import polygon.repos.SessionRepository;
 import polygon.services.interfaces.RoomService;
 
@@ -35,6 +37,12 @@ public class RoomServiceImplTest {
 
     @MockBean
     private SessionRepository sessionRepository;
+
+    @MockBean
+    private SeatsRepository seatsRepository;
+
+    @MockBean
+    private SeatsRowRepository seatsRowRepository;
 
     @Test
     public void allCities() {
@@ -95,5 +103,30 @@ public class RoomServiceImplTest {
         Room expected = roomService.findById(1);
         Assert.assertNotNull(expected);
         Mockito.verify(roomRepository,Mockito.times(1)).findById(1);
+    }
+
+    @Test
+    public void safeDelete() {
+        Room room = new Room();
+        SeatsRow seatsRow = new SeatsRow();
+        Seat seat = new Seat();
+        room.setId(1);
+        seatsRow.setId(1);
+        seat.setId(1);
+        Set<SeatsRow> seatsRows = Set.of(seatsRow);
+        Set<Seat> seats = Set.of(seat);
+        seatsRow.setSeats(seats);
+        room.setSeatsRows(seatsRows);
+        Mockito.when(roomRepository.findById(1)).thenReturn(Optional.of(room));
+        boolean expected = roomService.safeDelete(1);
+        Assert.assertTrue(expected);
+    }
+
+    @Test
+    public void save() {
+        Room room = new Room();
+        room.setId(1);
+        roomService.save(room);
+        Mockito.verify(roomRepository,Mockito.times(1)).save(room);
     }
 }

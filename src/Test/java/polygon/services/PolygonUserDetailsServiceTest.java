@@ -9,8 +9,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+import polygon.models.City;
 import polygon.models.User;
 import polygon.repos.UserRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -53,4 +57,42 @@ public class PolygonUserDetailsServiceTest {
         Mockito.verify(userRepository,Mockito.times(1)).save(user);
         Mockito.verify(userRepository,Mockito.times(1)).flush();
     }
+
+    @Test
+    public void allUsers() {
+        User user = new User();
+        user.setId(1);
+        List<User> users = List.of(user);
+        Mockito.when(userRepository.findAll()).thenReturn(users);
+        List<User> expected=polygonUserDetailsService.allUsers();
+        Assert.assertNotNull(expected);
+        Assert.assertEquals(1,expected.size());
+    }
+
+    @Test
+    public void findById() {
+        User user = new User();
+        user.setId(1);
+        Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(user));
+        User expected=polygonUserDetailsService.findById(1);
+        Assert.assertNotNull(expected);
+    }
+
+    @Test
+    public void delete() {
+        User user = new User();
+        user.setId(1);
+        boolean expected = polygonUserDetailsService.delete(1);
+        Assert.assertTrue(expected);
+        Mockito.verify(userRepository,Mockito.times(1)).deleteById(1);
+    }
+
+    @Test
+    public void save() {
+        User user = new User();
+        user.setId(1);
+        polygonUserDetailsService.save(user);
+        Mockito.verify(userRepository,Mockito.times(1)).saveAndFlush(user);
+    }
+
 }

@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import polygon.models.*;
 import polygon.repos.TicketRepository;
+import polygon.repos.TransactionRepository;
 import polygon.services.interfaces.TicketService;
 
 import java.util.*;
@@ -26,36 +27,24 @@ public class TicketServiceImplTest {
     @MockBean
     private TicketRepository ticketRepository;
 
+    @MockBean
+    private TransactionRepository transactionRepository;
+
 
     @Test
     public void setTickets() {
-//        Ticket ticket = new Ticket();
-//        ticket.setId(1);
-//        ticket.setOccupied(false);
-//        List<Integer> list = new ArrayList<Integer>();
-//        list.add(1);
-//        TicketRepository ticketRepositoryMock = mock(TicketRepository.class);
-//        Mockito.when(ticketRepositoryMock.findById(1)).thenReturn(ticket);
-//        int setTicketsWorks=ticketService.setTickets(list);
-//        Assert.assertNotEquals(-1,setTicketsWorks);
         Ticket ticket1 = new Ticket();
         Ticket ticket2 = new Ticket();
+        User user = new User();
         ticket1.setId(1);
         ticket2.setId(2);
         ticket1.setOccupied(false);
         ticket2.setOccupied(false);
         List<Integer> list = new ArrayList<Integer>();
         list.add(1);
-//        list.add(2);
-
-        TicketsTransaction ticketsTransaction = new TicketsTransaction();
-        ticketsTransaction.setEnded(false);
-        ticketsTransaction.setDate(new java.sql.Timestamp(new Date().getTime()));
-        ticketsTransaction.setTerminated(false);
-
+        Set<Ticket> transaction = Set.of(ticket1);
         Mockito.when(ticketRepository.findById(1)).thenReturn(Optional.of(ticket1));
-//        Mockito.when(ticketRepository.findById(2)).thenReturn(Optional.of(ticket2));
-        int setTicketsWorks=ticketService.setTickets(list, null);
+        int setTicketsWorks=ticketService.setTickets(list, user);
         Assert.assertNotEquals(-1,setTicketsWorks);
     }
 
