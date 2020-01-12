@@ -45,4 +45,21 @@ public class CategoryImplTest {
         Assert.assertNotNull(expected);
         Mockito.verify(categoryRepository,Mockito.times(1)).findById(1);
     }
+
+    @Test
+    public void save() {
+        Category category = new Category();
+        category.setId(1);
+        categoryService.save(category);
+        Mockito.verify(categoryRepository,Mockito.times(1)).saveAndFlush(category);
+    }
+
+    @Test
+    public void safeDelete() {
+        Category category = new Category();
+        category.setId(1);
+        categoryService.safeDelete(1);
+        Mockito.verify(categoryRepository,Mockito.times(1)).deleteById(1);
+    }
+
 }

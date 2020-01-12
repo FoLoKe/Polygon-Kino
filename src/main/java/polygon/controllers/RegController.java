@@ -21,7 +21,7 @@ public class RegController {
     RegService regService;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String showRegistrationForm(WebRequest request, Model model) {
+    public String showRegistrationForm(Model model) {
         User modelUserRegAttr = new User();
         model.addAttribute("user", modelUserRegAttr);
         return "registration";
@@ -30,9 +30,7 @@ public class RegController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView registerUserAccount(
             @ModelAttribute("user") @Valid User user,
-            BindingResult result,
-            WebRequest request,
-            Errors errors) {
+            BindingResult result) {
 
         if(user.getUsername().isEmpty()) {
             result.rejectValue("username", "message.regError", "Укажите имя пользователя");

@@ -34,11 +34,9 @@ public class StripeService {
 
     public void refund(TicketsTransaction ticketsTransaction) {
         try {
-            if (ticketsTransaction.isRefunded()
-                    || ticketsTransaction.isByBalance()
-                    || !ticketsTransaction.isEnded()) {
+            if (ticketsTransaction.isRefunded() || ticketsTransaction.isByBalance() || !ticketsTransaction.isEnded())
                 return;
-            }
+
 
             Map<String, Object> params = new HashMap<>();
             int price = 0;
