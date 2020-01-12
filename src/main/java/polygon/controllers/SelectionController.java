@@ -166,43 +166,4 @@ public class SelectionController {
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
-
-    public class PurchaseInfo {
-        public ArrayList<Integer> ids;
-        public String tel;
-        public String email;
-        public boolean byBalance;
-
-        public ArrayList<Integer> getIds() {
-            return ids;
-        }
-
-        public void setIds(ArrayList<Integer> ids) {
-            this.ids = ids;
-        }
-
-        public String getTel() {
-            return tel;
-        }
-
-        public void setTel(String tel) {
-            this.tel = tel;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public boolean isByBalance() {
-            return byBalance;
-        }
-
-        public void setByBalance(boolean byBalance) {
-            this.byBalance = byBalance;
-        }
-    }
 }
