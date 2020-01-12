@@ -13,6 +13,8 @@
     <img class = "background" src="images/bg.jpg">
     <div class="buyBody">
         <div class = "buyHeader">
+            <p class = "caption" th:text="${ssession.performance.name} + ' ' + ${#dates.format(ssession.time, 'dd-MM-yyyy HH:mm')} +
+            ' Зал №' +${ssession.room.number}"></p>
             <a class = "exitCross" th:href = "@{/performance(id = ${ssession.performance.id})}">&#10005;</a>
         </div>
         <div class = "buyFooter">

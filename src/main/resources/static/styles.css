@@ -770,6 +770,7 @@ font-family: Roboto;
 .buyHeader {
     margin-left: auto;
     width: fit-content;
+    display: flex;
     padding: 10px;
 }
 .noSize {

@@ -223,11 +223,12 @@ public class ManagementController {
     private SessionService sessionService;
 
     @RequestMapping(value = "/management/manageSessions", method = RequestMethod.GET)
-    public ModelAndView manageSessions(@RequestParam(required = false, name = "b", defaultValue = "0") int buildingId) {
+    public ModelAndView manageSessions(@RequestParam(required = false, name = "b", defaultValue = "0") int buildingId,
+                                       @RequestParam(required = false, name = "t", defaultValue = "0") String stringTime) {
         ModelAndView modelAndView = new ModelAndView("sessionsManagement");
         List<Building> buildings = buildingService.allBuildings();
         Map<Performance, List<Session>> sessions = new LinkedHashMap<>();
-
+        Timestamp timestamp = new Timestamp(new Date().getTime());
         if (buildings.size() > 0) {
             modelAndView.addObject("buildings", buildings);
             Building building = buildings.get(0);
@@ -239,22 +240,29 @@ public class ManagementController {
             }
             modelAndView.addObject("defaultBuilding", building);
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(new Date());
+            if(stringTime.equals("0")) {
+                calendar.setTime(new Date());
+            } else {
+                try {
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    calendar.setTime(dateFormat.parse(stringTime));
+                } catch (Exception e) {
+                    System.out.println(e);
+                    calendar.setTime(new Date());
+                }
+            }
             calendar.set(Calendar.HOUR_OF_DAY, 0);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
-            Timestamp timestamp = new Timestamp(calendar.getTime().getTime());
-
+            timestamp = new Timestamp(calendar.getTime().getTime());
             sessions = sessionService.findSessionsInBuilding(building, timestamp);
         }
 
         modelAndView.addObject("sessions", sessions);
 
-        Date date = new Date(System.currentTimeMillis());
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        java.sql.Timestamp time = new java.sql.Timestamp(date.getTime());
-        modelAndView.addObject("day", dateFormat.format(date));
+        modelAndView.addObject("day", dateFormat.format(timestamp));
 
         return modelAndView;
     }
@@ -294,11 +302,22 @@ public class ManagementController {
     public ModelAndView deleteSession(@RequestParam("id") int id) {
         Session session = sessionService.findById(id);
         int buildingId = 0;
+        String stringTime = "0";
         if(session != null) {
             buildingId = session.getRoom().getBuilding().getId();
             sessionService.cancel(id);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Timestamp timestamp = session.getTime();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(timestamp);
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            stringTime = dateFormat.format(calendar.getTime());
         }
-        return new ModelAndView("redirect:/management/manageSessions?b="+buildingId);
+        return new ModelAndView("redirect:/management/manageSessions?b="+buildingId +
+                "&t=" + stringTime);
     }
 
     @RequestMapping(value = "/management/manageSessions/manage", method = RequestMethod.GET)
