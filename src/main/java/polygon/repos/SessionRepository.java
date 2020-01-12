@@ -21,5 +21,12 @@ public interface SessionRepository extends JpaRepository<Session, Integer> {
     @Query("select s from Session s inner join s.room r where r.building = :building and s.performance = :performance and s.time >= :time and s.time < :endTime")
     List<Session> findAllActiveSessionsOnPerformanceForBuilding(@Param("building") Building building, @Param("performance") Performance performance, @Param("time") Timestamp time,  @Param("endTime") Timestamp endTime);
 
+    @Query("select s from Session s inner join s.room r where r.building = :building and s.performance = :performance and s.time >= :time and s.time < :endTime and r.type = :type")
+    List<Session> findAllActiveSessionsOnPerformanceForBuildingByType(@Param("building") Building building,
+                                                                      @Param("performance") Performance performance,
+                                                                      @Param("time") Timestamp time,
+                                                                      @Param("endTime") Timestamp endTime,
+                                                                      @Param("type") String type);
+
 
 }

@@ -9,46 +9,61 @@
 
 </head>
 <body>
-<center>
-    <div>
-<form class="ManagmentForm" th:attr = "action=@{/management/managePerformances/save}" method = "post" enctype="multipart/form-data">
-    <div>
-    <input type="hidden" name="id" th:value="${id}">
-    </div>
-        <div>
-        <input type="text" name="name" th:value="${name}">
-        </div>
-            <div>
-            <input type="text" name="link" th:value="${link}">
-            </div>
-                <div>
-    <input type="text" name="imdb" th:value="${imdbID}">
+    <center>
+        <div class="managementBox">
+            <p>Редактор фильма</p>
+        <form class="managementForm" th:attr = "action=@{/management/managePerformances/save}" method = "post" enctype="multipart/form-data">
+            <input type="hidden" name="id" th:value="${id}">
+            <div class="managementLine">
+                <label class="managementLabel">Название фильма</label>
+                <div class="managementInput">
+                    <input type="text" name="name" th:value="${name}">
                 </div>
-                    <div>
-    <input type="text" name="description" th:value="${description}">
-                    </div>
-                        <div>
-    <input type="file" name="file"  >
-                        </div>
-                            <div>
-    <input type="file" name="files" multiple>
-                            </div>
-                                <div>
-    <input type="date" name="date" th:value="${date}">
-                                </div>
-                                    <div>
-    <div th:each="instance : ${cats}">
-    </div>
-                                    </div>
-        <div>
-        <input type = "checkbox" th:text = "${instance.key.name}" id="cats" name="cats" th:value="${instance.key.id}" th:checked="${instance.value}" >
-    </div>
-    <input type="submit" value="Сохранить">
-    <div>
-        <a class="ManagmentText" onclick="history.back();"> Назад</a>
-    </div>
-</form>
-    </div>
-</center>
+            </div>
+            <div class="managementLine">
+                <label  class="managementLabel">Ссылка на YouTube трейлер (Embed)</label>
+                <div class="managementInput">
+                    <input type="text" name="link" th:value="${link}">
+                </div>
+            </div>
+            <div class="managementLine">
+                <label class="managementLabel">IMDB ID</label>
+                <div class="managementInput">
+                    <input type="text" name="imdb" th:value="${imdbID}">
+                </div>
+            </div>
+            <div class="managementLine">
+                <label class="managementLabel">Описание</label>
+                <div class="managementInput">
+                    <input type="text" name="description" th:value="${description}">
+                </div>
+            </div>
+            <div class="managementLine">
+                <label class="managementLabel">Постер</label>
+                <div class="managementInput">
+                    <input type="file" name="file">
+                </div>
+            </div>
+            <div class="managementLine">
+                <label class="managementLabel">Превью</label>
+                <div class="managementInput">
+                    <input type="file" name="files" multiple>
+                </div>
+            </div>
+            <div class="managementLine">
+                <label class="managementLabel">Премьера</label>
+                <div class="managementInput">
+                    <input type="date" name="date" th:value="${date}">
+                </div>
+            </div>
+            <div class="managementLine" th:each="instance : ${cats}">
+                <input type = "checkbox" th:text = "${instance.key.name}" id="cats" name="cats" th:value="${instance.key.id}" th:checked="${instance.value}" >
+            </div>
+            <div class="managementControls">
+                <input class="managementText" type="submit" value="Сохранить">
+                <a class="managementText" onclick="history.back();"> Назад</a>
+            </div>
+        </form>
+    </center>
 </body>
 </html>

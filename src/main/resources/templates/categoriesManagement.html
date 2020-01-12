@@ -2,25 +2,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 </head>
 <body>
-<table>
-    <tr th:each ="category : ${categories}">
-        <td>
-            <p th:text = "${category.name}"></p>
-        </td>
-        <td>
-            <a th:href="'/management/manageCategories/manage?id=' + ${category.id}"> Изменить</a>
-        </td>
-        <td>
-            <a th:href="'/management/manageCategories/delete?id=' + ${category.id}"> Удалить</a>
-        </td>
-    </tr>
-</table>
-<a href="/management/manageCategories/manage"> Добавить </a>
+    <center>
+        <div class="managementBox">
+            <p>Категории</p>
+            <p th:if="${error != null}" th:text="${error}"></p>
+            <div class = "managementForm">
+                <table class="managementTable">
+                    <tr class="managementLine" th:each ="category : ${categories}">
+                        <td class="managementLabel">
+                            <p th:text = "${category.name}"></p>
+                        </td>
+                        <td class="managementInput">
+                            <a class="managementText" th:href="'/management/manageCategories/manage?id=' + ${category.id}">&#9998;</a>
+                        </td>
+                        <td>
+                            <a class="managementText" th:href="'/management/manageCategories/delete?id=' + ${category.id}"> &#128711;</a>
+                        </td>
+                    </tr>
+                </table>
+                <div class="managementControls">
+                    <a class="managementText" href="/management/manageCategories/manage"> Добавить </a>
+                </div>
+            </div>
+        </div>
+    </center>
 </body>
 </html>

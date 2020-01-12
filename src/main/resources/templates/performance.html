@@ -28,8 +28,12 @@
                 <p  class = "performanceDescription" th:text = ${perf.restriction}></p>
                 <p  class = "performanceDescription" th:text = ${perf.description}></p>
                 <p  class = "performanceDescription" th:text = ${perf.date}></p>
-                <div class = "tag" th:each = "tag : ${perf.categories}" th:text="${tag.name}">
-            </div>
+                <a class="noDeco" th:each = "tag : ${perf.categories}" th:href="@{/films(cats = ${tag.id})}">
+                <div class = "tag"  th:text="${tag.name}">
+
+
+                </div>
+                </a>
             </div>
         </div>
         <div class = "previewTab">
@@ -58,7 +62,7 @@
         <div class = "buildingTab" th:each = "building : ${entry.value}">
             <p th:text = "${building.key.address}">
             <div class = "session_tab" th:each = "s : ${building.value}" th:href="@{/selectSeat(id = ${s.id})}">
-                <a th:text = "${s.getSimpleTime()}  + ' ' + ${s.room.type}" th:href="@{/selectSeat(id = ${s.id})}">
+                <a th:text = "${#dates.format(s.time, 'HH:mm')}  + ' ' + ${s.room.type}" th:href="@{/selectSeat(id = ${s.id})}">
 
                 </a>
             </div>

@@ -37,9 +37,15 @@ public class CityServiceImpl implements CityService {
     @Transactional
     public boolean safeDelete(int id) {
         try {
-            cityRepository.deleteById(id);
-            cityRepository.flush();
+            City city = cityRepository.findById(id).orElse(null);
+            if(city != null && city.getBuildings().size() == 0) {
+                cityRepository.deleteById(id);
+                cityRepository.flush();
+            } else {
+                return false;
+            }
         } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
         return true;

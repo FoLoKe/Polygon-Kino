@@ -32,12 +32,12 @@ public class StripeService {
         return charge;
     }
 
-    public void refund(TicketsTransaction ticketsTransaction) {
+    public boolean refund(TicketsTransaction ticketsTransaction) {
         try {
             if (ticketsTransaction.isRefunded()
                     || ticketsTransaction.isByBalance()
                     || !ticketsTransaction.isEnded()) {
-                return;
+                return false;
             }
 
             Map<String, Object> params = new HashMap<>();
@@ -51,10 +51,12 @@ public class StripeService {
             Refund refund = Refund.create(params);
             if (refund.getStatus().equals("succeeded")) {
                 ticketsTransaction.setRefunded(true);
+                return true;
             }
 
         } catch (Exception e) {
             System.out.println(e);
         }
+        return false;
     }
 }

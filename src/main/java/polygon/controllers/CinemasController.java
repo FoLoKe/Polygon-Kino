@@ -14,6 +14,7 @@ import polygon.services.PolygonUserDetailsService;
 import polygon.services.interfaces.BuildingService;
 import polygon.services.interfaces.CityService;
 import polygon.services.interfaces.SessionService;
+import polygon.services.interfaces.TransactionService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
@@ -35,6 +36,9 @@ public class CinemasController
 
     @Autowired
     private SessionService sessionService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @RequestMapping(value="/cinemas", method = RequestMethod.GET)
     public ModelAndView allCinemas(HttpServletRequest request,
@@ -73,6 +77,7 @@ public class CinemasController
         User user = null;
         if(username != null && !username.isEmpty()) {
             user = polygonUserDetailsService.getUserByUsername(username);
+            modelAndView.addObject("transactions", transactionService.findByUser(user));
         }
         modelAndView.addObject("user", user);
 
@@ -122,6 +127,7 @@ public class CinemasController
         User user = null;
         if(username != null && !username.isEmpty()) {
             user = polygonUserDetailsService.getUserByUsername(username);
+            modelAndView.addObject("transactions", transactionService.findByUser(user));
         }
         modelAndView.addObject("user", user);
         

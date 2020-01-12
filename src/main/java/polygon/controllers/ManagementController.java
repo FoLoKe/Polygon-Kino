@@ -32,7 +32,7 @@ public class ManagementController {
     private CityService cityService;
 
     @RequestMapping(value = "/management/manageCities", method = RequestMethod.GET)
-    public ModelAndView mangeCities() {
+    public ModelAndView manageCities() {
         ModelAndView modelAndView = new ModelAndView("citiesManagement");
         List<City> cities = cityService.allCities();
         modelAndView.addObject("cities", cities);
@@ -42,8 +42,11 @@ public class ManagementController {
 
     @RequestMapping(value = "/management/manageCities/delete", method = RequestMethod.GET)
     public ModelAndView deleteCity(@RequestParam("id") int id) {
-        cityService.safeDelete(id);
-
+        if(!cityService.safeDelete(id)) {
+            ModelAndView modelAndView = manageCities();
+            modelAndView.addObject("error", "Для начала удалите связанные здания");
+            return modelAndView;
+        }
         return new ModelAndView("redirect:/management/manageCities");
     }
 
@@ -87,7 +90,7 @@ public class ManagementController {
     private CategoryService categoryService;
 
     @RequestMapping(value = "/management/manageCategories", method = RequestMethod.GET)
-    public ModelAndView mangeCategories() {
+    public ModelAndView manageCategories() {
         ModelAndView modelAndView = new ModelAndView("categoriesManagement");
         List<Category> categories = categoryService.allCategories();
         modelAndView.addObject("categories", categories);
@@ -97,7 +100,11 @@ public class ManagementController {
 
     @RequestMapping(value = "/management/manageCategories/delete", method = RequestMethod.GET)
     public ModelAndView deleteCategory(@RequestParam("id") int id) {
-        categoryService.safeDelete(id);
+        if(!categoryService.safeDelete(id)) {
+            ModelAndView modelAndView = manageCategories();
+            modelAndView.addObject("error", "Для начала снемите данную каткгорию с фильмов");
+            return modelAndView;
+        }
 
         return new ModelAndView("redirect:/management/manageCategories");
     }
@@ -148,7 +155,11 @@ public class ManagementController {
 
     @RequestMapping(value = "/management/manageBuildings/delete", method = RequestMethod.GET)
     public ModelAndView deleteBuilding(@RequestParam("id") int id) {
-        buildingService.safeDelete(id);
+        if(!buildingService.safeDelete(id)) {
+            ModelAndView modelAndView = manageBuildings();
+            modelAndView.addObject("error", "Для начала удалите связанные залы");
+            return modelAndView;
+        }
 
         return new ModelAndView("redirect:/management/manageBuildings");
     }
@@ -212,7 +223,7 @@ public class ManagementController {
     private SessionService sessionService;
 
     @RequestMapping(value = "/management/manageSessions", method = RequestMethod.GET)
-    public ModelAndView mangeSessions() {
+    public ModelAndView manageSessions(@RequestParam(required = false, name = "b", defaultValue = "0") int buildingId) {
         ModelAndView modelAndView = new ModelAndView("sessionsManagement");
         List<Building> buildings = buildingService.allBuildings();
         Map<Performance, List<Session>> sessions = new LinkedHashMap<>();
@@ -220,8 +231,22 @@ public class ManagementController {
         if (buildings.size() > 0) {
             modelAndView.addObject("buildings", buildings);
             Building building = buildings.get(0);
+            if(buildingId != 0) {
+                Building temp = buildingService.findById(buildingId);
+                if(temp != null) {
+                    building = temp;
+                }
+            }
             modelAndView.addObject("defaultBuilding", building);
-            sessions = sessionService.findSessionsInBuilding(building, new Timestamp(new Date().getTime()));
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            Timestamp timestamp = new Timestamp(calendar.getTime().getTime());
+
+            sessions = sessionService.findSessionsInBuilding(building, timestamp);
         }
 
         modelAndView.addObject("sessions", sessions);
@@ -267,9 +292,13 @@ public class ManagementController {
 
     @RequestMapping(value = "/management/manageSessions/delete", method = RequestMethod.GET)
     public ModelAndView deleteSession(@RequestParam("id") int id) {
-        sessionService.cancel(id);
-
-        return new ModelAndView("redirect:/management/manageSessions");
+        Session session = sessionService.findById(id);
+        int buildingId = 0;
+        if(session != null) {
+            buildingId = session.getRoom().getBuilding().getId();
+            sessionService.cancel(id);
+        }
+        return new ModelAndView("redirect:/management/manageSessions?b="+buildingId);
     }
 
     @RequestMapping(value = "/management/manageSessions/manage", method = RequestMethod.GET)
@@ -338,6 +367,20 @@ public class ManagementController {
             session.setRoom(room);
             session.setPerformance(performance);
             session.setPrice(price);
+            Set<Ticket> tickets = new LinkedHashSet<>();
+            for (SeatsRow sr : room.getSeatsRows()) {
+                for (Seat seat : sr.getSeats()) {
+                    if (seat.isSeat()) {
+                        Ticket ticket = new Ticket();
+                        ticket.setOccupied(false);
+                        ticket.setSeat(seat);
+                        ticket.setSession(session);
+                        tickets.add(ticket);
+                    }
+                }
+            }
+
+            session.setTickets(tickets);
 
             DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
             LocalDateTime localDateTime = LocalDateTime.from(sdf.parse(date));
@@ -365,8 +408,11 @@ public class ManagementController {
 
     @RequestMapping(value = "/management/managePerformances/delete", method = RequestMethod.GET)
     public ModelAndView deletePerformance(@RequestParam("id") int id) {
-        performanceService.cancel(id);
-
+        if(!performanceService.cancel(id)) {
+            ModelAndView modelAndView = managePerformances();
+            modelAndView.addObject("error", "Для начала завершите связанные сеансы");
+            return modelAndView;
+        }
         return new ModelAndView("redirect:/management/managePerformances");
     }
 
@@ -445,10 +491,10 @@ public class ManagementController {
                     }
 
                     performance.setDate(new java.sql.Date(utilDate.getTime()));
-                    if (file != null) {
+                    if (file != null && file.getSize() > 0) {
                         performance.setPoster(file.getBytes());
                     }
-                    if (files != null && files.length > 0) {
+                    if (files != null && files.length > 0 && files[0].getSize() > 0) {
                         Set<Preview> previews = new HashSet<>();
                         for (MultipartFile pf : files) {
                             Preview preview = new Preview();
@@ -485,7 +531,7 @@ public class ManagementController {
     SeatsRowRepository seatsRowRepository;
 
     @RequestMapping(value = "/management/manageRooms", method = RequestMethod.GET)
-    public ModelAndView mangeRooms() {
+    public ModelAndView manageRooms() {
         ModelAndView modelAndView = new ModelAndView("roomsManagement");
         List<Room> rooms = roomService.allRooms();
         modelAndView.addObject("rooms", rooms);
@@ -495,7 +541,11 @@ public class ManagementController {
 
     @RequestMapping(value = "/management/manageRooms/delete", method = RequestMethod.GET)
     public ModelAndView deleteRoom(@RequestParam("id") int id) {
-        roomService.safeDelete(id);
+        if(!roomService.safeDelete(id)){
+            ModelAndView modelAndView = manageRooms();
+            modelAndView.addObject("error", "Для начала завершите связанные сеансы");
+            return modelAndView;
+        }
 
         return new ModelAndView("redirect:/management/manageRooms");
     }
@@ -530,13 +580,15 @@ public class ManagementController {
                 SeatsRow seatsRow = new SeatsRow();
                 Set<Seat> seatsSet = new LinkedHashSet<>();
                 int seatsCount = seatsCountList.get(iRow - 1);
-                for (int iSeat = 1; iSeat <= seatsCount; iSeat++) {
+                int offset = 0;
+                for (int iSeat = 1; iSeat <= seatsCount; iSeat++, offset++) {
                     Seat seat = new Seat();
-                    seat.setSeat(iSeat);
+                    seat.setSeat(iSeat - offset);
                     seat.setSeat(false);
                     for (String value : seats) {
                         if (value.equals(iRow + " " + iSeat)) {
                             seat.setSeat(true);
+                            offset--;
                         }
                     }
 
@@ -546,6 +598,7 @@ public class ManagementController {
 
 
                 seatsRow.setSeats(seatsSet);
+                seatsRow.setRow(iRow);
                 seatsRowRepository.saveAndFlush(seatsRow);
                 seatsRowSet.add(seatsRow);
             }
@@ -566,7 +619,7 @@ public class ManagementController {
     private PolygonUserDetailsService polygonUserDetailsService;
 
     @RequestMapping(value = "/management/manageUsers", method = RequestMethod.GET)
-    public ModelAndView mangeUsers() {
+    public ModelAndView manageUsers() {
         ModelAndView modelAndView = new ModelAndView("usersManagement");
         List<User> users = polygonUserDetailsService.allUsers();
         modelAndView.addObject("users", users);
@@ -597,6 +650,7 @@ public class ManagementController {
                 email = user.getEmail();
                 password = user.getPassword();
                 role = user.getRole();
+                balance = user.getBalance();
             }
         }
 
@@ -639,7 +693,7 @@ public class ManagementController {
     @Autowired
     TransactionService transactionService;
     @RequestMapping(value = "/management/manageTransactions", method = RequestMethod.GET)
-    public ModelAndView mangeTransactions() {
+    public ModelAndView manageTransactions() {
         ModelAndView modelAndView = new ModelAndView("transactionsManagement");
         List<TicketsTransaction> ticketsTransactions = transactionService.allTransactions();
         modelAndView.addObject("transactions", ticketsTransactions);

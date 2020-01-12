@@ -188,7 +188,6 @@ public class PaymentController {
 
         if(ticketsTransaction.getUser() != null) {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            int userBalance = 0;
             String username;
             if (principal instanceof UserDetails) {
                 username = ((UserDetails) principal).getUsername();
@@ -200,11 +199,13 @@ public class PaymentController {
             if (username != null && !username.isEmpty()) {
                 user = polygonUserDetailsService.getUserByUsername(username);
                 if (ticketsTransaction.isEnded() && !ticketsTransaction.isRefunded() && ticketsTransaction.getUser().getId() == user.getId()) {
-                    stripeService.refund(ticketsTransaction);
-                    transactionService.save(ticketsTransaction);
-                    emailService.sendSimpleMessage(ticketsTransaction.getEmail(), "Возврат билетов",
-                            "С вашего аккаунта был оформлен возврат средств."
-                    );
+                    if(stripeService.refund(ticketsTransaction)) {
+                        ticketService.rollbackTickets(ticketsTransaction.getTickets());
+                        transactionService.save(ticketsTransaction);
+                        emailService.sendSimpleMessage(ticketsTransaction.getEmail(), "Возврат билетов",
+                                "С вашего аккаунта был оформлен возврат средств."
+                        );
+                    }
                 }
             }
         }

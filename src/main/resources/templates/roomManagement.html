@@ -9,31 +9,45 @@
 
 </head>
 <body>
-<center>
-    <div>
-<form class="ManagmentForm" th:attr = "action=@{/management/manageRooms/save}" method = "post">
-    <input type="hidden" value="0" name = "rowsCount" id = "rowsCount">
-    <select name = "selectedBuilding" >
-        <option th:each = "building : ${buildings}"
-                th:selected = "${defaultBuilding.id == building.id}"
-                th:text = "${building.city.name} + ', ' + ${building.address}"
-                th:value = "${building.id}">
-        </option>
-    </select>
-    <input type="text" value="2D" name = "type">
-    <input type="text" value="1" name = "number">
-    <table id = "rowsTable">
-        <tr>
-            <th> ЗАЛ</th>
-        </tr>
-    </table>
-    <input type="button" th:onclick="addRow();">
-    <input  type="submit" value="Сохранить">
-    <div>
-        <a class="ManagmentText" onclick="history.back();"> Назад</a>
-    </div>
-</form>
-    </div>
-</center>
+    <center>
+        <div class="managementBox">
+            <p>Создание зала</p>
+            <form class="managementForm" th:attr = "action=@{/management/manageRooms/save}" method = "post">
+                <div class="managementTable">
+                    <input type="hidden" value="0" name = "rowsCount" id = "rowsCount">
+                    <div class="managementLine">
+                        <label class="managementLabel">Адрес</label>
+                        <select class="managementInput" name = "selectedBuilding" >
+                            <option th:each = "building : ${buildings}"
+                                    th:selected = "${defaultBuilding.id == building.id}"
+                                    th:text = "${building.city.name} + ', ' + ${building.address}"
+                                    th:value = "${building.id}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="managementLine">
+                        <label class="managementLabel">Тип зала</label>
+                        <input class="managementInput" type="text" value="2D" name = "type">
+                    </div>
+                    <div class="managementLine">
+                        <label class="managementLabel">Номер зала</label>
+                        <input class="managementInput" type="text" value="1" name = "number">
+                    </div>
+
+                    <table id = "rowsTable">
+                        <tr>
+                            <th> ЗАЛ</th>
+                        </tr>
+                    </table>
+                    <input class="managementText" type="button" th:onclick="addRow();" value="Добавить ряд">
+                    <input class="managementText" type="button" th:onclick="delRow();" value="Удалить ряд">
+                </div>
+                <div class="managementControls">
+                    <input class="managementText" type="submit" value="Сохранить">
+                    <a class="managementText" onclick="history.back();"> Назад</a>
+                </div>
+            </form>
+        </div>
+    </center>
 </body>
 </html>

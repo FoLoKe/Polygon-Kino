@@ -9,24 +9,28 @@
 
 </head>
 <body>
-<center>
-    <div class="ManagmentForm">
-<table>
-    <tr th:each ="room : ${rooms}">
-        <td>
-            <p th:text = "${room.building.city.name} + ', ' + ${room.building.address} + ', Зал № ' + ${room.number} +
-            ' (' +  ${room.type} + ')'"></p>
-        </td>
-        <td>
-            <a  class="ManagmentText"  th:href="'/management/manageRooms/delete?id=' + ${room.id}"> Удалить</a>
-        </td>
-    </tr>
-</table>
-<a class="ManagmentText"  href="/management/manageRooms/manage"> Добавить </a>
-        <div>
-            <a class="ManagmentText" onclick="history.back();"> Назад</a>
+    <center>
+        <div class="managementBox">
+            <p>Залы</p>
+            <p th:if="${error != null}" th:text="${error}"></p>
+            <div class="managementForm">
+                <table class="managementTable">
+                    <tr class="managementLine" th:each ="room : ${rooms}">
+                        <td class="managementLabel">
+                            <p th:text = "${room.building.city.name} + ', ' + ${room.building.address} + ', Зал № ' + ${room.number} +
+                            ' (' +  ${room.type} + ')'"></p>
+                        </td>
+                        <td class="managementInput">
+                            <a  class="managementText"  th:href="'/management/manageRooms/delete?id=' + ${room.id}">&#128711;</a>
+                        </td>
+                    </tr>
+                </table>
+                <div class="managementControls">
+                    <a class="managementText"  href="/management/manageRooms/manage"> Добавить </a>
+                    <a class="managementText" onclick="history.back();"> Назад</a>
+                </div>
+            </div>
         </div>
-    </div>
-</center>
+    </center>
 </body>
 </html>

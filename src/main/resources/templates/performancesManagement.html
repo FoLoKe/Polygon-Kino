@@ -5,30 +5,31 @@
     <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 
 </head>
 <body>
-<center>
-    <div  class="ManagmentForm">
-<table>
-    <tr  th:each ="performance : ${performances}">
-        <td>
-            <p th:text = "${performance.name}"></p>
-        </td>
-        <td>
-            <a  class="ManagmentText" th:href="'/management/managePerformances/manage?id=' + ${performance.id}"> Изменить</a>
-        </td>
-        <td>
-            <a class="ManagmentText" th:href="'/management/managePerformances/delete?id=' + ${performance.id}"> Удалить</a>
-        </td>
-    </tr>
-</table>
-<a class="ManagmentText" href="/management/managePerformances/manage"> Добавить </a>
-        <div>
-            <a class="ManagmentText" onclick="history.back();"> Назад</a>
+    <center>
+        <div class="managementBox">
+            <p>Фильмы</p>
+            <p th:if="${error != null}" th:text="${error}"></p>
+            <div class="managementForm">
+                <table class = "managementTable">
+                    <tr class="managementLine" th:each ="performance : ${performances}">
+                        <td class="managementLabel">
+                            <p th:text = "${performance.name}"></p>
+                        </td>
+                        <td class="managementInput">
+                            <a  class="managementText" th:href="'/management/managePerformances/manage?id=' + ${performance.id}">&#9998;</a>
+                        </td>
+                        <td >
+                            <a class="managementText" th:href="'/management/managePerformances/delete?id=' + ${performance.id}">&#128711;</a>
+                        </td>
+                    </tr>
+                </table>
+                <a class="managementText" href="/management/managePerformances/manage"> Добавить </a>
+                <a class="managementText" onclick="history.back();"> Назад</a>
+            </div>
         </div>
-    </div>
-</center>
+    </center>
 </body>
 </html>

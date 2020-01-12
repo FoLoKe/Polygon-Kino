@@ -1,35 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+>
 <head>
-    <meta charset="UTF-8">
-    <title>Management</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
-<center>
-    <div>
-        <form class = "ManagmentForm">
-            <div>
-                <a class="ManagmentText" href="management/manageCities">Редактор городов</a>
+    <center>
+        <div class="managementBox">
+            <div class="managementMenu">
+            <a class="managementText" href="management/manageCities">Редактор городов</a>
+            <a class="managementText" href="management/manageSessions">Редактор сеансов</a>
+            <a class="managementText" href="management/managePerformances">Редактор фильмов</a>
+            <a class="managementText" href="management/manageRooms">Редактор залов</a>
+            <a class="managementText"  href="management/manageCategories">Редактор Категорий</a>
+            <a class="managementText"  href="management/manageBuildings">Редактор Зданий</a>
+            <a class="managementText"  href="management/manageUsers">Редактор Пользователей</a>
+            <a class="managementText"  href="management/manageTransactions">Тразакции</a>
             </div>
-            <div>
-                <a class="ManagmentText" href="management/manageSessions">Редактор сеансов</a>
-            </div>
-            <div>
-                <a class="ManagmentText" href="management/managePerformances">Редактор фильмов</a>
-            </div>
-            <div>
-                <a class="ManagmentText" href="management/manageRooms">Редактор залов</a>
-            </div>
-    <div>
-        <a class="ManagmentText" onclick="history.back();"> Назад</a>
-    </div>
-            <a href="management/manageCategories">Редактор Категорий</a>
-            <a href="management/manageBuildings">Редактор Зданий</a>
-            <a href="management/manageUsers">Редактор Пользователей</a>
-            <a href="management/manageTransactions">Тразакции</a>
-
-        </form>
-    </div>
-</center>
+        </div>
+    </center>
 </body>
 </html>

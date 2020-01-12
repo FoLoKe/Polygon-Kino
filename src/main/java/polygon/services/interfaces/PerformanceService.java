@@ -23,7 +23,7 @@ public interface PerformanceService {
     void add(List<Performance> performance);
     Performance findById(int id);
     Performance findByIdFullLoad(int id);
-    Map<Timestamp, Map<Building, List<Session>>> getSchedule(Performance performance, City city);
+    Map<Timestamp, Map<Building, List<Session>>> getSchedule(Performance performance, City city, String type);
 
     void writeImageToResponse(Integer id, HttpServletResponse response);
     void writePreviewToResponse(Integer id, HttpServletResponse response);

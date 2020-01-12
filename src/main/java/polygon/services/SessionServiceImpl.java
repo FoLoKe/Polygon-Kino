@@ -110,6 +110,20 @@ public class SessionServiceImpl implements SessionService {
                 performance = (Performance) ((HibernateProxy) performance).getHibernateLazyInitializer()
                         .getImplementation();
             }
+
+            Room room = s.getRoom();
+            Hibernate.initialize(room);
+            if (room instanceof HibernateProxy) {
+                room = (Room) ((HibernateProxy) room).getHibernateLazyInitializer()
+                        .getImplementation();
+            }
+
+            Building building = room.getBuilding();
+            Hibernate.initialize(room);
+            if (building instanceof HibernateProxy) {
+                building = (Building) ((HibernateProxy) building).getHibernateLazyInitializer()
+                        .getImplementation();
+            }
         }
         return s;
     }

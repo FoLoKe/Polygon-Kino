@@ -51,7 +51,7 @@ public class PerformanceServiceImpl implements PerformanceService {
 
     @Override
     @Transactional
-    public Map<Timestamp, Map<Building, List<Session>>> getSchedule(Performance performance, City city) {
+    public Map<Timestamp, Map<Building, List<Session>>> getSchedule(Performance performance, City city, String type) {
         Date utilDate = new Date();
         Calendar ac = Calendar.getInstance();
         ac.setTime(utilDate);
@@ -69,7 +69,12 @@ public class PerformanceServiceImpl implements PerformanceService {
             //calendar.add(Calendar.DATE, 1);
             Timestamp endTime = new Timestamp(calendar.getTime().getTime());
             for (Building building : buildings) {
-                List<Session> sessions = sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(building, performance, time, endTime);
+                List<Session> sessions = new ArrayList<>();
+                if(type.length() == 0) {
+                    sessions = sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(building, performance, time, endTime);
+                } else {
+                    sessions = sessionRepository.findAllActiveSessionsOnPerformanceForBuildingByType(building, performance, time, endTime, type);
+                }
                 for(Session s: sessions) {
                     Hibernate.initialize(s);
                     Room room = s.getRoom();
@@ -236,11 +241,17 @@ public class PerformanceServiceImpl implements PerformanceService {
     @Transactional
     public boolean cancel(int id) {
         try {
-            performanceRepository.deleteById(id);
+            Performance performance = performanceRepository.findById(id).orElse(null);
+
+            if(performance != null && performance.getSessions().size() == 0) {
+                performanceRepository.deleteById(id);
+                return true;
+            }
         } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
-        return true;
+        return false;
     }
 
     @Override

@@ -2,20 +2,52 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 </head>
 <body>
-<form class="calendarForm" th:attr = "action=@{/management/manageUsers/save}" method = "post">
-    <input type="text" name="username" th:value="${username}">
-    <input type="text" name="password" th:value="${password}">
-    <input type="text" name="email" th:value="${email}">
-    <input type="text" name="role" th:value="${role}">
-    <input type="text" name="balance" th:value="${balance}">
-    <input type="hidden" name="id" th:value="${id}">
-    <input type="submit" value="Сохранить">
+    <center>
+        <div class="managementBox">
+            <p>Редактор пользователя</p>
+                <form class="managementForm" th:attr = "action=@{/management/manageUsers/save}" method = "post">
+                    <input type="hidden" name="id" th:value="${id}">
+                    <div class="managementTable">
+                        <div class="managementLine">
+                            <label class="managementLabel">Имя пользователя</label>
+                            <div class="managementInput">
+                                <input type="text" name="username" th:value="${username}">
+                            </div>
+                        </div>
+                        <div class="managementLine">
+                            <label class="managementLabel">Пароль</label>
+                            <div class="managementInput">
+                                <input type="text" name="password" th:value="${password}">
+                            </div>
+                        </div>
+                        <div class="managementLine">
+                            <label class="managementLabel">Почта</label>
+                            <div class="managementInput">
+                                <input type="text" name="email" th:value="${email}">
+                            </div>
+                        </div>
+                        <div class="managementLine">
+                            <label class="managementLabel">Роль</label>
+                            <div class="managementInput">
+                                <input type="text" name="role" th:value="${role}">
+                            </div>
+                        </div>
+                        <div class="managementLine">
+                            <label class="managementLabel">Баланс</label>
+                            <div class="managementInput">
+                                <input type="text" name="balance" th:value="${balance}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="managementControls">
+                    <input class="managementText" type="submit" value="Сохранить">
+                    <a class="managementText" onclick="history.back();"> Назад</a>
+                </div>
 </form>
 </body>
 </html>

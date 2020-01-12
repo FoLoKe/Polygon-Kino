@@ -16,10 +16,12 @@ function addRow()
     var td1 = d.createElement("TD");
 
     var b1 = d.createElement("a");
-    b1.innerHTML="add";
+    b1.className="managementText";
+    b1.innerHTML="+";
 
     var b2 = d.createElement("a");
-    b2.innerHTML="del";
+    b2.className="managementText";
+    b2.innerHTML="-";
 
     row.appendChild(td1);
 
@@ -53,9 +55,16 @@ function addRow()
     });
 
     b2.addEventListener("click", function(me) {
-        rc.value = td1.childElementCount - 2;
+
         var first = b1;
         if(b1.previousSibling!=null)
             b1.previousSibling.remove();
+        rc.value = td1.childElementCount - 3;
     });
+}
+
+function delRow() {
+    var tbody = d.getElementById('rowsTable').getElementsByTagName('TBODY')[0];
+    tbody.removeChild(tbody.lastChild);
+    var rc = d.getElementById('rowsCount').value = tbody.rows.length - 1;
 }

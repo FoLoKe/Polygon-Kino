@@ -66,7 +66,13 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public boolean safeDelete(int id) {
         try {
-            buildingRepository.deleteById(id);
+            Building building = buildingRepository.findById(id).orElse(null);
+
+            if(building != null && building.getRooms().size() == 0) {
+                buildingRepository.deleteById(id);
+                return true;
+            }
+
         } catch (Exception e) {
             System.out.println(e.toString());
             return false;

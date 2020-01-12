@@ -126,7 +126,7 @@ public class PerformanceServiceImplTest {
 
         Mockito.when(buildingService.allByCity(city)).thenReturn(buildings);
         Mockito.when(sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(building,performance,time,endTime)).thenReturn(sessions);
-        Map<Timestamp, Map<Building, List<Session>>> expected = performanceService.getSchedule(performance,city);
+        Map<Timestamp, Map<Building, List<Session>>> expected = performanceService.getSchedule(performance,city,"");
         Assert.assertNotNull(expected);
     }
 

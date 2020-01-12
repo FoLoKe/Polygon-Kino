@@ -2,25 +2,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 </head>
 <body>
-<table>
-    <tr th:each ="user : ${users}">
-        <td>
-            <p th:text = "${user.username}"></p>
-        </td>
-        <td>
-            <a th:href="'/management/manageUsers/manage?id=' + ${user.id}"> Изменить</a>
-        </td>
-        <td>
-            <a th:href="'/management/manageUsers/delete?id=' + ${user.id}"> Удалить</a>
-        </td>
-    </tr>
-</table>
-<a href="/management/manageUsers/manage"> Добавить </a>
+    <center>
+        <div class="managementBox">
+            <p>Пользователи</p>
+            <p th:if="${error != null}" th:text="${error}"></p>
+            <div class = "managementForm">
+                <table class="managementTable">
+                    <tr class="managementLine" th:each ="user : ${users}">
+                        <td class="managementLabel">
+                            <p th:text = "${user.username}"></p>
+                        </td>
+                        <td class="managementInput">
+                            <a class="managementText" th:href="'/management/manageUsers/manage?id=' + ${user.id}">&#9998;</a>
+                        </td>
+                        <td>
+                            <a class="managementText" th:href="'/management/manageUsers/delete?id=' + ${user.id}">&#128711;</a>
+                        </td>
+                    </tr>
+                </table>
+                <div class="managementControls">
+                    <a class="managementText" href="/management/manageUsers/manage"> Добавить </a>
+                    <a class="managementText" onclick="history.back();"> Назад</a>
+                </div>
+            </div>
+        </div>
+    </center>
 </body>
 </html>

@@ -29,8 +29,8 @@
             </form>
             <form sec:authorize = "isAuthenticated()" th:action="'/charge?id=' + ${id} + '&byBalance=1'" method='POST' id='byBalance'>
                 <input type='hidden' th:value='${amount}' name='amount' />
-                <input type="submit" value="Купить за бонусы"/>
-                <p class="etext" th:text="${balance}"></p>
+                <p class="etext" th:text="'Бонусный баланс: ' + ${balance}"></p>
+                <input type="submit" th:disabled="${balance < amount}" value="Купить за бонусы"/>
             </form>
         </div>
     </div>

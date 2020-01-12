@@ -2,22 +2,48 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 </head>
 <body>
-<form class="calendarForm" th:attr = "action=@{/management/manageBuildings/save}" method = "post">
-    <select name = "selectedCity" >
-        <option th:each = "city : ${cities}" th:selected = "${defaultCity.id == city.id}" th:text = "${city.name}" th:value = "${city.id}">
+    <center>
+        <div class="managementBox">
+            <p>Редактор города</p>
+                <form class="managementForm" th:attr = "action=@{/management/manageBuildings/save}" method = "post">
+                    <input type="hidden" name="id" th:value="${id}">
+                    <div class="managementTable">
+                        <div class="managementLine">
+                            <label class="managementLabel">Город</label>
+                            <div class="managementInput">
+                                <select name = "selectedCity" >
+                                    <option th:each = "city : ${cities}"
+                                        th:selected = "${defaultCity.id == city.id}"
+                                        th:text = "${city.name}"
+                                        th:value = "${city.id}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="managementLine">
+                            <label class="managementLabel">Адрес</label>
+                            <div class="managementInput">
+                                <input type="text" name="address" th:value="${address}">
+                            </div>
+                        </div>
+                        <div class="managementLine">
+                            <label class="managementLabel">Тип здания</label>
+                            <div class="managementInput">
+                                <input type="text" name="type" th:value="${type}">
+                            </div>
+                        </div>
 
-        </option>
-    </select>
-    <input type="text" name="address" th:value="${address}">
-    <input type="text" name="type" th:value="${type}">
-    <input type="hidden" name="id" th:value="${id}">
-    <input type="submit" value="Сохранить">
-</form>
-</body>
+                        <div class="managementControls">
+                            <input class="managementText" type="submit" value="Сохранить">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </center>
+    </body>
 </html>

@@ -37,8 +37,13 @@ public class PerformanceController {
     @Autowired
     private PolygonUserDetailsService polygonUserDetailsService;
 
+    @Autowired
+    private TransactionService transactionService;
+
     @RequestMapping(value = "/performance", method = RequestMethod.GET)
-    public ModelAndView getPerformance(@RequestParam("id") int id, @CookieValue(value = "city", defaultValue = "1") int cityId) {
+    public ModelAndView getPerformance(@RequestParam("id") int id,
+                                       @RequestParam(value = "type", required = false, defaultValue = "") String type,
+                                                   @CookieValue(value = "city", defaultValue = "1") int cityId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("performance");
 
@@ -67,7 +72,7 @@ public class PerformanceController {
 
         modelAndView.addObject("geoCity", geoCity);
 
-        Map<Timestamp, Map<Building, List<Session>>> schedule = performanceService.getSchedule(performance, city);
+        Map<Timestamp, Map<Building, List<Session>>> schedule = performanceService.getSchedule(performance, city, type);
         modelAndView.addObject("schedule", schedule);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -82,6 +87,7 @@ public class PerformanceController {
         User user = null;
         if(username != null && !username.isEmpty()) {
             user = polygonUserDetailsService.getUserByUsername(username);
+            modelAndView.addObject("transactions", transactionService.findByUser(user));
         }
         modelAndView.addObject("user", user);
 

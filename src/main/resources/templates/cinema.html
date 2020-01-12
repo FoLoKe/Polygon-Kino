@@ -29,7 +29,7 @@
                 </div>
             </div>
             <a class = "session_tab" th:each = "s : ${entry.value}" th:href="@{/selectSeat(id = ${s.id})}">
-                <p th:text = "${s.getSimpleTime()}  + ' ' + ${s.room.type}">
+                <p th:text = "${#dates.format(s.time, 'HH:mm')}  + ' ' + ${s.room.type}">
                 </p>
                 <p th:text = "${s.price} + '₽'">
 

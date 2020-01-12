@@ -86,7 +86,7 @@ public class RoomServiceImpl implements RoomService {
     public boolean safeDelete(int id) {
         try {
             Room room = roomRepository.findById(id).orElse(null);
-            if (room != null) {
+            if (room != null && room.getSessions().size() == 0) {
                 for(SeatsRow sr : room.getSeatsRows()) {
                     for (Seat seat : sr.getSeats()) {
                         seatsRepository.delete(seat);
@@ -98,13 +98,14 @@ public class RoomServiceImpl implements RoomService {
 
                 roomRepository.delete(room);
                 roomRepository.flush();
+                return true;
             }
 
         } catch (Exception e) {
             System.out.println(e.toString());
             return false;
         }
-        return true;
+        return false;
     }
 
     @Override

@@ -18,6 +18,7 @@ import polygon.services.PolygonUserDetailsService;
 import polygon.services.interfaces.CategoryService;
 import polygon.services.interfaces.CityService;
 import polygon.services.interfaces.PerformanceService;
+import polygon.services.interfaces.TransactionService;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -39,6 +40,8 @@ public class FilmsController
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private TransactionService transactionService;
 
 
     @RequestMapping(value = "/films", method = RequestMethod.GET)
@@ -101,6 +104,7 @@ public class FilmsController
         User user = null;
         if(username != null && !username.isEmpty()) {
             user = polygonUserDetailsService.getUserByUsername(username);
+            modelAndView.addObject("transactions", transactionService.findByUser(user));
         }
         modelAndView.addObject("user", user);
 

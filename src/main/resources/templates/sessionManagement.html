@@ -2,31 +2,60 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 </head>
 <body>
-<form class="calendarForm" th:attr = "action=@{/management/manageSessions/save}" method = "post">
-    <select name = "selectedPerformance" >
-        <option th:each = "performance : ${performances}"
-                th:selected = "${defaultPerformance.id == performance.id}"
-                th:text = "${performance.name}"
-                th:value = "${performance.id}">
-        </option>
-    </select>
-    <input type="text" name="price" th:value="${price}">
-    <select name = "selectedRoom" >
-        <option th:each = "room : ${rooms}"
-                th:selected = "${defaultRoom.id == room.id}"
-                th:text = "${room.building.address} + ', зал №' + ${room.number}"
-                th:value = "${room.id}">
-        </option>
-    </select>
-    <input type="hidden" name="id" th:value="${id}">
-    <input type="datetime-local" name="date" th:value="${date}">
-    <input type="submit" value="Сохранить">
-</form>
+    <center>
+        <div class="managementBox">
+            <p>Редактор сеанса</p>
+            <form class="managementForm" th:attr = "action=@{/management/manageSessions/save}" method = "post">
+                <input type="hidden" name="id" th:value="${id}">
+                <div class="managementTable">
+                    <div class="managementLine">
+                        <label class="managementLabel">Фильм</label>
+                        <div class="managementInput">
+                            <select name = "selectedPerformance" >
+                                <option th:each = "performance : ${performances}"
+                                    th:selected = "${defaultPerformance.id == performance.id}"
+                                    th:text = "${performance.name}"
+                                    th:value = "${performance.id}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="managementLine">
+                        <label class="managementLabel">Цена билета</label>
+                        <div class="managementInput">
+                            <input type="text" name="price" th:value="${price}">
+                        </div>
+                    </div>
+                    <div class="managementLine">
+                        <label class="managementLabel">Зал</label>
+                        <div class="managementInput">
+                            <select name = "selectedRoom" >
+                                <option th:each = "room : ${rooms}"
+                                    th:selected = "${defaultRoom.id == room.id}"
+                                    th:text = "${room.building.address} + ', зал №' + ${room.number}"
+                                    th:value = "${room.id}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="managementLine">
+                        <label class="managementLabel">Дата и время</label>
+                        <div class="managementInput">
+                            <input type="datetime-local" name="date" th:value="${date}">
+                        </div>
+                    </div>
+                </div>
+                <div class="managementControls">
+                    <input class="managementText" type="submit" value="Сохранить">
+                    <a class="managementText" onclick="history.back();"> Назад</a>
+                </div>
+            </form>
+        </div>
+    </center>
 </body>
 </html>

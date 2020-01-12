@@ -618,13 +618,13 @@ font-family: Roboto;
 .calendar {
     margin: auto;
     padding: 5px;
-    background: #555;
+    background: white;
     align-items: center;
 }
 .calendar .calendarForm {
     display: flow-root;
         
-        color: white;
+        color: black;
         padding: 5px;
         font-size: 20px;
 }
@@ -839,37 +839,72 @@ font-family: Roboto;
     overflow-y: scroll;
     width: -webkit-fill-available;
 }
-
-.ManagmentForm
-{
-     display: inline-table;
-    background: white;
-    padding: 10px;
-    position: absolute;
-    border-bottom-color: orange;
-        border-bottom-style: solid;
-        border-bottom-width: 15px;
+.managementBox {
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flow-root;
+            background: white;
+            padding: 10px;
+            position: absolute;
+            min-width: 500px;
+            min-height: 500px;
+            border-bottom-color: orange;
+            border-bottom-style: solid;
+            border-bottom-width: 15px;
 }
-.ManagmentText
+.managementForm
 {
+    height: 500px;
 
+}
+.managementLine {
+    display: flex;
+    margin-bottom: 5px;
+}
+.managementInput {
+    margin-left: auto;
+}
+.managementLabel{
+    margin-right: 10px;
+}
+.managementTable {
+    display: grid;
+        width: 100%;
+        max-height: 475px;
+        overflow-y: scroll;
+}
+.managementSubTable {
+    width: 100%;
+}
+.managementText{
+    padding: 5px;
+    margin-bottom: 2px;
     font-size: 20px;
     color: #333333;
-    font-weight bold 100;
-    font: Roboto;
-
+    font-weight: bold;
+    font-family: Roboto;
     text-decoration: none;
-
+    transition: .3s;
+    border: none;
+    background: none;
 }
-.ManagmentText:hover
+.managementMenu {
+    display: grid;
+}
+.managementText:hover
 {
     background: orange;
     color: black;
 }
-
+.managementControls{
+        margin: auto;
+        height: fit-content;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 0px);
+        position: absolute;
+}
 .blocks {
     display: inline-block;
 }

@@ -5,29 +5,33 @@
     <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
 
 </head>
 <body>
-<form class = "ManagmentForm">
-<table>
-        <tr th:each ="city : ${cities}">
-            <td>
-               <p th:text = "${city.name}"></p>
-            </td>
-            <td>
-                <a class="ManagmentText" th:href="'/management/manageCities/manage?id=' + ${city.id}"> Изменить</a>
-            </td>
-            <td>
-                <a  class="ManagmentText" th:href="'/management/manageCities/delete?id=' + ${city.id}"> Удалить</a>
-            </td>
-        </tr>
-</table>
-
-    <a class="ManagmentText" href="/management/manageCities/manage"> Добавить </a>
-    <div>
-        <a class="ManagmentText" onclick="history.back();"> Назад</a>
+<center>
+    <div class="managementBox">
+        <p> Города</p>
+        <p th:if="${error != null}" th:text="${error}"></p>
+        <div class = "managementForm">
+                <table class="managementTable">
+                    <tr class="managementLine" th:each ="city : ${cities}">
+                        <td class="managementLabel">
+                            <p th:text = "${city.name}"></p>
+                        </td>
+                        <td class="managementInput">
+                            <a class="managementText" th:href="'/management/manageCities/manage?id=' + ${city.id}">&#9998;</a>
+                        </td>
+                        <td>
+                            <a  class="managementText" th:href="'/management/manageCities/delete?id=' + ${city.id}">&#128711;</a>
+                        </td>
+                    </tr>
+                </table>
+            <div class="managementControls">
+                <a class="managementText" href="/management/manageCities/manage"> Добавить </a>
+                <a class="managementText" onclick="history.back();"> Назад</a>
+            </div>
+        </div>
     </div>
-</form>
+</center>
 </body>
 </html>
