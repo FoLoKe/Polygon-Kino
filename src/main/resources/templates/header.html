@@ -98,7 +98,7 @@
                             <div class="wrapper">
                                 <ul class="list">
                                     <li th:each="city : ${citiesList}">
-                                        <a th:href = "@{/setCity(id = ${city.id})}" th:text="${city.name}">
+                                        <a th:href = "@{/setCity(id = ${city.id}, source = ${#httpServletRequest.requestURI})}" th:text="${city.name}">
 
                                         </a>
                                     </li>

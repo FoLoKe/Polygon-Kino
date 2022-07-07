@@ -40,7 +40,7 @@ public class PerformanceController {
     @Autowired
     private TransactionService transactionService;
 
-    @RequestMapping(value = "/performance", method = RequestMethod.GET)
+    @GetMapping(value = "/performance")
     public ModelAndView getPerformance(@RequestParam("id") int id,
                                        @RequestParam(value = "type", required = false, defaultValue = "") String type,
                                                    @CookieValue(value = "city", defaultValue = "1") int cityId) {
@@ -76,8 +76,8 @@ public class PerformanceController {
         modelAndView.addObject("schedule", schedule);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        int userBalance = 0;
         String username;
+
         if (principal instanceof UserDetails) {
             username = ((UserDetails)principal).getUsername();
         } else {
@@ -94,12 +94,12 @@ public class PerformanceController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/img/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/img/{id}")
     public void getImage(@PathVariable("id") Integer id, HttpServletResponse response) {
         performanceService.writeImageToResponse(id, response);
     }
 
-    @RequestMapping(value = "/preview/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/preview/{id}")
     public void getPreviewImage(@PathVariable("id") Integer id, HttpServletResponse response) {
         performanceService.writePreviewToResponse(id, response);
     }
@@ -110,7 +110,7 @@ public class PerformanceController {
     @Autowired
     RegService regService;
 
-    @RequestMapping(value = "/debug", method = RequestMethod.GET)
+    @GetMapping(value = "/debug")
     public ModelAndView getPerformance() {
 
         java.util.Date date = new Date();

@@ -1,16 +1,15 @@
 package polygon.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.*;
 import polygon.repos.PreviewRepository;
-import polygon.repos.SeatsRepository;
+import polygon.repos.SeatRepository;
 import polygon.repos.SeatsRowRepository;
 import polygon.services.PolygonUserDetailsService;
 import polygon.services.interfaces.*;
@@ -27,36 +26,74 @@ import java.util.*;
 
 @Controller
 public class ManagementController {
+    private final CityService cityService;
+    private final CategoryService categoryService;
+    private final BuildingService buildingService;
+    private final SessionService sessionService;
+    private final PerformanceService performanceService;
+    private final RoomService roomService;
+    private final PolygonUserDetailsService polygonUserDetailsService;
+    private final TransactionService transactionService;
 
-    @Autowired
-    private CityService cityService;
+    private final PreviewRepository previewRepository;
+    private final SeatRepository seatsRepository;
+    private final SeatsRowRepository seatsRowRepository;
 
-    @RequestMapping(value = "/management/manageCities", method = RequestMethod.GET)
+    public ManagementController(CityService cityService,
+                                CategoryService categoryService,
+                                BuildingService buildingService,
+                                SessionService sessionService,
+                                PerformanceService performanceService,
+                                RoomService roomService,
+                                PolygonUserDetailsService polygonUserDetailsService,
+                                TransactionService transactionService,
+                                PreviewRepository previewRepository,
+                                SeatRepository seatsRepository,
+                                SeatsRowRepository seatsRowRepository) {
+        this.cityService = cityService;
+        this.categoryService = categoryService;
+        this.buildingService = buildingService;
+        this.sessionService = sessionService;
+        this.performanceService = performanceService;
+        this.roomService = roomService;
+        this.polygonUserDetailsService = polygonUserDetailsService;
+        this.transactionService = transactionService;
+
+        this.previewRepository = previewRepository;
+        this.seatsRepository = seatsRepository;
+        this.seatsRowRepository = seatsRowRepository;
+    }
+
+    @GetMapping(value = "/management/manageCities")
     public ModelAndView manageCities() {
         ModelAndView modelAndView = new ModelAndView("citiesManagement");
         List<City> cities = cityService.allCities();
+
         modelAndView.addObject("cities", cities);
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/manageCities/delete", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageCities/delete")
     public ModelAndView deleteCity(@RequestParam("id") int id) {
         if(!cityService.safeDelete(id)) {
             ModelAndView modelAndView = manageCities();
             modelAndView.addObject("error", "Для начала удалите связанные здания");
+
             return modelAndView;
         }
+
         return new ModelAndView("redirect:/management/manageCities");
     }
 
-    @RequestMapping(value = "/management/manageCities/manage", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageCities/manage")
     public ModelAndView manageCity(@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
         ModelAndView modelAndView = new ModelAndView("cityManagement");
-
         String name = "";
+
         if(id != 0) {
             City city = cityService.findById(id);
+
             if (city != null) {
                 name = city.getName();
             }
@@ -64,15 +101,17 @@ public class ManagementController {
 
         modelAndView.addObject("name", name);
         modelAndView.addObject("id", id);
+
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/manageCities/save", method = RequestMethod.POST)
+    @PostMapping(value = "/management/manageCities/save")
     public ModelAndView saveCity(@ModelAttribute("id") int id,
                                  @ModelAttribute("name") String name) {
         if (name != null && name.length() > 0) {
             if (id != 0) {
                 City city = cityService.findById(id);
+
                 if (city != null) {
                     city.setName(name);
                     cityService.save(city);
@@ -83,37 +122,37 @@ public class ManagementController {
                 cityService.save(city);
             }
         }
+
         return new ModelAndView("redirect:/management/manageCities");
     }
 
-    @Autowired
-    private CategoryService categoryService;
-
-    @RequestMapping(value = "/management/manageCategories", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageCategories")
     public ModelAndView manageCategories() {
         ModelAndView modelAndView = new ModelAndView("categoriesManagement");
         List<Category> categories = categoryService.allCategories();
+
         modelAndView.addObject("categories", categories);
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/manageCategories/delete", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageCategories/delete")
     public ModelAndView deleteCategory(@RequestParam("id") int id) {
         if(!categoryService.safeDelete(id)) {
             ModelAndView modelAndView = manageCategories();
-            modelAndView.addObject("error", "Для начала снемите данную каткгорию с фильмов");
+            modelAndView.addObject("error", "Для начала снимите данную каткгорию с фильмов");
+
             return modelAndView;
         }
 
         return new ModelAndView("redirect:/management/manageCategories");
     }
 
-    @RequestMapping(value = "/management/manageCategories/manage", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageCategories/manage")
     public ModelAndView manageCategory(@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
         ModelAndView modelAndView = new ModelAndView("categoryManagement");
-
         String name = "";
+
         if(id != 0) {
             Category category = categoryService.findById(id);
             if (category != null) {
@@ -123,14 +162,16 @@ public class ManagementController {
 
         modelAndView.addObject("name", name);
         modelAndView.addObject("id", id);
+
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/manageCategories/save", method = RequestMethod.POST)
+    @PostMapping(value = "/management/manageCategories/save")
     public ModelAndView saveCategory(@ModelAttribute("id") int id,
                                  @ModelAttribute("name") String name) {
         if (name != null && name.length() > 0) {
             Category category = new Category();
+
             if (id != 0) {
                 category = categoryService.findById(id);
             }
@@ -139,42 +180,45 @@ public class ManagementController {
                 category.setName(name);
                 categoryService.save(category);
             }
-
         }
+
         return new ModelAndView("redirect:/management/manageCategories");
     }
 
-    @RequestMapping(value = "/management/manageBuildings", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageBuildings")
     public ModelAndView manageBuildings() {
         ModelAndView modelAndView = new ModelAndView("buildingsManagement");
         List<Building> buildings = buildingService.allBuildings();
+
         modelAndView.addObject("buildings", buildings);
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/manageBuildings/delete", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageBuildings/delete")
     public ModelAndView deleteBuilding(@RequestParam("id") int id) {
         if(!buildingService.safeDelete(id)) {
             ModelAndView modelAndView = manageBuildings();
             modelAndView.addObject("error", "Для начала удалите связанные залы");
+
             return modelAndView;
         }
 
         return new ModelAndView("redirect:/management/manageBuildings");
     }
 
-    @RequestMapping(value = "/management/manageBuildings/manage", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageBuildings/manage")
     public ModelAndView manageBuilding(@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
         ModelAndView modelAndView = new ModelAndView("buildingManagement");
-
         String address = "";
         String type = "";
-        List<City> cities = cityService.allCities();
         City defaultCity = null;
+        List<City> cities = cityService.allCities();
+
         if(cities.size() > 0) {
             defaultCity = cities.get(0);
         }
+
         if(id != 0) {
             Building building = buildingService.findById(id);
             if (building != null) {
@@ -189,18 +233,21 @@ public class ManagementController {
         modelAndView.addObject("type", type);
         modelAndView.addObject("cities", cities);
         modelAndView.addObject("defaultCity", defaultCity);
+
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/manageBuildings/save", method = RequestMethod.POST)
+    @PostMapping(value = "/management/manageBuildings/save")
     public ModelAndView manageBuilding(@ModelAttribute("id") int id,
                                      @ModelAttribute("address") String address,
                                        @ModelAttribute("type") String type,
                                        @ModelAttribute("selectedCity") int cityId)
     {
         City city = cityService.findById(cityId);
+
         if (address != null && address.length() > 0 && type.length() > 0 && city != null) {
             Building building = new Building();
+
             if (id != 0) {
                 building = buildingService.findById(id);
             }
@@ -211,35 +258,33 @@ public class ManagementController {
                 building.setType(type);
                 buildingService.save(building);
             }
-
         }
+
         return new ModelAndView("redirect:/management/manageBuildings");
     }
 
-    @Autowired
-    private BuildingService buildingService;
-
-    @Autowired
-    private SessionService sessionService;
-
-    @RequestMapping(value = "/management/manageSessions", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageSessions")
     public ModelAndView manageSessions(@RequestParam(required = false, name = "b", defaultValue = "0") int buildingId,
                                        @RequestParam(required = false, name = "t", defaultValue = "0") String stringTime) {
         ModelAndView modelAndView = new ModelAndView("sessionsManagement");
-        List<Building> buildings = buildingService.allBuildings();
         Map<Performance, List<Session>> sessions = new LinkedHashMap<>();
         Timestamp timestamp = new Timestamp(new Date().getTime());
+        List<Building> buildings = buildingService.allBuildings();
+
         if (buildings.size() > 0) {
             modelAndView.addObject("buildings", buildings);
             Building building = buildings.get(0);
+
             if(buildingId != 0) {
                 Building temp = buildingService.findById(buildingId);
                 if(temp != null) {
                     building = temp;
                 }
             }
+
             modelAndView.addObject("defaultBuilding", building);
             Calendar calendar = Calendar.getInstance();
+
             if(stringTime.equals("0")) {
                 calendar.setTime(new Date());
             } else {
@@ -251,6 +296,7 @@ public class ManagementController {
                     calendar.setTime(new Date());
                 }
             }
+
             calendar.set(Calendar.HOUR_OF_DAY, 0);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
@@ -267,18 +313,19 @@ public class ManagementController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/manageSessions", method = RequestMethod.POST)
+    @PostMapping(value = "/management/manageSessions")
     public ModelAndView manageSessionByDay(@ModelAttribute("day") String date,
                                            @ModelAttribute("selectedBuilding") String id) {
         ModelAndView modelAndView = new ModelAndView("sessionsManagement");
-
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date utilDate = new Date();
+
         try {
             utilDate = dateFormat.parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         java.sql.Timestamp time = new java.sql.Timestamp(utilDate.getTime());
         modelAndView.addObject("day", date);
 
@@ -298,11 +345,13 @@ public class ManagementController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/manageSessions/delete", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageSessions/delete")
     public ModelAndView deleteSession(@RequestParam("id") int id) {
-        Session session = sessionService.findById(id);
         int buildingId = 0;
         String stringTime = "0";
+
+        Session session = sessionService.findById(id);
+
         if(session != null) {
             buildingId = session.getRoom().getBuilding().getId();
             sessionService.cancel(id);
@@ -316,22 +365,25 @@ public class ManagementController {
             calendar.set(Calendar.MILLISECOND, 0);
             stringTime = dateFormat.format(calendar.getTime());
         }
+
         return new ModelAndView("redirect:/management/manageSessions?b="+buildingId +
                 "&t=" + stringTime);
     }
 
-    @RequestMapping(value = "/management/manageSessions/manage", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageSessions/manage")
     public ModelAndView manageSession(@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
         ModelAndView modelAndView = new ModelAndView("sessionManagement");
 
         Performance defaultPerformance = null;
         List<Performance> performances = performanceService.allPerformances();
+
         if(performances.size() > 0) {
             defaultPerformance = performances.get(0);
         }
 
         Room defaultRoom = null;
         List<Room> rooms = roomService.allRooms();
+
         if(rooms.size() > 0) {
             defaultRoom = rooms.get(0);
         }
@@ -342,7 +394,6 @@ public class ManagementController {
         if (id != 0) {
             Session session = sessionService.findById(id);
             if (session != null) {
-
                 date = session.getTime().toLocalDateTime();
                 price = session.getPrice();
             }
@@ -350,6 +401,7 @@ public class ManagementController {
 
         DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         String sDate = "";
+
         try {
             sDate = date.format(sdf);
         } catch (Exception e) {
@@ -368,7 +420,7 @@ public class ManagementController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/manageSessions/save", method = RequestMethod.POST)
+    @PostMapping(value = "/management/manageSessions/save")
     public ModelAndView saveSession(@RequestParam(value = "id") int id,
                                     @ModelAttribute("price") float price,
                                     @ModelAttribute("selectedRoom") int selectedRoom,
@@ -377,8 +429,10 @@ public class ManagementController {
     {
         Room room = roomService.findById(selectedRoom);
         Performance performance = performanceService.findById(selectedPerformance);
+
         if(price > 0 && room != null && performance != null) {
             Session session = sessionService.findById(id);
+
             if (session == null) {
                 session = new Session();
             }
@@ -386,7 +440,9 @@ public class ManagementController {
             session.setRoom(room);
             session.setPerformance(performance);
             session.setPrice(price);
+
             Set<Ticket> tickets = new LinkedHashSet<>();
+
             for (SeatsRow sr : room.getSeatsRows()) {
                 for (Seat seat : sr.getSeats()) {
                     if (seat.isSeat()) {
@@ -407,16 +463,12 @@ public class ManagementController {
             session.setTime(new Timestamp(Date.from(localDateTime.atZone( ZoneId.systemDefault()).toInstant()).getTime()));
             sessionService.addSession(session);
         }
+
         return new ModelAndView("redirect:/management/manageSessions");
     }
 
-    @Autowired
-    private PerformanceService performanceService;
 
-    @Autowired
-    private PreviewRepository previewRepository;
-
-    @RequestMapping(value = "/management/managePerformances", method = RequestMethod.GET)
+    @GetMapping(value = "/management/managePerformances")
     public ModelAndView managePerformances() {
         ModelAndView modelAndView = new ModelAndView("performancesManagement");
 
@@ -425,17 +477,19 @@ public class ManagementController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/managePerformances/delete", method = RequestMethod.GET)
+    @GetMapping(value = "/management/managePerformances/delete")
     public ModelAndView deletePerformance(@RequestParam("id") int id) {
         if(!performanceService.cancel(id)) {
             ModelAndView modelAndView = managePerformances();
             modelAndView.addObject("error", "Для начала завершите связанные сеансы");
+
             return modelAndView;
         }
+
         return new ModelAndView("redirect:/management/managePerformances");
     }
 
-    @RequestMapping(value = "/management/managePerformances/manage", method = RequestMethod.GET)
+    @GetMapping(value = "/management/managePerformances/manage")
     public ModelAndView managePerformance(@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
         ModelAndView modelAndView = new ModelAndView("performanceManagement");
         String name = "";
@@ -445,8 +499,10 @@ public class ManagementController {
         File file = null;
         Date date = new Date();
         Map<Category, Boolean> categories = new LinkedHashMap<>();
+
         if(id != 0) {
             Performance performance = performanceService.findById(id);
+
             if (performance != null) {
                 name = performance.getName();
                 link = performance.getTrailerLink();
@@ -471,14 +527,14 @@ public class ManagementController {
         modelAndView.addObject("link", link);
         modelAndView.addObject("imdbID", imdb);
         modelAndView.addObject("description", description);
-        modelAndView.addObject("poster", file);
+        modelAndView.addObject("poster", file); // TODO
         modelAndView.addObject("id", id);
         modelAndView.addObject("date", date);
         modelAndView.addObject("cats", categories);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/managePerformances/save", method = RequestMethod.POST)
+    @PostMapping(value = "/management/managePerformances/save")
     public ModelAndView savePerformance(@ModelAttribute(value = "id") int id,
                                         @ModelAttribute("name") String name,
                                         @ModelAttribute("link") String link,
@@ -493,9 +549,11 @@ public class ManagementController {
             if (name != null && name.length() > 0) {
                 if (id != 0) {
                     Performance performance = performanceService.findById(id);
+
                     if (performance == null) {
                         performance = new Performance();
                     }
+
                     performance.setName(name);
                     performance.setTrailerLink(link);
                     performance.setImdbRating(imdb);
@@ -503,6 +561,7 @@ public class ManagementController {
 
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     Date utilDate = new Date();
+
                     try {
                         utilDate = dateFormat.parse(date);
                     } catch (ParseException e) {
@@ -510,26 +569,33 @@ public class ManagementController {
                     }
 
                     performance.setDate(new java.sql.Date(utilDate.getTime()));
+
                     if (file != null && file.getSize() > 0) {
                         performance.setPoster(file.getBytes());
                     }
+
                     if (files != null && files.length > 0 && files[0].getSize() > 0) {
                         Set<Preview> previews = new HashSet<>();
+
                         for (MultipartFile pf : files) {
                             Preview preview = new Preview();
                             preview.setImage(pf.getBytes());
                             previews.add(preview);
                         }
+
                         performance.setPreviews(previews);
                         previewRepository.saveAll(previews);
                     }
+
                     Set<Category> categories = new HashSet<>();
+
                     if(cats != null) {
                         for (String s: cats) {
                             int catId = Integer.parseInt(s);
                             categories.add(categoryService.findById(catId));
                         }
                     }
+
                     performance.setCategories(categories);
                     performanceService.save(performance);
                 }
@@ -537,53 +603,49 @@ public class ManagementController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return new ModelAndView("redirect:/management/managePerformances");
     }
 
-    @Autowired
-    private RoomService roomService;
-
-    @Autowired
-    SeatsRepository seatsRepository;
-
-    @Autowired
-    SeatsRowRepository seatsRowRepository;
-
-    @RequestMapping(value = "/management/manageRooms", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageRooms")
     public ModelAndView manageRooms() {
         ModelAndView modelAndView = new ModelAndView("roomsManagement");
         List<Room> rooms = roomService.allRooms();
+
         modelAndView.addObject("rooms", rooms);
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/manageRooms/delete", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageRooms/delete")
     public ModelAndView deleteRoom(@RequestParam("id") int id) {
         if(!roomService.safeDelete(id)){
             ModelAndView modelAndView = manageRooms();
             modelAndView.addObject("error", "Для начала завершите связанные сеансы");
+
             return modelAndView;
         }
 
         return new ModelAndView("redirect:/management/manageRooms");
     }
 
-    @RequestMapping(value = "/management/manageRooms/manage", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageRooms/manage")
     public ModelAndView manageRoom() {
         ModelAndView modelAndView = new ModelAndView("roomManagement");
         Building defaultBuilding = null;
         List<Building> buildings = buildingService.allBuildings();
+
         if(buildings.size() > 0) {
             defaultBuilding = buildings.get(0);
         }
 
         modelAndView.addObject("defaultBuilding", defaultBuilding);
         modelAndView.addObject("buildings", buildings);
+
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/manageRooms/save", method = RequestMethod.POST)
+    @PostMapping(value = "/management/manageRooms/save")
     public ModelAndView saveRoom(@ModelAttribute("rowsCount") int rowsCount,
                                  @ModelAttribute("selectedBuilding") int buildingId,
                                  @ModelAttribute("number") int number,
@@ -592,18 +654,22 @@ public class ManagementController {
                                  @RequestParam(value = "seat", required = false) List<String> seats)
     {
         Building building = buildingService.findById(buildingId);
+
         if(rowsCount > 0 && seats != null && building != null && number > 0 && type.length() > 0) {
             Room room = new Room();
             Set<SeatsRow> seatsRowSet = new LinkedHashSet<>();
+
             for (int iRow = 1; iRow <= rowsCount; iRow++) {
                 SeatsRow seatsRow = new SeatsRow();
                 Set<Seat> seatsSet = new LinkedHashSet<>();
                 int seatsCount = seatsCountList.get(iRow - 1);
                 int offset = 0;
+
                 for (int iSeat = 1; iSeat <= seatsCount; iSeat++, offset++) {
                     Seat seat = new Seat();
                     seat.setSeat(iSeat - offset);
                     seat.setSeat(false);
+
                     for (String value : seats) {
                         if (value.equals(iRow + " " + iSeat)) {
                             seat.setSeat(true);
@@ -615,7 +681,6 @@ public class ManagementController {
                     seatsSet.add(seat);
                 }
 
-
                 seatsRow.setSeats(seatsSet);
                 seatsRow.setRow(iRow);
                 seatsRowRepository.saveAndFlush(seatsRow);
@@ -623,47 +688,44 @@ public class ManagementController {
             }
 
             room.setSeatsRows(seatsRowSet);
-
             room.setBuilding(building);
             room.setNumber(number);
             room.setType(type);
             roomService.save(room);
-
-
         }
+
         return new ModelAndView("redirect:/management/manageRooms");
     }
 
-    @Autowired
-    private PolygonUserDetailsService polygonUserDetailsService;
-
-    @RequestMapping(value = "/management/manageUsers", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageUsers")
     public ModelAndView manageUsers() {
         ModelAndView modelAndView = new ModelAndView("usersManagement");
         List<User> users = polygonUserDetailsService.allUsers();
+
         modelAndView.addObject("users", users);
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/manageUsers/delete", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageUsers/delete")
     public ModelAndView deleteUser(@RequestParam("id") int id) {
         polygonUserDetailsService.delete(id);
 
         return new ModelAndView("redirect:/management/manageUsers");
     }
 
-    @RequestMapping(value = "/management/manageUsers/manage", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageUsers/manage")
     public ModelAndView manageUser(@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
         ModelAndView modelAndView = new ModelAndView("userManagement");
-
         String username = "";
         String email = "";
         String password = "";
         String role = "";
         int balance = 0;
+
         if(id != 0) {
             User user = polygonUserDetailsService.findById(id);
+
             if (user != null) {
                 username = user.getUsername();
                 email = user.getEmail();
@@ -679,10 +741,11 @@ public class ManagementController {
         modelAndView.addObject("password", password);
         modelAndView.addObject("role", role);
         modelAndView.addObject("balance", balance);
+
         return modelAndView;
     }
 
-    @RequestMapping(value = "/management/manageUsers/save", method = RequestMethod.POST)
+    @PostMapping(value = "/management/manageUsers/save")
     public ModelAndView saveUser(@ModelAttribute("id") int id,
                                  @ModelAttribute("username") String username,
                                  @ModelAttribute("email") String email,
@@ -691,6 +754,7 @@ public class ManagementController {
                                  @ModelAttribute("role") String role) {
         if ( username.length() > 0 && email.length() > 0 && password.length() > 0 && balance >= 0 && role.length() > 0) {
             User user = new User();
+
             if (id != 0) {
                 user = polygonUserDetailsService.findById(id);
             }
@@ -703,18 +767,16 @@ public class ManagementController {
                 user.setPassword(password);
                 polygonUserDetailsService.save(user);
             }
-
         }
+
         return new ModelAndView("redirect:/management/manageUsers");
     }
 
-
-    @Autowired
-    TransactionService transactionService;
-    @RequestMapping(value = "/management/manageTransactions", method = RequestMethod.GET)
+    @GetMapping(value = "/management/manageTransactions")
     public ModelAndView manageTransactions() {
         ModelAndView modelAndView = new ModelAndView("transactionsManagement");
         List<TicketsTransaction> ticketsTransactions = transactionService.allTransactions();
+
         modelAndView.addObject("transactions", ticketsTransactions);
 
         return modelAndView;

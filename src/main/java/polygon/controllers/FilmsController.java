@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.Category;
 import polygon.models.City;
@@ -44,7 +41,7 @@ public class FilmsController
     private TransactionService transactionService;
 
 
-    @RequestMapping(value = "/films", method = RequestMethod.GET)
+    @GetMapping(value = "/films")
     public ModelAndView filmsByTag(@RequestParam(required = false, name = "cats") String sids,
             @CookieValue(value = "city", defaultValue = "1") int cityId) {
 

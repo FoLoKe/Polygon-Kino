@@ -1,6 +1,5 @@
 package polygon.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import polygon.models.Category;
 import polygon.repos.CategoryRepository;
@@ -12,11 +11,14 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService
 {
-    @Autowired
-    CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
+    private final PerformanceRepository performanceRepository;
 
-    @Autowired
-    PerformanceRepository performanceRepository;
+    public CategoryServiceImpl(CategoryRepository categoryRepository,
+                               PerformanceRepository performanceRepository) {
+        this.categoryRepository = categoryRepository;
+        this.performanceRepository = performanceRepository;
+    }
 
     @Override
     public List<Category> allCategories() {
@@ -36,16 +38,17 @@ public class CategoryServiceImpl implements CategoryService
     @Override
     public boolean safeDelete(int id) {
         try {
-            Category category = categoryRepository.findById(id).orElse(null);
-            if(category != null && performanceRepository.getAllFilmsByTag(category).size() == 0) {
+            Category category = findById(id);
+
+            if(category != null && performanceRepository.countByTag(category) == 0) {
                 categoryRepository.deleteById(id);
                 return true;
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+
         return false;
     }
 }

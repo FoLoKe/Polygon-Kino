@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.*;
 import polygon.services.EmailServiceImpl;
@@ -40,7 +38,7 @@ public class SelectionController {
     @Autowired
     private TransactionService transactionService;
 
-    @RequestMapping(value = "/selectSeat", method = RequestMethod.GET)
+    @GetMapping(value = "/selectSeat")
     public ModelAndView getPerformance(@RequestParam("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
 
@@ -116,12 +114,13 @@ public class SelectionController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/selectSeat", method = RequestMethod.POST)
+    @PostMapping(value = "/selectSeat")
     public ModelAndView reserveTickets(@RequestParam("ticketsId") String sids)
     {
         int price = 0;
         String[] splitIds = sids.split(" ");
         List<Integer> ids = new ArrayList<>();
+
         for (String s: splitIds) {
             if(s!= null && !s.isEmpty()) {
                 try {
@@ -142,6 +141,7 @@ public class SelectionController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = null;
         String username;
+
         if (principal instanceof UserDetails) {
             username = ((UserDetails)principal).getUsername();
         } else {
@@ -153,6 +153,7 @@ public class SelectionController {
         }
 
         int transaction = ticketService.setTickets(ids, user);
+
         if(transaction != -1) {
             return new ModelAndView("redirect:/pay?id=" + transaction);
         }
@@ -160,7 +161,7 @@ public class SelectionController {
         return new ModelAndView("failPayment");
     }
 
-    @RequestMapping(value = "/confirmPage", method = RequestMethod.GET)
+    @GetMapping(value = "/confirmPage")
     public ModelAndView confirm() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");

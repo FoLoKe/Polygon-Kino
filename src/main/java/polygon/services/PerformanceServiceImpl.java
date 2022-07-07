@@ -25,7 +25,7 @@ public class PerformanceServiceImpl implements PerformanceService {
     PreviewRepository previewRepository;
 
     @Autowired
-    CinemasRepository cinemasRepository;
+    CinemaRepository cinemaRepository;
 
     @Autowired
     CategoryRepository categoryRepository;

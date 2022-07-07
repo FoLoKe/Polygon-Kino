@@ -18,8 +18,11 @@ public interface PerformanceRepository extends JpaRepository<Performance, Intege
     @Query("select p from Performance p join p.sessions js join js.room r join r.building b where p.date >= :date and p.sessions.size > 0 and b.city = :city group by p.id")
     List<Performance> findAllPremiers(@Param("date") Date date, City city);
 
-    @Query("select p from Performance p join p.categories c where c = :cat")
-    List<Performance> getAllFilmsByTag(Category cat);
+    @Query("select p from Performance p join p.categories c where c = :category")
+    List<Performance> getAllFilmsByTag(Category category);
+
+    @Query("select count(p.id) from Performance p join p.categories c where c = :category")
+    int countByTag(Category category);
 
     @Query("select p from Performance p where p.date <= :date")
     List<Performance> findAllPresent(@Param("date") Date date);

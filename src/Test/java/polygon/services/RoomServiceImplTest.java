@@ -14,7 +14,7 @@ import polygon.models.Seat;
 import polygon.models.SeatsRow;
 import polygon.models.Session;
 import polygon.repos.RoomRepository;
-import polygon.repos.SeatsRepository;
+import polygon.repos.SeatRepository;
 import polygon.repos.SeatsRowRepository;
 import polygon.repos.SessionRepository;
 import polygon.services.interfaces.RoomService;
@@ -39,7 +39,7 @@ public class RoomServiceImplTest {
     private SessionRepository sessionRepository;
 
     @MockBean
-    private SeatsRepository seatsRepository;
+    private SeatRepository seatsRepository;
 
     @MockBean
     private SeatsRowRepository seatsRowRepository;

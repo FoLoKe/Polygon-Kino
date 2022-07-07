@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.*;
 import polygon.repos.RoomRepository;
-import polygon.repos.SeatsRepository;
+import polygon.repos.SeatRepository;
 import polygon.repos.SeatsRowRepository;
 import polygon.services.interfaces.RoomService;
 
@@ -24,7 +24,7 @@ public class RoomServiceImpl implements RoomService {
     private SeatsRowRepository seatsRowRepository;
 
     @Autowired
-    private SeatsRepository seatsRepository;
+    private SeatRepository seatsRepository;
 
     @Override
     @Transactional

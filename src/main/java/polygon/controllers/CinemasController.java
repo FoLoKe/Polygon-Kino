@@ -5,8 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.*;
@@ -16,7 +15,6 @@ import polygon.services.interfaces.CityService;
 import polygon.services.interfaces.SessionService;
 import polygon.services.interfaces.TransactionService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +38,7 @@ public class CinemasController
     @Autowired
     private TransactionService transactionService;
 
-    @RequestMapping(value="/cinemas", method = RequestMethod.GET)
+    @GetMapping(value="/cinemas")
     public ModelAndView allCinemas(
             @CookieValue(value = "city", defaultValue = "1") int cityId) {
         ModelAndView modelAndView = new ModelAndView();
@@ -83,7 +81,7 @@ public class CinemasController
         return modelAndView;
     }
 
-    @RequestMapping(value="/cinema", method = RequestMethod.GET)
+    @GetMapping(value="/cinema")
     public ModelAndView cinemaDetails(@RequestParam("id") int id,
                                    @CookieValue(value = "city", defaultValue = "1") int cityId) {
         ModelAndView modelAndView = new ModelAndView();

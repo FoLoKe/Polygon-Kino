@@ -1,30 +1,32 @@
 package polygon.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.User;
 import polygon.services.interfaces.RegService;
 
-
 @Controller
 public class RegController {
-    @Autowired
-    RegService regService;
+    private final RegService regService;
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    public RegController(RegService regService) {
+        this.regService = regService;
+    }
+
+    @GetMapping(value = "/registration")
     public String showRegistrationForm(Model model) {
         User modelUserRegAttr = new User();
         model.addAttribute("user", modelUserRegAttr);
+
         return "registration";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    @PostMapping(value = "/registration")
     public ModelAndView registerUserAccount(
             @ModelAttribute("user") User user,
             BindingResult result) {
@@ -49,7 +51,6 @@ public class RegController {
             result.rejectValue("email", "message.regError","Почта уже занята");
         }
 
-
         if(!result.hasErrors()) {
             regService.registerNewUserAccount(user);
         }
@@ -61,6 +62,4 @@ public class RegController {
             return new ModelAndView("redirect:/");
         }
     }
-
-
 }

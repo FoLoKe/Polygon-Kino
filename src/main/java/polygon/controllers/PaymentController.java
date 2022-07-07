@@ -8,8 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.Ticket;
@@ -47,8 +47,9 @@ public class PaymentController {
     @RequestMapping("/pay")
     public String pay(@RequestParam("id") int id, Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = null;
+        User user;
         String username;
+
         if (principal instanceof UserDetails) {
             username = ((UserDetails)principal).getUsername();
         } else {
@@ -57,6 +58,7 @@ public class PaymentController {
 
         int balance = 0;
         String email = "";
+
         if(username != null && !username.isEmpty() && !(username.equals("anonymousUser"))) {
             user = polygonUserDetailsService.getUserByUsername(username);
             balance = user.getBalance();
@@ -67,6 +69,7 @@ public class PaymentController {
         TicketsTransaction ticketsTransaction = transactionService.findById(id);
         if (!ticketsTransaction.isEnded() && !ticketsTransaction.isTerminated()) {
             Set<Ticket> tickets = ticketsTransaction.getTickets();
+
             for (Ticket ticket : tickets) {
                 price += ticket.getSession().getPrice();
             }
@@ -78,16 +81,16 @@ public class PaymentController {
             model.addAttribute("amount", price);
             model.addAttribute("stripePublicKey", stripePublicKey);
 
-
             return "pay";
         }
+
         return "failPayment";
     }
 
     @Autowired
     private StripeService stripeService;
 
-    @RequestMapping(value = "/charge", method = RequestMethod.POST)
+    @PostMapping(value = "/charge")
     public ModelAndView chargeCard(@RequestParam("id") int id, @RequestParam("byBalance") int byBalance, HttpServletRequest request) throws Exception {
         String token = request.getParameter("stripeToken");
         double amount = Double.parseDouble(request.getParameter("amount"));
@@ -182,7 +185,7 @@ public class PaymentController {
         emailService.sendSimpleMessage(email, "Ваши билеты", emailText);
     }
 
-    @RequestMapping(value = "/refund", method = RequestMethod.POST)
+    @PostMapping(value = "/refund")
     public ModelAndView refund(@RequestParam("id") int id) {
         TicketsTransaction ticketsTransaction = transactionService.findById(id);
 
