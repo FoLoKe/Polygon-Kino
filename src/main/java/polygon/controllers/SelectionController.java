@@ -133,7 +133,7 @@ public class SelectionController {
                         return new ModelAndView("redirect:/failPayment");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("bad link" + e.toString());
+                    e.printStackTrace();
                     return new ModelAndView("redirect:/failPayment");
                 }
             }

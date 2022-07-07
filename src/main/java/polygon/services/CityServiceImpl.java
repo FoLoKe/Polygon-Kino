@@ -20,11 +20,7 @@ public class CityServiceImpl implements CityService {
     @Transactional
     @Cacheable
     public List<City> allCities() {
-        List<City> cities = cityRepository.findAll();
-        for(City c : cities) {
-            c.getBuildings().size();
-        }
-        return cities;
+        return cityRepository.findAll();
     }
 
     @Override
@@ -37,7 +33,7 @@ public class CityServiceImpl implements CityService {
     @Transactional
     public boolean safeDelete(int id) {
         try {
-            City city = cityRepository.findById(id).orElse(null);
+            City city = findById(id);
             if(city != null && city.getBuildings().size() == 0) {
                 cityRepository.deleteById(id);
                 cityRepository.flush();
@@ -45,7 +41,7 @@ public class CityServiceImpl implements CityService {
                 return false;
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -58,6 +54,7 @@ public class CityServiceImpl implements CityService {
             cityRepository.save(city);
             cityRepository.flush();
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
 

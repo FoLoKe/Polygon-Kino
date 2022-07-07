@@ -12,9 +12,9 @@ import org.springframework.core.env.Environment;
 
 @SpringBootApplication(scanBasePackages = "polygon")
 
-@EnableAutoConfiguration(exclude = { //
-        DataSourceAutoConfiguration.class, //
-        DataSourceTransactionManagerAutoConfiguration.class, //
+@EnableAutoConfiguration(exclude = {
+        DataSourceAutoConfiguration.class,
+        DataSourceTransactionManagerAutoConfiguration.class,
         HibernateJpaAutoConfiguration.class,
         MultipartAutoConfiguration.class})
 
@@ -24,10 +24,6 @@ public class Application {
     private Environment env;
 
     public static void main(String[] args) {
-        try {
-            SpringApplication.run(Application.class, args);
-        } catch (Exception e) {
-
-        }
+        SpringApplication.run(Application.class, args);
     }
 }

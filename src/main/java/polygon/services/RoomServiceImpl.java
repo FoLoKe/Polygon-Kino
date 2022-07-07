@@ -102,7 +102,7 @@ public class RoomServiceImpl implements RoomService {
             }
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
             return false;
         }
         return false;

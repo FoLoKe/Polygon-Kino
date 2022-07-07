@@ -43,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService
             }
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
             return false;
         }
         return false;

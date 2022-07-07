@@ -4,16 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.User;
 import polygon.services.interfaces.RegService;
 
-import javax.validation.Valid;
 
 @Controller
 public class RegController {
@@ -29,7 +26,7 @@ public class RegController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView registerUserAccount(
-            @ModelAttribute("user") @Valid User user,
+            @ModelAttribute("user") User user,
             BindingResult result) {
 
         if(user.getUsername().isEmpty()) {

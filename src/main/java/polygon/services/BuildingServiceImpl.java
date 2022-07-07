@@ -74,7 +74,7 @@ public class BuildingServiceImpl implements BuildingService {
             }
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
             return false;
         }
         return false;

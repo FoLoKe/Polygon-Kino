@@ -58,7 +58,7 @@ public class PolygonUserDetailsService implements UserDetailsService {
         try {
             userRepository.deleteById(userId);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -68,8 +68,8 @@ public class PolygonUserDetailsService implements UserDetailsService {
         userRepository.saveAndFlush(user);
     }
 
-    public class PolyUser implements UserDetails {
-        private User user;
+    public static class PolyUser implements UserDetails {
+        private final User user;
 
         public PolyUser(User user) {
             this.user = user;

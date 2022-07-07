@@ -66,7 +66,6 @@ public class CinemasController
         modelAndView.addObject("geoCity", geoCity);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        int userBalance = 0;
         String username;
         if (principal instanceof UserDetails) {
             username = ((UserDetails)principal).getUsername();
@@ -116,7 +115,6 @@ public class CinemasController
         modelAndView.addObject("orderedPerformances", sessions);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        int userBalance = 0;
         String username;
         if (principal instanceof UserDetails) {
             username = ((UserDetails)principal).getUsername();

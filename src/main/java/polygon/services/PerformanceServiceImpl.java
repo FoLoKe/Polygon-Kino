@@ -204,7 +204,7 @@ public class PerformanceServiceImpl implements PerformanceService {
             try (OutputStream out = response.getOutputStream()) {
                 out.write(imageData);
             } catch (Exception e) {
-                System.out.println(e.toString());
+                e.printStackTrace();
             }
         }
     }
@@ -224,7 +224,7 @@ public class PerformanceServiceImpl implements PerformanceService {
             try (OutputStream out = response.getOutputStream()) {
                 out.write(imageData);
             } catch (Exception e) {
-                System.out.println(e.toString());
+                e.printStackTrace();
             }
         }
     }
@@ -248,7 +248,7 @@ public class PerformanceServiceImpl implements PerformanceService {
                 return true;
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             return false;
         }
         return false;

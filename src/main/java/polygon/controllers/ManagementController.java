@@ -247,7 +247,7 @@ public class ManagementController {
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     calendar.setTime(dateFormat.parse(stringTime));
                 } catch (Exception e) {
-                    System.out.println(e);
+                    e.printStackTrace();
                     calendar.setTime(new Date());
                 }
             }
@@ -353,7 +353,7 @@ public class ManagementController {
         try {
             sDate = date.format(sdf);
         } catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
 
         modelAndView.addObject("performances", performances);
@@ -535,7 +535,7 @@ public class ManagementController {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
         return new ModelAndView("redirect:/management/managePerformances");
     }
