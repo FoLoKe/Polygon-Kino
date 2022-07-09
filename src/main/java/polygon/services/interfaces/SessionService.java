@@ -15,6 +15,8 @@ public interface SessionService {
     Map<Performance, List<Session>> findSessionsInBuilding(Building building, Timestamp timestamp);
     Session findById(int id);
     void addSession(Session session);
+
+    void addSessions(List<Session> sessions);
     Map<Building, List<Session>> findBuildingsWithSessionsInCity(Performance performance, City city, Timestamp time);
     boolean cancel(int id);
 }

@@ -56,19 +56,21 @@ public class PerformanceController {
         Performance performance = performanceService.findByIdFullLoad(id);
         modelAndView.addObject("perf", performance);
 
-
         List<City> cities;
         cities = cityService.allCities();
         modelAndView.addObject("citiesList", cities);
 
         String geoCity="";
         City city = cityService.findById(cityId);
-        if(city == null && cities.size() > 0) {
-            city = (City) cities.toArray()[0];
-        }
 
         if(city != null) {
             geoCity = city.getName();
+        } else if (cities.size() > 0) {
+            city = cities.get(0);
+        } else {
+            city = new City();
+            city.setName("unknown");
+            city.setId(-1);
         }
 
         modelAndView.addObject("geoCity", geoCity);
@@ -96,50 +98,28 @@ public class PerformanceController {
         performanceService.writePreviewToResponse(id, response);
     }
 
+    // TODO: debug scheduling doesn't check for time collisions
     @GetMapping(value = "/debug")
     public ModelAndView getPerformance() {
-        java.util.Date date = new Date();
-        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-        Timestamp time = new Timestamp(sqlDate.getTime());
-
         Calendar ac = Calendar.getInstance();
-        ac.setTime(time);
+        Timestamp time = new Timestamp(ac.getTimeInMillis());
 
         List<Performance> performances = performanceService.allPresentPerformances();
         List<Room> rooms = roomService.allRooms();
+        List<Session> sessionsToAdd = new ArrayList<>();
 
-        for(int d = 0; d < 2; d++) {
-            ac.set(Calendar.HOUR_OF_DAY, 0);
+        for(int day = 0; day < 2; day++) {
+
             ac.set(Calendar.MINUTE, 0);
             ac.set(Calendar.SECOND, 0);
-            ac.add(Calendar.HOUR_OF_DAY, 6);
+            ac.set(Calendar.HOUR_OF_DAY, 6);
 
-            for (int m = 0; m < 8; m++) {
-                time = new Timestamp(ac.getTime().getTime());
+            for (int minute = 0; minute < 8; minute++) {
+                time.setTime(ac.getTimeInMillis());
 
                 for (Room room : rooms) {
-                    for (Performance p : performances) {
-                        Session s = new Session();
-                        s.setTime(time);
-                        s.setPrice(250);
-
-                        s.setRoom(room);
-                        Set<Ticket> tickets = new LinkedHashSet<>();
-                        for (SeatsRow sr : room.getSeatsRows()) {
-                            for (Seat seat : sr.getSeats()) {
-                                if (seat.isSeat()) {
-                                    Ticket ticket = new Ticket();
-                                    ticket.setOccupied(false);
-                                    ticket.setSeat(seat);
-                                    ticket.setSession(s);
-                                    tickets.add(ticket);
-                                }
-                            }
-                        }
-
-                        s.setTickets(tickets);
-                        s.setPerformance(p);
-                        sessionService.addSession(s);
+                    for (Performance performance : performances) {
+                        sessionsToAdd.add(generateSession(room, performance, time));
                     }
                 }
                 ac.add(Calendar.MINUTE, 130);
@@ -147,50 +127,28 @@ public class PerformanceController {
             ac.add(Calendar.DATE, 1);
         }
 
-        List<Performance> sPerformances = performanceService.allPremiers();
+        List<Performance> premiers = performanceService.allPremiers();
 
-        for (Performance performance : sPerformances) {
+        for (Performance performance : premiers) {
             Timestamp begin = new Timestamp(performance.getDate().getTime());
             ac.setTime(begin);
 
-            for(int d = 0; d < 1; d++) {
-                ac.set(Calendar.HOUR_OF_DAY, 0);
-                ac.set(Calendar.MINUTE, 0);
-                ac.set(Calendar.SECOND, 0);
-                ac.add(Calendar.HOUR_OF_DAY, 6);
+            ac.set(Calendar.HOUR_OF_DAY, 6);
+            ac.set(Calendar.MINUTE, 0);
+            ac.set(Calendar.SECOND, 0);
 
-                for (int m = 0; m < 1; m++) {
-                    time = new Timestamp(ac.getTime().getTime());
+            for (int minute = 0; minute < 8; minute++) {
+                time = new Timestamp(ac.getTimeInMillis());
 
-                    for (Room room : rooms) {
-                        Session s = new Session();
-                        s.setTime(time);
-                        s.setPrice(250);
-
-                        s.setRoom(room);
-                        Set<Ticket> tickets = new LinkedHashSet<>();
-
-                        for (SeatsRow sr : room.getSeatsRows()) {
-                            for (Seat seat : sr.getSeats()) {
-                                if (seat.isSeat()) {
-                                    Ticket ticket = new Ticket();
-                                    ticket.setOccupied(false);
-                                    ticket.setSeat(seat);
-                                    ticket.setSession(s);
-                                    tickets.add(ticket);
-                                }
-                            }
-                        }
-
-                        s.setTickets(tickets);
-                        s.setPerformance(performance);
-                        sessionService.addSession(s);
-                    }
-                    ac.add(Calendar.MINUTE, 130);
+                for (Room room : rooms) {
+                    sessionsToAdd.add(generateSession(room, performance, time));
                 }
-                ac.add(Calendar.DATE, 1);
+
+                ac.add(Calendar.MINUTE, 130);
             }
         }
+
+        sessionService.addSessions(sessionsToAdd);
 
         User user = new User();
         user.setUsername("FoLoKe");
@@ -209,5 +167,32 @@ public class PerformanceController {
         regService.registerNewUserAccount(user);
 
         return new ModelAndView("redirect:/");
+    }
+
+    private static Session generateSession(Room room, Performance performance, Timestamp time) {
+        Session session = new Session();
+        session.setRoom(room);
+
+        session.setTime(time);
+        session.setPrice(250);
+
+        Set<Ticket> tickets = new LinkedHashSet<>();
+
+        for (SeatsRow sr : room.getSeatsRows()) {
+            for (Seat seat : sr.getSeats()) {
+                if (seat.isSeat()) {
+                    Ticket ticket = new Ticket();
+                    ticket.setOccupied(false);
+                    ticket.setSeat(seat);
+                    ticket.setSession(session);
+                    tickets.add(ticket);
+                }
+            }
+        }
+
+        session.setTickets(tickets);
+        session.setPerformance(performance);
+
+        return session;
     }
 }

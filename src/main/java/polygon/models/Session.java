@@ -59,11 +59,6 @@ public class Session {
         return time;
     }
 
-    public String getSimpleTime() {
-
-        return "" + time.getHours() + ":" + time.getMinutes();
-    }
-
     public void setTime(Timestamp time) {
         this.time = time;
     }
