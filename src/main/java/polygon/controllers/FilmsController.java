@@ -1,11 +1,12 @@
 package polygon.controllers;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.Category;
 import polygon.models.City;
@@ -18,28 +19,28 @@ import polygon.services.interfaces.PerformanceService;
 import polygon.services.interfaces.TransactionService;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 @Controller
-public class FilmsController
-{
+public class FilmsController {
 
-    @Autowired
-    private PolygonUserDetailsService polygonUserDetailsService;
+    private final PolygonUserDetailsService polygonUserDetailsService;
+    private final CityService cityService;
+    private final PerformanceService performanceService;
+    private final CategoryService categoryService;
+    private final TransactionService transactionService;
 
-    @Autowired
-    private CityService cityService;
-
-    @Autowired
-    private PerformanceService performanceService;
-
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private TransactionService transactionService;
-
+    public FilmsController(PolygonUserDetailsService polygonUserDetailsService,
+                           CityService cityService,
+                           PerformanceService performanceService,
+                           CategoryService categoryService,
+                           TransactionService transactionService) {
+        this.polygonUserDetailsService = polygonUserDetailsService;
+        this.cityService = cityService;
+        this.performanceService = performanceService;
+        this.categoryService = categoryService;
+        this.transactionService = transactionService;
+    }
 
     @GetMapping(value = "/films")
     public ModelAndView filmsByTag(@RequestParam(required = false, name = "cats") String sids,
@@ -73,10 +74,9 @@ public class FilmsController
 
         if(sids != null && !sids.isEmpty()) {
             String[] splitIds = sids.split(" ");
-            LinkedHashSet<Integer> ids = new LinkedHashSet<>();
+
             for (String s : splitIds) {
                 if (s != null && !s.isEmpty()) {
-                    ids.add(Integer.parseInt(s));
                     films.addAll(performanceService.activePerformances(Integer.parseInt(s)));
                     selectedCategory = categoryService.findById(Integer.parseInt(s));
                 }
@@ -90,8 +90,8 @@ public class FilmsController
         modelAndView.addObject("selectedCategory", selectedCategory);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        int userBalance = 0;
         String username;
+
         if (principal instanceof UserDetails) {
             username = ((UserDetails)principal).getUsername();
         } else {
@@ -99,10 +99,12 @@ public class FilmsController
         }
 
         User user = null;
+
         if(username != null && !username.isEmpty()) {
             user = polygonUserDetailsService.getUserByUsername(username);
             modelAndView.addObject("transactions", transactionService.findByUser(user));
         }
+
         modelAndView.addObject("user", user);
 
         return modelAndView;

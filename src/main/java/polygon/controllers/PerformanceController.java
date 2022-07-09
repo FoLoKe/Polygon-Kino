@@ -1,10 +1,12 @@
 package polygon.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.*;
 import polygon.services.PolygonUserDetailsService;
@@ -19,26 +21,29 @@ import java.util.*;
 @Controller
 public class PerformanceController {
 
-    @Autowired
-    private PerformanceService performanceService;
+    private final PerformanceService performanceService;
+    private final CityService cityService;
+    private final SessionService sessionService;
+    private final RoomService roomService;
+    private final PolygonUserDetailsService polygonUserDetailsService;
+    private final TransactionService transactionService;
+    private final RegService regService;
 
-    @Autowired
-    private CityService cityService;
-
-    @Autowired
-    private SessionService sessionService;
-
-    @Autowired
-    private RoomService roomService;
-
-    @Autowired
-    private TicketService ticketService;
-
-    @Autowired
-    private PolygonUserDetailsService polygonUserDetailsService;
-
-    @Autowired
-    private TransactionService transactionService;
+    public PerformanceController(PerformanceService performanceService,
+                                 CityService cityService,
+                                 SessionService sessionService,
+                                 RoomService roomService,
+                                 PolygonUserDetailsService polygonUserDetailsService,
+                                 TransactionService transactionService,
+                                 RegService regService) {
+        this.performanceService = performanceService;
+        this.cityService = cityService;
+        this.sessionService = sessionService;
+        this.roomService = roomService;
+        this.polygonUserDetailsService = polygonUserDetailsService;
+        this.transactionService = transactionService;
+        this.regService = regService;
+    }
 
     @GetMapping(value = "/performance")
     public ModelAndView getPerformance(@RequestParam("id") int id,
@@ -49,7 +54,6 @@ public class PerformanceController {
 
         Date date = new Date(System.currentTimeMillis());
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        java.sql.Timestamp time = new java.sql.Timestamp(date.getTime());
         modelAndView.addObject("day", dateFormat.format(date));
 
         Performance performance = performanceService.findByIdFullLoad(id);
@@ -103,12 +107,6 @@ public class PerformanceController {
     public void getPreviewImage(@PathVariable("id") Integer id, HttpServletResponse response) {
         performanceService.writePreviewToResponse(id, response);
     }
-
-    @Autowired
-    CategoryService categoryService;
-
-    @Autowired
-    RegService regService;
 
     @GetMapping(value = "/debug")
     public ModelAndView getPerformance() {

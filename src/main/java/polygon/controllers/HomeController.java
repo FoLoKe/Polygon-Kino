@@ -1,6 +1,5 @@
 package polygon.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -10,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 import polygon.models.City;
 import polygon.models.Performance;
 import polygon.models.User;
-import polygon.services.EmailServiceImpl;
 import polygon.services.PolygonUserDetailsService;
 import polygon.services.interfaces.CityService;
 import polygon.services.interfaces.PerformanceService;
@@ -22,20 +20,20 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-    @Autowired
-    EmailServiceImpl emailService;
+    private final PolygonUserDetailsService polygonUserDetailsService;
+    private final CityService cityService;
+    private final PerformanceService performanceService;
+    private final TransactionService transactionService;
 
-    @Autowired
-    private PolygonUserDetailsService polygonUserDetailsService;
-
-    @Autowired
-    private CityService cityService;
-
-    @Autowired
-    private PerformanceService performanceService;
-
-    @Autowired
-    private TransactionService transactionService;
+    public HomeController(PolygonUserDetailsService polygonUserDetailsService,
+                          CityService cityService,
+                          PerformanceService performanceService,
+                          TransactionService transactionService) {
+        this.polygonUserDetailsService = polygonUserDetailsService;
+        this.cityService = cityService;
+        this.performanceService = performanceService;
+        this.transactionService = transactionService;
+    }
 
     @GetMapping(value="/")
     public ModelAndView home(HttpServletRequest request,

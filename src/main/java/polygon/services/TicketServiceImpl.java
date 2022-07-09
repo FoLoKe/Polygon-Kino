@@ -2,7 +2,6 @@ package polygon.services;
 
 import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.*;
@@ -16,11 +15,14 @@ import java.util.*;
 @Transactional
 public class TicketServiceImpl implements TicketService {
 
-    @Autowired
-    private TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
+    private final TransactionRepository transactionRepository;
 
-    @Autowired
-    private TransactionRepository transactionRepository;
+    public TicketServiceImpl(TicketRepository ticketRepository,
+                             TransactionRepository transactionRepository) {
+        this.ticketRepository = ticketRepository;
+        this.transactionRepository = transactionRepository;
+    }
 
     @Override
     public int setTickets(List<Integer> ids, User user) {

@@ -12,6 +12,7 @@ import polygon.services.interfaces.RegService;
 
 @Controller
 public class RegController {
+
     private final RegService regService;
 
     public RegController(RegService regService) {

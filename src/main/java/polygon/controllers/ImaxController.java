@@ -1,7 +1,6 @@
 package polygon.controllers;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -20,19 +19,22 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-public class ImaxController
-{
-    @Autowired
-    private PolygonUserDetailsService polygonUserDetailsService;
+public class ImaxController {
 
-    @Autowired
-    private CityService cityService;
+    private final PolygonUserDetailsService polygonUserDetailsService;
+    private final CityService cityService;
+    private final PerformanceService performanceService;
+    private final TransactionService transactionService;
 
-    @Autowired
-    private PerformanceService performanceService;
-
-    @Autowired
-    private TransactionService transactionService;
+    public ImaxController(PolygonUserDetailsService polygonUserDetailsService,
+                          CityService cityService,
+                          PerformanceService performanceService,
+                          TransactionService transactionService) {
+        this.polygonUserDetailsService = polygonUserDetailsService;
+        this.cityService = cityService;
+        this.performanceService = performanceService;
+        this.transactionService = transactionService;
+    }
 
     @GetMapping(value="/imax")
     public ModelAndView allIMAXFilms(HttpServletRequest request,

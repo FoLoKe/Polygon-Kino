@@ -2,7 +2,6 @@ package polygon.controllers;
 
 import com.stripe.model.Card;
 import com.stripe.model.Charge;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,17 +31,24 @@ public class PaymentController {
     @Value("${STRIPE_PUBLIC_KEY}")
     private String stripePublicKey;
 
-    @Autowired
-    private TicketService ticketService;
+    private final TicketService ticketService;
+    private final EmailServiceImpl emailService;
+    private final PolygonUserDetailsService polygonUserDetailsService;
+    private final TransactionServiceImpl transactionService;
+    private final StripeService stripeService;
 
-    @Autowired
-    private EmailServiceImpl emailService;
-
-    @Autowired
-    private PolygonUserDetailsService polygonUserDetailsService;
-
-    @Autowired
-    private TransactionServiceImpl transactionService;
+    public PaymentController(
+            TicketService ticketService,
+            EmailServiceImpl emailService,
+            PolygonUserDetailsService polygonUserDetailsService,
+            TransactionServiceImpl transactionService,
+            StripeService stripeService) {
+        this.ticketService = ticketService;
+        this.emailService = emailService;
+        this.polygonUserDetailsService = polygonUserDetailsService;
+        this.transactionService = transactionService;
+        this.stripeService = stripeService;
+    }
 
     @RequestMapping("/pay")
     public String pay(@RequestParam("id") int id, Model model) {
@@ -86,9 +92,6 @@ public class PaymentController {
 
         return "failPayment";
     }
-
-    @Autowired
-    private StripeService stripeService;
 
     @PostMapping(value = "/charge")
     public ModelAndView chargeCard(@RequestParam("id") int id, @RequestParam("byBalance") int byBalance, HttpServletRequest request) throws Exception {
@@ -170,19 +173,17 @@ public class PaymentController {
 
     public void sendEmail(String email, List<Integer> ids) {
         Ticket first = ticketService.loadTicket(ids.get(0));
-        String emailText = "Спасибо за покупку!" +
+        StringBuilder emailText = new StringBuilder("Спасибо за покупку!" +
                 "\n Ваши билеты на: " + first.getSession().getPerformance().getName() +
                 "\n Зал №: " + first.getSeat().getSeatsRow().getRoom().getNumber() +
-                "\n По адресу: " + first.getSeat().getSeatsRow().getRoom().getBuilding().getAddress();
+                "\n По адресу: " + first.getSeat().getSeatsRow().getRoom().getBuilding().getAddress());
 
         for (int id : ids) {
             Ticket ticket = ticketService.loadTicket(id);
-            emailText += "\n\nБилет №" + ticket.getId() +
-                    "\n Ряд: " + ticket.getSeat().getSeatsRow().getRow() +
-                    "\n Место: " + ticket.getSeat().getSeat();
+            emailText.append("\n\nБилет №").append(ticket.getId()).append("\n Ряд: ").append(ticket.getSeat().getSeatsRow().getRow()).append("\n Место: ").append(ticket.getSeat().getSeat());
 
         }
-        emailService.sendSimpleMessage(email, "Ваши билеты", emailText);
+        emailService.sendSimpleMessage(email, "Ваши билеты", emailText.toString());
     }
 
     @PostMapping(value = "/refund")
@@ -198,7 +199,7 @@ public class PaymentController {
                 username = principal.toString();
             }
 
-            User user = null;
+            User user;
             if (username != null && !username.isEmpty()) {
                 user = polygonUserDetailsService.getUserByUsername(username);
                 if (ticketsTransaction.isEnded() && !ticketsTransaction.isRefunded() && ticketsTransaction.getUser().getId() == user.getId()) {

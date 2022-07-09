@@ -1,6 +1,5 @@
 package polygon.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -21,22 +20,25 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class CinemasController
-{
-    @Autowired
-    private PolygonUserDetailsService polygonUserDetailsService;
+public class CinemasController {
 
-    @Autowired
-    private CityService cityService;
+    private final PolygonUserDetailsService polygonUserDetailsService;
+    private final CityService cityService;
+    private final BuildingService buildingService;
+    private final SessionService sessionService;
+    private final TransactionService transactionService;
 
-    @Autowired
-    private BuildingService buildingService;
-
-    @Autowired
-    private SessionService sessionService;
-
-    @Autowired
-    private TransactionService transactionService;
+    public CinemasController(PolygonUserDetailsService polygonUserDetailsService,
+                             CityService cityService,
+                             BuildingService buildingService,
+                             SessionService sessionService,
+                             TransactionService transactionService) {
+        this.polygonUserDetailsService = polygonUserDetailsService;
+        this.cityService = cityService;
+        this.buildingService = buildingService;
+        this.sessionService = sessionService;
+        this.transactionService = transactionService;
+    }
 
     @GetMapping(value="/cinemas")
     public ModelAndView allCinemas(
@@ -50,6 +52,7 @@ public class CinemasController
 
         String geoCity="";
         City city = cityService.findById(cityId);
+
         if(city == null && cities.size() > 0) {
             city = (City) cities.toArray()[0];
         }
@@ -60,22 +63,23 @@ public class CinemasController
             modelAndView.addObject("cinemasList", cinemasList);
         }
 
-
         modelAndView.addObject("geoCity", geoCity);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = null;
         String username;
+
         if (principal instanceof UserDetails) {
             username = ((UserDetails)principal).getUsername();
         } else {
             username = principal.toString();
         }
 
-        User user = null;
         if(username != null && !username.isEmpty()) {
             user = polygonUserDetailsService.getUserByUsername(username);
             modelAndView.addObject("transactions", transactionService.findByUser(user));
         }
+
         modelAndView.addObject("user", user);
 
         return modelAndView;
@@ -93,6 +97,7 @@ public class CinemasController
 
         String geoCity="";
         City city = cityService.findById(cityId);
+
         if(city == null && cities.size() > 0) {
             city = (City) cities.toArray()[0];
         }
@@ -114,17 +119,19 @@ public class CinemasController
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
+        User user = null;
+
         if (principal instanceof UserDetails) {
             username = ((UserDetails)principal).getUsername();
         } else {
             username = principal.toString();
         }
 
-        User user = null;
         if(username != null && !username.isEmpty()) {
             user = polygonUserDetailsService.getUserByUsername(username);
             modelAndView.addObject("transactions", transactionService.findByUser(user));
         }
+
         modelAndView.addObject("user", user);
         
         return modelAndView;

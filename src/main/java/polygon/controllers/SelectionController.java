@@ -1,13 +1,13 @@
 package polygon.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import polygon.models.*;
-import polygon.services.EmailServiceImpl;
 import polygon.services.PolygonUserDetailsService;
 import polygon.services.interfaces.RoomService;
 import polygon.services.interfaces.SessionService;
@@ -20,23 +20,23 @@ import java.util.*;
 @Controller
 public class SelectionController {
 
-    @Autowired
-    private RoomService roomService;
+    private final RoomService roomService;
+    private final SessionService sessionService;
+    private final TicketService ticketService;
+    private final PolygonUserDetailsService polygonUserDetailsService;
+    private final TransactionService transactionService;
 
-    @Autowired
-    private SessionService sessionService;
-
-    @Autowired
-    private TicketService ticketService;
-
-    @Autowired
-    private PolygonUserDetailsService polygonUserDetailsService;
-
-    @Autowired
-    private EmailServiceImpl emailService;
-
-    @Autowired
-    private TransactionService transactionService;
+    public SelectionController(RoomService roomService,
+                               SessionService sessionService,
+                               TicketService ticketService,
+                               PolygonUserDetailsService polygonUserDetailsService,
+                               TransactionService transactionService) {
+        this.roomService = roomService;
+        this.sessionService = sessionService;
+        this.ticketService = ticketService;
+        this.polygonUserDetailsService = polygonUserDetailsService;
+        this.transactionService = transactionService;
+    }
 
     @GetMapping(value = "/selectSeat")
     public ModelAndView getPerformance(@RequestParam("id") int id) {
