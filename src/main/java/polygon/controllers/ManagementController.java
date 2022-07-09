@@ -354,7 +354,7 @@ public class ManagementController {
 
         if(session != null) {
             buildingId = session.getRoom().getBuilding().getId();
-            sessionService.cancel(id);
+            sessionService.cancel(id); // TODO: check return
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Timestamp timestamp = session.getTime();
             Calendar calendar = Calendar.getInstance();

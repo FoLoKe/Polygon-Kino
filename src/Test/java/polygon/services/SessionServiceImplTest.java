@@ -40,13 +40,6 @@ public class SessionServiceImplTest {
         Mockito.verify(sessionRepository,Mockito.times(1)).flush();
     }
 
-    @Test
-    public void findSessionsInCity() {
-        City city = new City();
-        sessionService.findSessionsInCity(city);
-        Mockito.verify(sessionRepository,Mockito.times(1)).findAllActiveSessionForCity(city);
-    }
-
      @Test
     public void findBuildingsWithSessionsInCity() {
         Performance performance = new Performance();
