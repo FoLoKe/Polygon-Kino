@@ -2,57 +2,57 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="/styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
-    <center>
-        <div class="management-box">
-            <div class="calendar">
-                <form class="calendar-form" th:attr = "action=@{/management/manageSessions}" method = "post">
-                    Выберите дату:
-                    <input class="calendar-main" type="date" name="day" th:value="${day}"  >
-                    <input class="calendar-button" type="submit" value="Выбрать">
-                    <select name = "selectedBuilding" >
-                        <option th:each = "building : ${buildings}" th:selected = "${defaultBuilding.id == building.id}" th:text = "${building.address}" th:value = "${building.id}">
-                        </option>
-                    </select>
-                </form>
-            </div>
-            <p th:if="${error != null}" th:text="${error}"></p>
-            <div class="management-form">
-                <table class="management-table">
-                    <tr th:each ="instance : ${sessions}">
-                    <td>
-                        <table class="management-sub-table">
-                            <tr class="management-line" th:each = "ssession : ${instance.value}">
-                                <td class="management-label">
-                                    <p th:text = "${instance.key.name}"></p>
-                                </td>
-                                <td class="management-label">
-                                    <p th:text = "${#dates.format(ssession.time, 'HH:mm')}">
+<center>
+  <div class="management-box">
+    <div class="calendar">
+      <form class="calendar-form" th:attr = "action=@{/management/manageSessions}" method = "post">
+        Выберите дату:
+        <input class="calendar-main" type="date" name="day" th:value="${day}"  >
+        <input class="calendar-button" type="submit" value="Выбрать">
+        <select name = "selectedBuilding" >
+          <option th:each = "building : ${buildings}" th:selected = "${defaultBuilding.id == building.id}" th:text = "${building.address}" th:value = "${building.id}">
+          </option>
+        </select>
+      </form>
+    </div>
+    <p th:if="${error != null}" th:text="${error}"></p>
+    <div class="management-form">
+      <table class="management-table">
+        <tr th:each ="instance : ${sessions}">
+          <td>
+            <table class="management-sub-table">
+              <tr class="management-line" th:each = "selectedSession : ${instance.value}">
+                <td class="management-label">
+                  <p th:text = "${instance.key.name}"></p>
+                </td>
+                <td class="management-label">
+                  <p th:text = "${#dates.format(selectedSession.time, 'HH:mm')}">
 
-                                    </p>
-                                </td>
-                                <td class="management-input">
-                                    <a class="management-text" th:href="'/management/manageSessions/manage?id=' + ${ssession.id}"> &#9998;</a>
-                                </td>
-                                <td>
-                                    <a class="management-text" th:href="'/management/manageSessions/delete?id=' + ${ssession.id}"> &#128711;</a>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
+                  </p>
+                </td>
+                <td class="management-input">
+                  <a class="management-text" th:href="'/management/manageSessions/manage?id=' + ${selectedSession.id}"> &#9998;</a>
+                </td>
+                <td>
+                  <a class="management-text" th:href="'/management/manageSessions/delete?id=' + ${selectedSession.id}"> &#128711;</a>
+                </td>
+              </tr>
+            </table>
+          </td>
 
-                    </tr>
-                </table>
-                <div class="management-controls">
-                    <a class="management-text" href="/management/manageSessions/manage"> Добавить </a>
-                    <a class="management-text" onclick="history.back();"> Назад</a>
-                </div>
-            </div>
-        </div>
-    </center>
+        </tr>
+      </table>
+      <div class="management-controls">
+        <a class="management-text" href="/management/manageSessions/manage"> Добавить </a>
+        <a class="management-text" onclick="history.back();"> Назад</a>
+      </div>
+    </div>
+  </div>
+</center>
 </body>
 </html>

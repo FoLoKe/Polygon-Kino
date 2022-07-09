@@ -3,6 +3,7 @@ package polygon.controllers;
 import com.stripe.model.Card;
 import com.stripe.model.Charge;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,7 @@ import java.util.Set;
 public class PaymentController {
 
     @Value("${STRIPE_PUBLIC_KEY}")
-    private String stripePublicKey;
+    private final String stripePublicKey;
 
     private final TicketService ticketService;
     private final EmailServiceImpl emailService;
@@ -40,12 +41,13 @@ public class PaymentController {
             EmailServiceImpl emailService,
             PolygonUserDetailsService polygonUserDetailsService,
             TransactionServiceImpl transactionService,
-            StripeService stripeService) {
+            StripeService stripeService, Environment environment) {
         this.ticketService = ticketService;
         this.emailService = emailService;
         this.polygonUserDetailsService = polygonUserDetailsService;
         this.transactionService = transactionService;
         this.stripeService = stripeService;
+        this.stripePublicKey = environment.getProperty("STRIPE_PUBLIC_KEY");
     }
 
     @RequestMapping("/pay")
@@ -63,7 +65,7 @@ public class PaymentController {
         int price = 0;
         TicketsTransaction ticketsTransaction = transactionService.findById(id);
 
-        if (!ticketsTransaction.isEnded() && !ticketsTransaction.isTerminated()) {
+        if (!ticketsTransaction.isEnded() && ticketsTransaction.isNotTerminated()) {
             Set<Ticket> tickets = ticketsTransaction.getTickets();
 
             for (Ticket ticket : tickets) {
@@ -100,7 +102,7 @@ public class PaymentController {
         int price = 0;
         TicketsTransaction ticketsTransaction = transactionService.findById(id);
 
-        if (!ticketsTransaction.isEnded()  && !ticketsTransaction.isTerminated()) {
+        if (!ticketsTransaction.isEnded()  && ticketsTransaction.isNotTerminated()) {
             for (Ticket ticket : ticketsTransaction.getTickets()) {
                 price += ticket.getSession().getPrice();
             }

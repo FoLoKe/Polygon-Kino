@@ -29,8 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class ManagementControllerTest {
 
-
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -85,6 +83,7 @@ public class ManagementControllerTest {
     public void deleteCity() {
         City city = new City();
         city.setId(1);
+        cityService.save(city);
         controller.deleteCity(1);
         Mockito.verify(cityService,Mockito.times(1)).safeDelete(1);
     }
@@ -105,6 +104,7 @@ public class ManagementControllerTest {
         city.setId(1);
         Mockito.when(cityService.findById(1)).thenReturn(city);
         ModelAndView expected = controller.saveCity(1,s);
+        Assert.assertEquals("redirect:/management/manageCities", expected.getViewName());
         Mockito.verify(cityService,Mockito.times(1)).save(city);
     }
 
@@ -122,6 +122,7 @@ public class ManagementControllerTest {
     public void deleteCategory() {
         Category category = new Category();
         category.setId(1);
+        categoryService.save(category);
         controller.deleteCategory(1);
         Mockito.verify(categoryService,Mockito.times(1)).safeDelete(1);
     }
@@ -141,8 +142,9 @@ public class ManagementControllerTest {
         category.setId(1);
         String s = "Категория";
         Mockito.when(categoryService.findById(1)).thenReturn(category);
-        ModelAndView expected = controller.saveCategory(1,s);
-        Mockito.verify(categoryService,Mockito.times(1)).save(category);
+        ModelAndView expected = controller.saveCategory(1, s);
+        Assert.assertEquals("redirect:/management/manageCategories", expected.getViewName());
+        Mockito.verify(categoryService, Mockito.times(1)).save(category);
     }
 
     @Test
@@ -159,6 +161,7 @@ public class ManagementControllerTest {
     public void deleteBuilding() {
         Building building = new Building();
         building.setId(1);
+        buildingService.save(building);
         controller.deleteBuilding(1);
         Mockito.verify(buildingService,Mockito.times(1)).safeDelete(1);
     }
@@ -180,6 +183,7 @@ public class ManagementControllerTest {
         Building building = new Building();
         city.setId(1);
         building.setId(1);
+        building.setCity(city);
         Mockito.when(buildingService.findById(1)).thenReturn(building);
         ModelAndView expected = controller.manageBuilding(1,"адрес","тип",1);
         Assert.assertNotNull(expected);
@@ -191,6 +195,7 @@ public class ManagementControllerTest {
         Building building = new Building();
         city.setId(1);
         building.setId(1);
+        building.setCity(city);
         List<Building> buildings = List.of(building);
         Set<Building> buildingsSet = Set.of(building);
         city.setBuildings(buildingsSet);
@@ -210,6 +215,7 @@ public class ManagementControllerTest {
     public void manageSessionByDay() {
         City city = new City();
         Building building = new Building();
+        building.setCity(city);
         String s1 = "01.01.2020";
         String s2 = "1";
         city.setId(1);
@@ -234,6 +240,7 @@ public class ManagementControllerTest {
     public void deleteSession() {
         Session session = new Session();
         session.setId(1);
+        sessionService.addSession(session);
         controller.deleteSession(1);
         Mockito.verify(sessionService,Mockito.times(1)).cancel(1);
     }
@@ -292,8 +299,9 @@ public class ManagementControllerTest {
     public void deletePerformance() {
         Performance performance = new Performance();
         performance.setId(1);
+        performanceService.save(performance);
         controller.deletePerformance(1);
-        Mockito.verify(performanceService,Mockito.times(1)).cancel(1);
+        Mockito.verify(performanceService, Mockito.times(1)).cancel(1);
     }
 
     @Test
@@ -336,6 +344,7 @@ public class ManagementControllerTest {
     public void deleteRoom() {
         Room room = new Room();
         room.setId(1);
+        roomService.save(room);
         controller.deleteRoom(1);
         Mockito.verify(roomService,Mockito.times(1)).safeDelete(1);
     }
@@ -385,6 +394,7 @@ public class ManagementControllerTest {
     public void deleteUser() {
         User user = new User();
         user.setId(1);
+        userService.save(user);
         controller.deleteUser(1);
         Mockito.verify(userService,Mockito.times(1)).delete(1);
     }

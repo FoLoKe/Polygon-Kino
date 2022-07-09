@@ -3,7 +3,7 @@ Cinema tickets booking web-application written with spring-boot
 ## Capabilities
 - Tickets booking and payments through Stripe API
 - User registration with Bonus balance system
-- Administrative privileges to edit info in databse (/debug for "debug" db initialization)
+- Administrative privileges to edit info in database (/debug for "debug" db initialization)
 - ~~Shitty style~~ (sorry im not a web designer)
 ## Screenshots
 ### Main page

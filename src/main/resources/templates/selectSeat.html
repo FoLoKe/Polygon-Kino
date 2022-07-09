@@ -6,16 +6,16 @@
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
+  <script type="text/javascript" th:src="@{js/geo-popup.js}" src="js/geo-popup.js"></script>
   <script type="text/javascript" th:src="@{js/selection.js}" src = "js/selection.js"></script>
 </head>
 <body class="buy-root">
 <img class = "background" src="images/bg.jpg">
 <div class="buy-body">
   <div class = "buy-header">
-    <p class = "caption" th:text="${ssession.performance.name} + ' ' + ${#dates.format(ssession.time, 'dd-MM-yyyy HH:mm')} +
-            ' Зал №' +${ssession.room.number}"></p>
-    <a class = "exit-cross" th:href = "@{/performance(id = ${ssession.performance.id})}">&#10005;</a>
+    <p class = "caption" th:text="${selectedSession.performance.name} + ' ' + ${#dates.format(selectedSession.time, 'dd-MM-yyyy HH:mm')} +
+            ' Зал №' +${selectedSession.room.number}"></p>
+    <a class = "exit-cross" th:href = "@{/performance(id = ${selectedSession.performance.id})}">&#10005;</a>
   </div>
   <div class = "buyFooter">
     <p class = "price" id="price">Цена</p>
@@ -33,16 +33,16 @@
       </div>
       <div class = "bottom">
         <table class = "seats-rows">
-          <tr class = "seats_row"  th:each = "srow, iterStat : ${rowsList}">
+          <tr class = "seats_row"  th:each = "sRow, iterationStat : ${rowsList}">
             <td>
-              <p th:text = ${iterStat.count} class = "row-number"></p>
+              <p th:text = ${iterationStat.count} class = "row-number"></p>
             </td>
             <td class = "selected-seatsRow">
               <center class = "selected-seatsRow">
-                <div th:each = "instance : ${srow}">
+                <div th:each = "instance : ${sRow}">
                   <center>
                     <div th:if="${instance.key.isSeat()}">
-                      <div class = "seat" th:value= "${instance.value.occupied}" th:attr = "ticket = ${instance.value.id}" th:attrappend =  "ticketPrice = ${ssession.price}">
+                      <div class = "seat" th:value= "${instance.value.occupied}" th:attr = "ticket = ${instance.value.id}" th:attrappend =  "ticketPrice = ${selectedSession.price}">
                         <div th:text = "${instance.key.seat}"></div>
                       </div>
                     </div>
@@ -56,7 +56,7 @@
               </center>
             </td>
             <td>
-              <p th:text = ${iterStat.count} class = "row-number"></p>
+              <p th:text = ${iterationStat.count} class = "row-number"></p>
             </td>
           </tr>
         </table>

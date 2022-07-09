@@ -27,10 +27,11 @@ public class RegServiceImpl implements RegService {
 
     @Transactional
     @Override
-    public User registerNewUserAccount(User user) {
+    public void registerNewUserAccount(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setBalance(0);
-        return userRepository.save(user);
+        userRepository.save(user);
+        userRepository.flush();
     }
 
     @Override

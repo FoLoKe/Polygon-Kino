@@ -9,9 +9,9 @@
 </head>
 <body>
     <center>
-        <div class="regpage">
+        <div class="registration-page">
             <form class = "reg-form" th:action="@{/login}" method="post">
-                <p class="regcaption">Вход</p>
+                <p class="registration-caption">Вход</p>
                 <div th:if="${param.error}">
                     Неверное имя пользователя или пароль.
                 </div>

@@ -3,7 +3,6 @@ package polygon.services;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,7 +16,6 @@ import polygon.repos.SessionRepository;
 import polygon.services.interfaces.BuildingService;
 import polygon.services.interfaces.PerformanceService;
 
-
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -29,9 +27,6 @@ public class PerformanceServiceImplTest {
 
     @Autowired
     private PerformanceService performanceService;
-
-//    @Autowired
-//    private SessionService sessionService;
 
     @MockBean
     private PerformanceRepository performanceRepository;
@@ -117,9 +112,9 @@ public class PerformanceServiceImplTest {
         Date utilDate = new Date();
         Calendar ac = Calendar.getInstance();
         ac.setTime(utilDate);
-        ac.add(Calendar.HOUR, - utilDate.getHours());
-        ac.add(Calendar.MINUTE, - utilDate.getMinutes());
-        ac.add(Calendar.SECOND, - utilDate.getSeconds());
+        ac.set(Calendar.HOUR, 0);
+        ac.set(Calendar.MINUTE, 0);
+        ac.set(Calendar.SECOND, 0);
         Timestamp time = new Timestamp(ac.getTime().getTime());
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(time);
@@ -249,8 +244,6 @@ public class PerformanceServiceImplTest {
 
     @Test
     public void cancel() {
-        Performance performance = new Performance();
-        performance.setId(1);
         boolean expected = performanceService.cancel(1);
         Assert.assertTrue(expected);
         Mockito.verify(performanceRepository,Mockito.times(1)).deleteById(1);

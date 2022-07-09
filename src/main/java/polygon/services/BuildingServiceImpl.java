@@ -2,7 +2,6 @@ package polygon.services;
 
 import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,9 +14,11 @@ import java.util.List;
 
 @Service
 public class BuildingServiceImpl implements BuildingService {
+    private final BuildingRepository buildingRepository;
 
-    @Autowired
-    private BuildingRepository buildingRepository;
+    public BuildingServiceImpl(BuildingRepository buildingRepository) {
+        this.buildingRepository = buildingRepository;
+    }
 
     @Override
     @Cacheable
@@ -29,7 +30,7 @@ public class BuildingServiceImpl implements BuildingService {
             Hibernate.initialize(city);
 
             if (city instanceof HibernateProxy) {
-                city = (City) ((HibernateProxy) city).getHibernateLazyInitializer()
+                ((HibernateProxy) city).getHibernateLazyInitializer()
                         .getImplementation();
             }
         }
@@ -42,11 +43,11 @@ public class BuildingServiceImpl implements BuildingService {
 
         List<Building> buildings = buildingRepository.findByCity(city);
         for (Building b : buildings) {
-            City cityf = b.getCity();
-            Hibernate.initialize(cityf);
+            City building_city = b.getCity();
+            Hibernate.initialize(building_city);
 
-            if (cityf instanceof HibernateProxy) {
-                cityf = (City) ((HibernateProxy) cityf).getHibernateLazyInitializer()
+            if (city instanceof HibernateProxy) {
+                ((HibernateProxy) building_city).getHibernateLazyInitializer()
                         .getImplementation();
             }
         }

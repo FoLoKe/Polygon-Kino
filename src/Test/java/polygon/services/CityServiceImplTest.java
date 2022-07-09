@@ -4,10 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import polygon.models.Building;
 import polygon.models.City;
@@ -21,14 +19,14 @@ import java.util.Set;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-
 public class CityServiceImplTest {
+    private final CityService cityService;
+    private final CityRepository cityRepository;
 
-    @Autowired
-    private CityService cityService;
-
-    @MockBean
-    private CityRepository cityRepository;
+    public CityServiceImplTest(CityService cityService, CityRepository cityRepository) {
+        this.cityService = cityService;
+        this.cityRepository = cityRepository;
+    }
 
     @Test
     public void allCities() {
@@ -54,10 +52,9 @@ public class CityServiceImplTest {
         Assert.assertNotNull(expected);
     }
 
+    //TODO: FIX DELETION TESTS
     @Test
     public void safeDelete() {
-        City city = new City();
-        city.setId(1);
         boolean expected = cityService.safeDelete(1);
         Assert.assertTrue(expected);
         Mockito.verify(cityRepository,Mockito.times(1)).deleteById(1);

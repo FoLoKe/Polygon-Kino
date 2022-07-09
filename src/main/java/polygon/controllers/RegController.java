@@ -1,7 +1,6 @@
 package polygon.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,11 +19,13 @@ public class RegController {
     }
 
     @GetMapping(value = "/registration")
-    public String showRegistrationForm(Model model) {
+    public ModelAndView showRegistrationForm() {
+        ModelAndView modelAndView = new ModelAndView("registration");
+        
         User modelUserRegAttr = new User();
-        model.addAttribute("user", modelUserRegAttr);
+        modelAndView.addObject("user", modelUserRegAttr);
 
-        return "registration";
+        return modelAndView;
     }
 
     @PostMapping(value = "/registration")

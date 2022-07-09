@@ -8,9 +8,9 @@
 </head>
 <body>
     <center>
-        <div class = "regpage">
+        <div class = "registration-page">
             <form class = "reg-form" id = "reg" action="/registration" th:object="${user}" method="POST" enctype="utf8">
-                <p class="regcaption">Регистрация</p>
+                <p class="registration-caption">Регистрация</p>
                 <div class="reg-elem">
                     <label>Имя пользователя</label>
                     <p th:each="error: ${#fields.errors('username')}"

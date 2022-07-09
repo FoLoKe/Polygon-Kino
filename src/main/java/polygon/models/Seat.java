@@ -24,7 +24,7 @@ public class Seat {
     private Set<Ticket> tickets;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seatsrow_id")
+    @JoinColumn(name = "seatsRow_id")
     private SeatsRow seatsRow;
 
     public void setId(int id) {

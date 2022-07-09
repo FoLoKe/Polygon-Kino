@@ -56,8 +56,6 @@ public class CategoryImplTest {
 
     @Test
     public void safeDelete() {
-        Category category = new Category();
-        category.setId(1);
         categoryService.safeDelete(1);
         Mockito.verify(categoryRepository,Mockito.times(1)).deleteById(1);
     }

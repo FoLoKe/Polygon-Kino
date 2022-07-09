@@ -16,5 +16,5 @@ public interface SessionService {
 
     void addSessions(List<Session> sessions);
     Map<Building, List<Session>> findBuildingsWithSessionsInCity(Performance performance, City city, Timestamp time);
-    boolean cancel(int id);
+    void cancel(int id);
 }

@@ -2,52 +2,54 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="/styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
-    <center>
-        <div class="management-box">
-            <p>Редактор пользователя</p>
-                <form class="management-form" th:attr = "action=@{/management/manageUsers/save}" method = "post">
-                    <input type="hidden" name="id" th:value="${id}">
-                    <div class="management-table">
-                        <div class="management-line">
-                            <label class="management-label">Имя пользователя</label>
-                            <div class="management-input">
-                                <input type="text" name="username" th:value="${username}">
-                            </div>
-                        </div>
-                        <div class="management-line">
-                            <label class="management-label">Пароль</label>
-                            <div class="management-input">
-                                <input type="text" name="password" th:value="${password}">
-                            </div>
-                        </div>
-                        <div class="management-line">
-                            <label class="management-label">Почта</label>
-                            <div class="management-input">
-                                <input type="text" name="email" th:value="${email}">
-                            </div>
-                        </div>
-                        <div class="management-line">
-                            <label class="management-label">Роль</label>
-                            <div class="management-input">
-                                <input type="text" name="role" th:value="${role}">
-                            </div>
-                        </div>
-                        <div class="management-line">
-                            <label class="management-label">Баланс</label>
-                            <div class="management-input">
-                                <input type="text" name="balance" th:value="${balance}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="management-controls">
-                    <input class="management-text" type="submit" value="Сохранить">
-                    <a class="management-text" onclick="history.back();"> Назад</a>
-                </div>
-</form>
+<center>
+  <div class="management-box">
+    <p>Редактор пользователя</p>
+    <form class="management-form" th:attr = "action=@{/management/manageUsers/save}" method = "post">
+      <input type="hidden" name="id" th:value="${id}">
+      <div class="management-table">
+        <div class="management-line">
+          <label class="management-label">Имя пользователя</label>
+          <div class="management-input">
+            <input type="text" name="username" th:value="${username}">
+          </div>
+        </div>
+        <div class="management-line">
+          <label class="management-label">Пароль</label>
+          <div class="management-input">
+            <input type="text" name="password" th:value="${password}">
+          </div>
+        </div>
+        <div class="management-line">
+          <label class="management-label">Почта</label>
+          <div class="management-input">
+            <input type="text" name="email" th:value="${email}">
+          </div>
+        </div>
+        <div class="management-line">
+          <label class="management-label">Роль</label>
+          <div class="management-input">
+            <input type="text" name="role" th:value="${role}">
+          </div>
+        </div>
+        <div class="management-line">
+          <label class="management-label">Баланс</label>
+          <div class="management-input">
+            <input type="text" name="balance" th:value="${balance}">
+          </div>
+        </div>
+      </div>
+      <div class="management-controls">
+        <input class="management-text" type="submit" value="Сохранить">
+        <a class="management-text" onclick="history.back();">Назад</a>
+      </div>
+    </form>
+  </div>
+  </center>
 </body>
 </html>

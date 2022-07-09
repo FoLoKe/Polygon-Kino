@@ -1,6 +1,5 @@
 package polygon.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +11,11 @@ import java.util.List;
 
 @Service
 public class CityServiceImpl implements CityService {
+    private final CityRepository cityRepository;
 
-    @Autowired
-    private CityRepository cityRepository;
+    public CityServiceImpl(CityRepository cityRepository) {
+        this.cityRepository = cityRepository;
+    }
 
     @Override
     @Transactional

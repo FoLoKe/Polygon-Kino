@@ -61,7 +61,7 @@ public class SelectionController {
         if(session.getTime().before(now))
             return new ModelAndView("failPayment");
 
-        modelAndView.addObject("ssession", session);
+        modelAndView.addObject("selectedSession", session);
 
         int previewId = ((Preview) session.getPerformance().getPreviews().toArray()[0]).getId();
         modelAndView.addObject("imgId", previewId);

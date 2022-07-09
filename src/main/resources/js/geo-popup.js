@@ -6,13 +6,13 @@ $(document).ready(function(){
  function PopUpSwitch(){
     rPopUpHide();
     lPopUpHide();
-    if($("#geoPopup").is(":visible"))
-        $("#geoPopup").hide();
+    if($("#geo-popup").is(":visible"))
+        $("#geo-popup").hide();
     else
-        $("#geoPopup").show();
+        $("#geo-popup").show();
  }
  function PopUpHide(){
-     $("#geoPopup").hide();
+     $("#geo-popup").hide();
  }
 
  function lPopUpSwitch(){

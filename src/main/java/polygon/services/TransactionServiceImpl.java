@@ -2,7 +2,6 @@ package polygon.services;
 
 import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.Session;
@@ -18,8 +17,11 @@ import java.util.Set;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
-    @Autowired
-    TransactionRepository transactionRepository;
+    private final TransactionRepository transactionRepository;
+
+    public TransactionServiceImpl(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+    }
 
     @Override
     @Transactional
@@ -32,7 +34,7 @@ public class TransactionServiceImpl implements TransactionService {
                 Hibernate.initialize(t);
                 Session session = t.getSession();
                 if (session instanceof HibernateProxy) {
-                    session = (Session) ((HibernateProxy) session).getHibernateLazyInitializer()
+                    ((HibernateProxy) session).getHibernateLazyInitializer()
                             .getImplementation();
                 }
             }
@@ -67,7 +69,7 @@ public class TransactionServiceImpl implements TransactionService {
                 Hibernate.initialize(user);
 
                 if (user instanceof HibernateProxy) {
-                    user = (User) ((HibernateProxy) user).getHibernateLazyInitializer()
+                    ((HibernateProxy) user).getHibernateLazyInitializer()
                             .getImplementation();
                 }
             }
@@ -93,7 +95,7 @@ public class TransactionServiceImpl implements TransactionService {
                 Hibernate.initialize(session);
 
                 if (session instanceof HibernateProxy) {
-                    session = (Session) ((HibernateProxy) session).getHibernateLazyInitializer()
+                    ((HibernateProxy) session).getHibernateLazyInitializer()
                             .getImplementation();
                 }
             }

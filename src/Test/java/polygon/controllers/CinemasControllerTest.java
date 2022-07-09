@@ -55,7 +55,7 @@ public class CinemasControllerTest {
 
 
     @Test
-    public void allcinemas(){
+    public void allCinemas(){
         City city = new City();
         Building building = new Building();
         city.setId(1);

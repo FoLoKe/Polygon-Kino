@@ -9,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import polygon.models.City;
 import polygon.models.User;
 import polygon.repos.UserRepository;
 
@@ -30,7 +29,7 @@ public class PolygonUserDetailsServiceTest {
     @Test
     public void loadUserByUsername() {
         User user = new User();
-        String username = "Vitalik";
+        String username = "TestUser";
         user.setUsername(username);
 //        UserRepository userRepositoryMock = mock(UserRepository.class);
         Mockito.when(userRepository.findByUsername(username)).thenReturn(user);
@@ -41,13 +40,13 @@ public class PolygonUserDetailsServiceTest {
     @Test
     public void getUserByUsername() {
         User user = new User();
-        String username = "Vitalik";
+        String username = "TestUser";
         user.setUsername(username);
 //        UserRepository userRepositoryMock = mock(UserRepository.class);
         Mockito.when(userRepository.findByUsername(username)).thenReturn(user);
         User expected = polygonUserDetailsService.getUserByUsername(username);
 //        Mockito.verify(userRepository,Mockito.times(1)).findByUsername(username);
-        Assert.assertEquals("Vitalik",expected.getUsername());
+        Assert.assertEquals("TestUser",expected.getUsername());
     }
 
     @Test
@@ -82,6 +81,7 @@ public class PolygonUserDetailsServiceTest {
     public void delete() {
         User user = new User();
         user.setId(1);
+        userRepository.save(user);
         boolean expected = polygonUserDetailsService.delete(1);
         Assert.assertTrue(expected);
         Mockito.verify(userRepository,Mockito.times(1)).deleteById(1);

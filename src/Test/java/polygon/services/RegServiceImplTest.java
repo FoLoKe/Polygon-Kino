@@ -47,7 +47,7 @@ public class RegServiceImplTest {
     @Test
     public void userExists() {
         User user = new User();
-        String username = "Vitalik";
+        String username = "TestUser";
         user.setUsername(username);
 //        UserRepository userRepositoryMock = mock(UserRepository.class);
         Mockito.when(userRepository.findByUsername(username)).thenReturn(user);
@@ -57,14 +57,14 @@ public class RegServiceImplTest {
 
     @Test
     public void validateEmail() {
-        String email = "vit.tagunov@gmail.com";
+        String email = "TestUser@gmail.com";
         boolean expected = regService.validateEmail(email);
         Assert.assertTrue(expected);
     }
 
     @Test
     public void notValidateEmail() {
-        String email = "Vitalik";
+        String email = "TestUser";
         boolean expected = regService.validateEmail(email);
         Assert.assertFalse(expected);
     }

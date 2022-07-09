@@ -80,8 +80,6 @@ public class BuildingServiceImplTest {
 
     @Test
     public void safeDelete() {
-        Building building = new Building();
-        building.setId(1);
         buildingService.safeDelete(1);
         Mockito.verify(buildingRepository,Mockito.times(1)).deleteById(1);
     }

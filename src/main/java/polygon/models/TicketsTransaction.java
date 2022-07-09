@@ -113,8 +113,8 @@ public class TicketsTransaction {
         this.date = date;
     }
 
-    public boolean isTerminated() {
-        return terminated;
+    public boolean isNotTerminated() {
+        return !terminated;
     }
 
     public void setTerminated(boolean terminated) {

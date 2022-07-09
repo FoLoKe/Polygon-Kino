@@ -2,11 +2,13 @@ package polygon.services;
 
 import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.*;
-import polygon.repos.*;
+import polygon.repos.CategoryRepository;
+import polygon.repos.PerformanceRepository;
+import polygon.repos.PreviewRepository;
+import polygon.repos.SessionRepository;
 import polygon.services.interfaces.BuildingService;
 import polygon.services.interfaces.PerformanceService;
 
@@ -17,18 +19,23 @@ import java.util.*;
 
 @Service
 public class PerformanceServiceImpl implements PerformanceService {
+    private final PerformanceRepository performanceRepository;
+    private final PreviewRepository previewRepository;
+    private final CategoryRepository categoryRepository;
+    private final BuildingService buildingRepository;
+    private final SessionRepository sessionRepository;
 
-    @Autowired
-    PerformanceRepository performanceRepository;
-
-    @Autowired
-    PreviewRepository previewRepository;
-
-    @Autowired
-    CinemaRepository cinemaRepository;
-
-    @Autowired
-    CategoryRepository categoryRepository;
+    public PerformanceServiceImpl(PerformanceRepository performanceRepository,
+                                  PreviewRepository previewRepository,
+                                  CategoryRepository categoryRepository,
+                                  BuildingService buildingRepository,
+                                  SessionRepository sessionRepository) {
+        this.performanceRepository = performanceRepository;
+        this.previewRepository = previewRepository;
+        this.categoryRepository = categoryRepository;
+        this.buildingRepository = buildingRepository;
+        this.sessionRepository = sessionRepository;
+    }
 
     @Override
     public List<Performance> allPerformances() {
@@ -39,15 +46,9 @@ public class PerformanceServiceImpl implements PerformanceService {
     @Transactional
     public Performance findById(int id) {
         Performance performance = performanceRepository.findById(id).orElse(new Performance());
-        performance.getCategories().size();
+        performance.getCategories().size(); //TODO: EAGER?
         return performance;
     }
-
-    @Autowired
-    private BuildingService buildingRepository;
-
-    @Autowired
-    private SessionRepository sessionRepository;
 
     @Override
     @Transactional
@@ -69,7 +70,7 @@ public class PerformanceServiceImpl implements PerformanceService {
             //calendar.add(Calendar.DATE, 1);
             Timestamp endTime = new Timestamp(calendar.getTime().getTime());
             for (Building building : buildings) {
-                List<Session> sessions = new ArrayList<>();
+                List<Session> sessions;
                 if(type.length() == 0) {
                     sessions = sessionRepository.findAllActiveSessionsOnPerformanceForBuilding(building, performance, time, endTime);
                 } else {
@@ -79,7 +80,7 @@ public class PerformanceServiceImpl implements PerformanceService {
                     Hibernate.initialize(s);
                     Room room = s.getRoom();
                     if (room instanceof HibernateProxy) {
-                        room = (Room) ((HibernateProxy) room).getHibernateLazyInitializer()
+                        ((HibernateProxy) room).getHibernateLazyInitializer()
                                 .getImplementation();
                     }
                 }
@@ -157,22 +158,6 @@ public class PerformanceServiceImpl implements PerformanceService {
             p.getCategories().size();
         }
 
-//        List<Performance> imax=new ArrayList<>();
-//        for (Performance p: performances) {
-////            p.getSessions().size();
-////            p.getCategories().size();
-//            for (Session s: p.getSessions()) {
-//                Room r = s.getRoom();
-//                Hibernate.initialize(r);
-//                if (r instanceof HibernateProxy) {
-//                    r = (Room) ((HibernateProxy) r).getHibernateLazyInitializer()
-//                            .getImplementation();
-//                }
-//                if (r.getType().equals("IMAX")) {
-//                    imax.add(p);
-//                }
-//            }
-//        }
         return performances;
     }
 
@@ -181,11 +166,13 @@ public class PerformanceServiceImpl implements PerformanceService {
     public List<Performance> activePerformances(Integer id) {
         Category category = categoryRepository.findById(id).orElse(null);
         List<Performance> performances = new ArrayList<>();
+
         if(category != null)
             performances =  performanceRepository.getAllFilmsByTag(category);
         for (Performance p: performances) {
             p.getCategories().size();
         }
+
         return performances;
     }
 

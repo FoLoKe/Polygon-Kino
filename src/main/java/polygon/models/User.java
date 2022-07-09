@@ -28,14 +28,14 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private Set<TicketsTransaction> buildings;
+    private Set<TicketsTransaction> transactions;
 
-    public Set<TicketsTransaction> getBuildings() {
-        return buildings;
+    public Set<TicketsTransaction> getTransactions() {
+        return transactions;
     }
 
-    public void setBuildings(Set<TicketsTransaction> buildings) {
-        this.buildings = buildings;
+    public void setTransactions(Set<TicketsTransaction> transactions) {
+        this.transactions = transactions;
     }
 
     public String getRole() {

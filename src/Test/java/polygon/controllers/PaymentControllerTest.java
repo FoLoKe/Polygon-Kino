@@ -72,7 +72,7 @@ public class PaymentControllerTest {
 
         performance.setName("Name");
         room.setNumber(100);
-        building.setAddress("adress");
+        building.setAddress("address");
 
         room.setBuilding(building);
         seatsRow.setRoom(room);

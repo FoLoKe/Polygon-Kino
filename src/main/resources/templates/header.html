@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
+    <script type="text/javascript" th:src="@{js/geo-popup.js}" src="js/geo-popup.js"></script>
 </head>
 <body>
 <div th:fragment="head">
@@ -94,7 +94,7 @@
                     </a>
                     <div class="geo">
                         <a href="javascript:PopUpSwitch()" th:text="${geoCity}"></a>
-                        <div class="cities" id="geoPopup">
+                        <div class="cities" id="geo-popup">
                             <div class="wrapper">
                                 <ul class="list">
                                     <li th:each="city : ${citiesList}">

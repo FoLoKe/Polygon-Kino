@@ -8,14 +8,14 @@
 </head>
 <body>
 <center>
-    <div class="regpsage">
+    <div class="registration-page">
         <div class = "buy-header">
             <a class = "exit-cross" href = "/">&#10005;</a>
         </div>
         <div class = "reg-form">
             <form th:action="'/charge?id=' + ${id} + '&byBalance=0'" method='POST' id='checkout-form'>
                 <input type='hidden' th:value='${amount}' name='amount' />
-                <h1 class = "regcaption">Цена билетов: <span th:text="${amount} + 'Р'" /></h1>
+                <h1 class = "registration-caption">Цена билетов: <span th:text="${amount} + 'Р'" /></h1>
                 <script
                     src='https://checkout.stripe.com/checkout.js'
                     class='stripe-button'

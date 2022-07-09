@@ -2,7 +2,6 @@ package polygon.services;
 
 import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.*;
@@ -17,14 +16,17 @@ import java.util.Set;
 @Service
 public class RoomServiceImpl implements RoomService {
 
-    @Autowired
-    private RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
+    private final SeatsRowRepository seatsRowRepository;
+    private final SeatRepository seatsRepository;
 
-    @Autowired
-    private SeatsRowRepository seatsRowRepository;
-
-    @Autowired
-    private SeatRepository seatsRepository;
+    public RoomServiceImpl(RoomRepository roomRepository,
+                           SeatsRowRepository seatsRowRepository,
+                           SeatRepository seatsRepository) {
+        this.roomRepository = roomRepository;
+        this.seatsRowRepository = seatsRowRepository;
+        this.seatsRepository = seatsRepository;
+    }
 
     @Override
     @Transactional
@@ -48,7 +50,7 @@ public class RoomServiceImpl implements RoomService {
                 Hibernate.initialize(city);
 
                 if (city instanceof HibernateProxy) {
-                    city = (City) ((HibernateProxy) city).getHibernateLazyInitializer()
+                    ((HibernateProxy) city).getHibernateLazyInitializer()
                             .getImplementation();
                 }
             }

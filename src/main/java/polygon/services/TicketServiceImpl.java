@@ -56,11 +56,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public Ticket getTicketById(Integer id) {
-        Ticket ticket = ticketRepository.findById(id).orElse(null);
-        if(ticket != null) {
-            ticket.getSession().getPrice();
-        }
-        return ticket;
+        return ticketRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -68,7 +64,6 @@ public class TicketServiceImpl implements TicketService {
     public Ticket loadTicket(Integer id) {
         Ticket ticket = ticketRepository.findById(id).orElse(null);
         if(ticket != null) {
-            ticket.getSession().getPrice();
             Seat seat = ticket.getSeat();
             Hibernate.initialize(seat);
             if (seat instanceof HibernateProxy) {
@@ -90,7 +85,7 @@ public class TicketServiceImpl implements TicketService {
 
             Building building = room.getBuilding();
             if (building instanceof HibernateProxy) {
-                building = (Building) ((HibernateProxy) building).getHibernateLazyInitializer()
+                ((HibernateProxy) building).getHibernateLazyInitializer()
                         .getImplementation();
             }
 
@@ -102,7 +97,7 @@ public class TicketServiceImpl implements TicketService {
 
             Performance performance = session.getPerformance();
             if (performance instanceof HibernateProxy) {
-                performance = (Performance) ((HibernateProxy) performance).getHibernateLazyInitializer()
+                ((HibernateProxy) performance).getHibernateLazyInitializer()
                         .getImplementation();
             }
         }

@@ -40,9 +40,10 @@ public class TicketServiceImplTest {
         ticket2.setId(2);
         ticket1.setOccupied(false);
         ticket2.setOccupied(false);
-        List<Integer> list = new ArrayList<Integer>();
+        ticketService.addTicket(ticket1);
+        ticketService.addTicket(ticket2);
+        List<Integer> list = new ArrayList<>();
         list.add(1);
-        Set<Ticket> transaction = Set.of(ticket1);
         Mockito.when(ticketRepository.findById(1)).thenReturn(Optional.of(ticket1));
         int setTicketsWorks=ticketService.setTickets(list, user);
         Assert.assertNotEquals(-1,setTicketsWorks);
@@ -50,8 +51,7 @@ public class TicketServiceImplTest {
 
     @Test
     public void setTicketsFail() {
-//        List<Ticket> tickets = new ArrayList<>();
-        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> list = new ArrayList<>();
         list.add(13);
         list.add(14);
         int setTicketsWorks=ticketService.setTickets(list, null);
@@ -78,7 +78,7 @@ public class TicketServiceImplTest {
         Ticket ticket=new Ticket();
         ticket.setId(1);
         ticket.setOccupied(true);
-        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> list = new ArrayList<>();
         list.add(1);
         Mockito.when(ticketRepository.findById(1)).thenReturn(Optional.of(ticket));
         ticketService.rollbackTickets(list);

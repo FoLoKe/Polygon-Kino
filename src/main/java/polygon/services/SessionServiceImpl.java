@@ -2,11 +2,13 @@ package polygon.services;
 
 import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.*;
-import polygon.repos.*;
+import polygon.repos.BuildingRepository;
+import polygon.repos.PerformanceRepository;
+import polygon.repos.SessionRepository;
+import polygon.repos.TransactionRepository;
 import polygon.services.interfaces.SessionService;
 
 import java.sql.Timestamp;
@@ -14,18 +16,27 @@ import java.util.*;
 
 @Service
 public class SessionServiceImpl implements SessionService {
+    private final SessionRepository sessionRepository;
+    private final BuildingRepository buildingRepository;
+    private final PerformanceRepository performanceRepository;
+    private final TransactionRepository transactionRepository;
 
-    @Autowired
-    private SessionRepository sessionRepository;
+    private final EmailServiceImpl emailService;
+    private final StripeService stripeService;
 
-    @Autowired
-    private BuildingRepository buildingRepository;
-
-    @Autowired
-    private TicketRepository ticketRepository;
-
-    @Autowired
-    private PerformanceRepository performanceRepository;
+    public SessionServiceImpl(SessionRepository sessionRepository,
+                              BuildingRepository buildingRepository,
+                              PerformanceRepository performanceRepository,
+                              TransactionRepository transactionRepository,
+                              EmailServiceImpl emailService, // TODO: make true service!
+                              StripeService stripeService) {
+        this.sessionRepository = sessionRepository;
+        this.buildingRepository = buildingRepository;
+        this.performanceRepository = performanceRepository;
+        this.transactionRepository = transactionRepository;
+        this.emailService = emailService;
+        this.stripeService = stripeService;
+    }
 
     @Override
     public void addSession(Session session) {
@@ -46,8 +57,8 @@ public class SessionServiceImpl implements SessionService {
         Map<Building, List<Session>> orderedSessions = new LinkedHashMap<>();
         Calendar ac = Calendar.getInstance();
         ac.setTime(time);
-        ac.add(Calendar.HOUR_OF_DAY, - time.getHours());
-        ac.add(Calendar.MINUTE, - time.getMinutes());
+        ac.set(Calendar.HOUR_OF_DAY, 0);
+        ac.set(Calendar.MINUTE, 0);
         time = new Timestamp(ac.getTime().getTime());
 
 
@@ -63,6 +74,7 @@ public class SessionServiceImpl implements SessionService {
          return orderedSessions;
     }
 
+    //TODO: GET RID OF THIS SIZE AND getImp.. CANCER!!!!
     @Override
     @Transactional
     public Map<Performance, List<Session>> findSessionsInBuilding(Building building, Timestamp time) {
@@ -85,7 +97,7 @@ public class SessionServiceImpl implements SessionService {
                     Hibernate.initialize(room);
 
                     if (room instanceof HibernateProxy) {
-                        room = (Room) ((HibernateProxy) room).getHibernateLazyInitializer()
+                        ((HibernateProxy) room).getHibernateLazyInitializer()
                                 .getImplementation();
                     }
                 }
@@ -108,7 +120,7 @@ public class SessionServiceImpl implements SessionService {
 
             Hibernate.initialize(performance);
             if (performance instanceof HibernateProxy) {
-                performance = (Performance) ((HibernateProxy) performance).getHibernateLazyInitializer()
+                ((HibernateProxy) performance).getHibernateLazyInitializer()
                         .getImplementation();
             }
 
@@ -122,32 +134,24 @@ public class SessionServiceImpl implements SessionService {
             Building building = room.getBuilding();
             Hibernate.initialize(room);
             if (building instanceof HibernateProxy) {
-                building = (Building) ((HibernateProxy) building).getHibernateLazyInitializer()
+                ((HibernateProxy) building).getHibernateLazyInitializer()
                         .getImplementation();
             }
         }
         return s;
     }
 
-    @Autowired
-    private TransactionRepository transactionRepository;
-
-    @Autowired
-    private EmailServiceImpl emailService;
-
-    @Autowired
-    private StripeService stripeService;
-
     @Override
     @Transactional
-    public boolean cancel(int id) {
+    public void cancel(int id) {
         Session session = sessionRepository.findById(id).orElse(null);
         if(session != null) {
             Set<Ticket> tickets = session.getTickets();
-            ///RETURN MONEY
             List<TicketsTransaction> ticketsTransactions = transactionRepository.findWithTickets(tickets);
+
             for (TicketsTransaction ticketsTransaction : ticketsTransactions) {
                 ticketsTransaction.setTerminated(true);
+
                 if(ticketsTransaction.isEnded()) {
                     ticketsTransaction.getTickets().size();
                     Ticket ticket = (Ticket) ticketsTransaction.getTickets().toArray()[0];
@@ -156,7 +160,8 @@ public class SessionServiceImpl implements SessionService {
                             "Сеанс на " + ticket.getSession().getTime() +
                                     " " + ticket.getSession().getPerformance().getName() +
                                     "\nбыл отменен, оформлен возврат средств."
-                            );
+                    );
+
                     if(ticketsTransaction.getChargeId() != null
                             && ticketsTransaction.getChargeId().length() > 0) {
                         stripeService.refund(ticketsTransaction);
@@ -169,6 +174,5 @@ public class SessionServiceImpl implements SessionService {
             sessionRepository.delete(session);
             sessionRepository.flush();
         }
-        return false;
     }
 }

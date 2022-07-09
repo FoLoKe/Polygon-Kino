@@ -16,22 +16,13 @@ import polygon.services.interfaces.PerformanceService;
 import polygon.services.interfaces.RoomService;
 import polygon.services.interfaces.SessionService;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-
-
 public class PerformanceControllerTest {
 
     @Autowired
@@ -49,18 +40,27 @@ public class PerformanceControllerTest {
     @MockBean
     private SessionService sessionService;
 
-
+    // TODO: FIX NAMING
     @Test
     public void getPerformance(){
+        Category category = new Category();
         Performance performance = new Performance();
+        performance.setCategories(new HashSet<>(List.of(category)));
+
         City city = new City();
         Building building = new Building();
-        Session session = new Session();
-        Room room = new Room();
-        Category category = new Category();
         SeatsRow seatsRow = new SeatsRow();
         Seat seat = new Seat();
+        Room room = new Room();
+        building.setCity(city);
+        room.setBuilding(building);
+
+        Session session = new Session();
+        session.setRoom(room);
         Ticket ticket = new Ticket();
+
+        sessionService.addSession(session);
+
         room.setId(1);
         seatsRow.setId(1);
         seat.setId(1);
