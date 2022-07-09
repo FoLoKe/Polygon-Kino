@@ -1,6 +1,6 @@
 package polygon.services;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.User;
@@ -14,21 +14,21 @@ import java.util.regex.Pattern;
 public class RegServiceImpl implements RegService {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$";
     private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 
     public RegServiceImpl(UserRepository userRepository,
-                          BCryptPasswordEncoder bCryptPasswordEncoder) {
+                          PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
     @Override
     public User registerNewUserAccount(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setBalance(0);
         return userRepository.save(user);
     }
@@ -49,5 +49,4 @@ public class RegServiceImpl implements RegService {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-
 }

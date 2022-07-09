@@ -196,7 +196,7 @@ public class PerformanceController {
         user.setUsername("FoLoKe");
         user.setPassword("1");
         user.setRole("USER");
-        user.setBalance(999);
+        user.setBalance(999); // TODO: Bonuses doesn't show up
         user.setEmail("foloke@yandex.ru");
         regService.registerNewUserAccount(user);
 
