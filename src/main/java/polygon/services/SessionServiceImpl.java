@@ -34,8 +34,9 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public List<Session> findSessionsInCity(City city) {
-        return sessionRepository.findAllActiveSessionForCity(city);
+    public void addSessions(List<Session> sessions) {
+        sessionRepository.saveAll(sessions);
+        sessionRepository.flush();
     }
 
     @Override

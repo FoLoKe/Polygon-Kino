@@ -8,6 +8,8 @@ import java.util.Set;
 @Table(name = "polygon.performances")
 public class Performance {
 
+    //TODO: session length
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

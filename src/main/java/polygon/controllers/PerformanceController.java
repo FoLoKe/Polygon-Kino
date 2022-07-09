@@ -101,31 +101,32 @@ public class PerformanceController {
     // TODO: debug scheduling doesn't check for time collisions
     @GetMapping(value = "/debug")
     public ModelAndView getPerformance() {
+        System.out.println("debug db filling");
         Calendar ac = Calendar.getInstance();
-        Timestamp time = new Timestamp(ac.getTimeInMillis());
 
         List<Performance> performances = performanceService.allPresentPerformances();
         List<Room> rooms = roomService.allRooms();
         List<Session> sessionsToAdd = new ArrayList<>();
 
         for(int day = 0; day < 2; day++) {
-
             ac.set(Calendar.MINUTE, 0);
             ac.set(Calendar.SECOND, 0);
             ac.set(Calendar.HOUR_OF_DAY, 6);
 
             for (int minute = 0; minute < 8; minute++) {
-                time.setTime(ac.getTimeInMillis());
+                Timestamp time = new Timestamp(ac.getTimeInMillis());
 
                 for (Room room : rooms) {
                     for (Performance performance : performances) {
                         sessionsToAdd.add(generateSession(room, performance, time));
                     }
                 }
-                ac.add(Calendar.MINUTE, 130);
+                ac.add(Calendar.MINUTE, 120);
             }
             ac.add(Calendar.DATE, 1);
         }
+
+        System.out.println("current sessions created");
 
         List<Performance> premiers = performanceService.allPremiers();
 
@@ -138,7 +139,7 @@ public class PerformanceController {
             ac.set(Calendar.SECOND, 0);
 
             for (int minute = 0; minute < 8; minute++) {
-                time = new Timestamp(ac.getTimeInMillis());
+                Timestamp time = new Timestamp(ac.getTimeInMillis());
 
                 for (Room room : rooms) {
                     sessionsToAdd.add(generateSession(room, performance, time));
@@ -148,7 +149,11 @@ public class PerformanceController {
             }
         }
 
+        System.out.println("premiere sessions created");
+
         sessionService.addSessions(sessionsToAdd);
+
+        System.out.println("sessions filled");
 
         User user = new User();
         user.setUsername("FoLoKe");
@@ -158,6 +163,8 @@ public class PerformanceController {
         user.setEmail("foloke@yandex.ru");
         regService.registerNewUserAccount(user);
 
+        System.out.println("Admin created");
+
         user = new User();
         user.setUsername("Admin");
         user.setPassword("1");
@@ -165,6 +172,9 @@ public class PerformanceController {
         user.setBalance(999);
         user.setEmail("tr12354@yandex.ru");
         regService.registerNewUserAccount(user);
+
+        System.out.println("User created");
+        System.out.println("debug db is filled");
 
         return new ModelAndView("redirect:/");
     }
