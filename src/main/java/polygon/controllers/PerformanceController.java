@@ -1,7 +1,5 @@
 package polygon.controllers;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,9 +46,8 @@ public class PerformanceController {
     @GetMapping(value = "/performance")
     public ModelAndView getPerformance(@RequestParam("id") int id,
                                        @RequestParam(value = "type", required = false, defaultValue = "") String type,
-                                                   @CookieValue(value = "city", defaultValue = "1") int cityId) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("performance");
+                                       @CookieValue(value = "city", defaultValue = "1") int cityId) {
+        ModelAndView modelAndView = new ModelAndView("performance");
 
         Date date = new Date(System.currentTimeMillis());
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -79,21 +76,12 @@ public class PerformanceController {
         Map<Timestamp, Map<Building, List<Session>>> schedule = performanceService.getSchedule(performance, city, type);
         modelAndView.addObject("schedule", schedule);
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
+        User user = polygonUserDetailsService.getUser();
 
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-        User user = null;
-        if(username != null && !username.isEmpty()) {
-            user = polygonUserDetailsService.getUserByUsername(username);
+        if(user != null) {
             modelAndView.addObject("transactions", transactionService.findByUser(user));
+            modelAndView.addObject("user", user);
         }
-        modelAndView.addObject("user", user);
 
         return modelAndView;
     }
@@ -110,7 +98,6 @@ public class PerformanceController {
 
     @GetMapping(value = "/debug")
     public ModelAndView getPerformance() {
-
         java.util.Date date = new Date();
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
         Timestamp time = new Timestamp(sqlDate.getTime());
@@ -120,14 +107,16 @@ public class PerformanceController {
 
         List<Performance> performances = performanceService.allPresentPerformances();
         List<Room> rooms = roomService.allRooms();
+
         for(int d = 0; d < 2; d++) {
-            ac.add(Calendar.HOUR_OF_DAY, - time.getHours());
-            ac.add(Calendar.MINUTE, - time.getMinutes());
-            ac.add(Calendar.SECOND, - time.getSeconds());
+            ac.set(Calendar.HOUR_OF_DAY, 0);
+            ac.set(Calendar.MINUTE, 0);
+            ac.set(Calendar.SECOND, 0);
             ac.add(Calendar.HOUR_OF_DAY, 6);
 
             for (int m = 0; m < 8; m++) {
                 time = new Timestamp(ac.getTime().getTime());
+
                 for (Room room : rooms) {
                     for (Performance p : performances) {
                         Session s = new Session();
@@ -159,17 +148,20 @@ public class PerformanceController {
         }
 
         List<Performance> sPerformances = performanceService.allPremiers();
+
         for (Performance performance : sPerformances) {
             Timestamp begin = new Timestamp(performance.getDate().getTime());
             ac.setTime(begin);
+
             for(int d = 0; d < 1; d++) {
-                ac.add(Calendar.HOUR_OF_DAY, -time.getHours());
-                ac.add(Calendar.MINUTE, -time.getMinutes());
-                ac.add(Calendar.SECOND, -time.getSeconds());
+                ac.set(Calendar.HOUR_OF_DAY, 0);
+                ac.set(Calendar.MINUTE, 0);
+                ac.set(Calendar.SECOND, 0);
                 ac.add(Calendar.HOUR_OF_DAY, 6);
 
                 for (int m = 0; m < 1; m++) {
                     time = new Timestamp(ac.getTime().getTime());
+
                     for (Room room : rooms) {
                         Session s = new Session();
                         s.setTime(time);
@@ -177,6 +169,7 @@ public class PerformanceController {
 
                         s.setRoom(room);
                         Set<Ticket> tickets = new LinkedHashSet<>();
+
                         for (SeatsRow sr : room.getSeatsRows()) {
                             for (Seat seat : sr.getSeats()) {
                                 if (seat.isSeat()) {
@@ -195,12 +188,9 @@ public class PerformanceController {
                     }
                     ac.add(Calendar.MINUTE, 130);
                 }
-
                 ac.add(Calendar.DATE, 1);
             }
-
         }
-
 
         User user = new User();
         user.setUsername("FoLoKe");
@@ -218,8 +208,6 @@ public class PerformanceController {
         user.setEmail("tr12354@yandex.ru");
         regService.registerNewUserAccount(user);
 
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
-        return modelAndView;
+        return new ModelAndView("redirect:/");
     }
 }

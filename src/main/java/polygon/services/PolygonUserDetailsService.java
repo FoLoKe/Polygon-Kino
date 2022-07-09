@@ -1,12 +1,11 @@
 package polygon.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import polygon.models.User;
@@ -21,12 +20,14 @@ import java.util.Set;
 @Transactional
 public class PolygonUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public PolygonUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public PolyUser loadUserByUsername(String username) throws UsernameNotFoundException {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
@@ -66,6 +67,24 @@ public class PolygonUserDetailsService implements UserDetailsService {
 
     public void save(User user) {
         userRepository.saveAndFlush(user);
+    }
+
+    public User getUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        User user = null;
+
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        if(username != null && !username.isEmpty() && !(username.equals("anonymousUser"))) {
+            user = getUserByUsername(username);
+        }
+
+        return user;
     }
 
     public static class PolyUser implements UserDetails {

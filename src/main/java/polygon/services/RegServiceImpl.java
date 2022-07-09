@@ -1,6 +1,5 @@
 package polygon.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,11 +12,18 @@ import java.util.regex.Pattern;
 
 @Service
 public class RegServiceImpl implements RegService {
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$";
+    private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+
+    public RegServiceImpl(UserRepository userRepository,
+                          BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @Transactional
     @Override
@@ -39,13 +45,8 @@ public class RegServiceImpl implements RegService {
         return user != null;
     }
 
-    private Pattern pattern;
-    private Matcher matcher;
-    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$";
-
     public boolean validateEmail(String email) {
-        pattern = Pattern.compile(EMAIL_PATTERN);
-        matcher = pattern.matcher(email);
+        Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
 

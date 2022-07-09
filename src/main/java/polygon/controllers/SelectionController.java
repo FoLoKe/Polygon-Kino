@@ -1,7 +1,5 @@
 package polygon.controllers;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +38,7 @@ public class SelectionController {
 
     @GetMapping(value = "/selectSeat")
     public ModelAndView getPerformance(@RequestParam("id") int id) {
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView("selectSeat");
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, -1);
@@ -52,7 +50,6 @@ public class SelectionController {
             ticketsTransaction.setTerminated(true);
             transactionService.save(ticketsTransaction);
         }
-        modelAndView.setViewName("selectSeat");
 
         Session session = sessionService.findById(id);
 
@@ -71,17 +68,10 @@ public class SelectionController {
 
         String email = "";
         int balance = 0;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user;
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
 
-        if (username != null && !username.isEmpty() && !(username.equals("anonymousUser"))) {
-            user = polygonUserDetailsService.getUserByUsername(username);
+        User user = polygonUserDetailsService.getUser();
+
+        if (user != null) {
             email = user.getEmail();
             balance = user.getBalance();
         }
@@ -117,7 +107,6 @@ public class SelectionController {
     @PostMapping(value = "/selectSeat")
     public ModelAndView reserveTickets(@RequestParam("ticketsId") String sids)
     {
-        int price = 0;
         String[] splitIds = sids.split(" ");
         List<Integer> ids = new ArrayList<>();
 
@@ -125,10 +114,9 @@ public class SelectionController {
             if(s!= null && !s.isEmpty()) {
                 try {
                     ids.add(Integer.parseInt(s));
-                    Ticket ticket=ticketService.getTicketById(Integer.parseInt(s)) ;
-                    if(ticket != null) {
-                        price += ticket.getSession().getPrice();
-                    } else {
+                    Ticket ticket=ticketService.getTicketById(Integer.parseInt(s));
+
+                    if(ticket == null) {
                         return new ModelAndView("redirect:/failPayment");
                     }
                 } catch (NumberFormatException e) {
@@ -138,19 +126,7 @@ public class SelectionController {
             }
         }
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = null;
-        String username;
-
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-        if(username != null && !username.isEmpty() && !(username.equals("anonymousUser"))) {
-            user = polygonUserDetailsService.getUserByUsername(username);
-        }
+        User user = polygonUserDetailsService.getUser(); // TODO: anonymous payment
 
         int transaction = ticketService.setTickets(ids, user);
 
@@ -163,8 +139,6 @@ public class SelectionController {
 
     @GetMapping(value = "/confirmPage")
     public ModelAndView confirm() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
-        return modelAndView;
+        return new ModelAndView("redirect:/");
     }
 }

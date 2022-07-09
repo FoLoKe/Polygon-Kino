@@ -3,8 +3,6 @@ package polygon.controllers;
 import com.stripe.model.Card;
 import com.stripe.model.Charge;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,27 +50,19 @@ public class PaymentController {
 
     @RequestMapping("/pay")
     public String pay(@RequestParam("id") int id, Model model) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user;
-        String username;
-
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
 
         int balance = 0;
         String email = "";
+        User user = polygonUserDetailsService.getUser();
 
-        if(username != null && !username.isEmpty() && !(username.equals("anonymousUser"))) {
-            user = polygonUserDetailsService.getUserByUsername(username);
+        if(user != null) {
             balance = user.getBalance();
             email = user.getEmail();
         }
 
         int price = 0;
         TicketsTransaction ticketsTransaction = transactionService.findById(id);
+
         if (!ticketsTransaction.isEnded() && !ticketsTransaction.isTerminated()) {
             Set<Ticket> tickets = ticketsTransaction.getTickets();
 
@@ -98,21 +88,12 @@ public class PaymentController {
         String token = request.getParameter("stripeToken");
         double amount = Double.parseDouble(request.getParameter("amount"));
 
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("failPayment");
+        ModelAndView modelAndView = new ModelAndView("failPayment");
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = null;
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
+        User user = polygonUserDetailsService.getUser();
         int balance = 0;
-        if(username != null && !username.isEmpty() && !(username.equals("anonymousUser"))) {
-            user = polygonUserDetailsService.getUserByUsername(username);
+
+        if(user != null) {
             balance = user.getBalance();
         }
 
@@ -191,17 +172,9 @@ public class PaymentController {
         TicketsTransaction ticketsTransaction = transactionService.findById(id);
 
         if(ticketsTransaction.getUser() != null) {
-            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String username;
-            if (principal instanceof UserDetails) {
-                username = ((UserDetails) principal).getUsername();
-            } else {
-                username = principal.toString();
-            }
+            User user = polygonUserDetailsService.getUser();
 
-            User user;
-            if (username != null && !username.isEmpty()) {
-                user = polygonUserDetailsService.getUserByUsername(username);
+            if (user != null) {
                 if (ticketsTransaction.isEnded() && !ticketsTransaction.isRefunded() && ticketsTransaction.getUser().getId() == user.getId()) {
                     if(stripeService.refund(ticketsTransaction)) {
                         ticketService.rollbackTickets(ticketsTransaction.getTickets());

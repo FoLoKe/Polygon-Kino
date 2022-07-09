@@ -1,8 +1,6 @@
 package polygon.controllers;
 
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,8 +44,7 @@ public class FilmsController {
     public ModelAndView filmsByTag(@RequestParam(required = false, name = "cats") String sids,
             @CookieValue(value = "city", defaultValue = "1") int cityId) {
 
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("films");
+        ModelAndView modelAndView = new ModelAndView("films");
 
         List<City> cities;
         cities = cityService.allCities();
@@ -86,26 +83,14 @@ public class FilmsController {
         }
 
         modelAndView.addObject("filmsList", films);
-
         modelAndView.addObject("selectedCategory", selectedCategory);
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
+        User user = polygonUserDetailsService.getUser();
 
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-        User user = null;
-
-        if(username != null && !username.isEmpty()) {
-            user = polygonUserDetailsService.getUserByUsername(username);
+        if(user != null) {
             modelAndView.addObject("transactions", transactionService.findByUser(user));
+            modelAndView.addObject("user", user);
         }
-
-        modelAndView.addObject("user", user);
 
         return modelAndView;
     }

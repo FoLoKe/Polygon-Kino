@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import polygon.repos.UserRepository;
 import polygon.security.UrlAuthSuccessHandler;
 import polygon.services.PolygonUserDetailsService;
 
@@ -55,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        return new PolygonUserDetailsService();
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
+        return new PolygonUserDetailsService(userRepository);
     }
 }

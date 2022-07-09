@@ -30,9 +30,6 @@ public class CityController {
             response.addCookie(cookie);
         }
 
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:" + source); // redirecting to the source to reload page with appropriate info
-
-        return modelAndView;
+        return new ModelAndView("redirect:" + source);
     }
 }

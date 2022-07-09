@@ -1,7 +1,5 @@
 package polygon.controllers;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,8 +41,7 @@ public class CinemasController {
     @GetMapping(value="/cinemas")
     public ModelAndView allCinemas(
             @CookieValue(value = "city", defaultValue = "1") int cityId) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("cinemas");
+        ModelAndView modelAndView = new ModelAndView("cinemas");
 
         List<City> cities;
         cities = cityService.allCities();
@@ -65,22 +62,12 @@ public class CinemasController {
 
         modelAndView.addObject("geoCity", geoCity);
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = null;
-        String username;
+        User user = polygonUserDetailsService.getUser();
 
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-        if(username != null && !username.isEmpty()) {
-            user = polygonUserDetailsService.getUserByUsername(username);
+        if(user!= null) {
+            modelAndView.addObject("user", user);
             modelAndView.addObject("transactions", transactionService.findByUser(user));
         }
-
-        modelAndView.addObject("user", user);
 
         return modelAndView;
     }
@@ -88,8 +75,7 @@ public class CinemasController {
     @GetMapping(value="/cinema")
     public ModelAndView cinemaDetails(@RequestParam("id") int id,
                                    @CookieValue(value = "city", defaultValue = "1") int cityId) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("cinema");
+        ModelAndView modelAndView = new ModelAndView("cinema");
 
         List<City> cities;
         cities = cityService.allCities();
@@ -117,22 +103,13 @@ public class CinemasController {
         Map<Performance,List<Session>> sessions = sessionService.findSessionsInBuilding(cinema, timestamp);
         modelAndView.addObject("orderedPerformances", sessions);
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        User user = null;
 
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+        User user = polygonUserDetailsService.getUser();
 
-        if(username != null && !username.isEmpty()) {
-            user = polygonUserDetailsService.getUserByUsername(username);
+        if (user != null) {
             modelAndView.addObject("transactions", transactionService.findByUser(user));
+            modelAndView.addObject("user", user);
         }
-
-        modelAndView.addObject("user", user);
         
         return modelAndView;
     }

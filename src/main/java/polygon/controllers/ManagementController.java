@@ -531,6 +531,7 @@ public class ManagementController {
         modelAndView.addObject("id", id);
         modelAndView.addObject("date", date);
         modelAndView.addObject("cats", categories);
+
         return modelAndView;
     }
 

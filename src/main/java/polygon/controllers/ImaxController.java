@@ -1,8 +1,6 @@
 package polygon.controllers;
 
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,8 +38,7 @@ public class ImaxController {
     public ModelAndView allIMAXFilms(HttpServletRequest request,
                                            @CookieValue(value = "city", defaultValue = "1") int cityId)
     {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("imax");
+        ModelAndView modelAndView = new ModelAndView("imax");
 
         List<City> cities;
         cities = cityService.allCities();
@@ -59,25 +56,14 @@ public class ImaxController {
 
         modelAndView.addObject("geoCity", geoCity);
 
-        List<Performance> films;
-        films = performanceService.activeIMAXPerformances(city);
+        List<Performance> films = performanceService.activeIMAXPerformances(city);
         modelAndView.addObject("filmsList", films);
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        int userBalance = 0;
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-        User user = null;
-        if(username != null && !username.isEmpty()) {
-            user = polygonUserDetailsService.getUserByUsername(username);
+        User user = polygonUserDetailsService.getUser();
+        if(user != null) {
             modelAndView.addObject("transactions", transactionService.findByUser(user));
+            modelAndView.addObject("user", user);
         }
-        modelAndView.addObject("user", user);
 
         return modelAndView;
     }

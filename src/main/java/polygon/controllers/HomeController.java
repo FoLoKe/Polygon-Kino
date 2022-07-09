@@ -1,7 +1,5 @@
 package polygon.controllers;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,8 +37,7 @@ public class HomeController {
     public ModelAndView home(HttpServletRequest request,
                                   @CookieValue(value = "city", defaultValue = "1") int cityId)
     {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home");
+        ModelAndView modelAndView = new ModelAndView("home");
 
         List<City> cities;
         cities = cityService.allCities();
@@ -59,38 +56,16 @@ public class HomeController {
         modelAndView.addObject("geoCity", geoCity);
 
         List<Performance> films =  performanceService.activePerformances(city);
-//        List<Performance> tempFilms = performanceService.activePerformances(city);
-//        for (Performance film : tempFilms) {
-//            films.add(film);
-//            if(films.size() >= 5)
-//                break;
-//        }
         modelAndView.addObject("filmsList", films);
 
         List<Performance> premiers =  performanceService.allPremiers();
-//        List<Performance> tempPremiers = performanceService.allPremiers();
-//        for (Performance film : tempPremiers) {
-//            premiers.add(film);
-//            if(premiers.size() >= 5)
-//                break;
-//        }
         modelAndView.addObject("premiersList", premiers);
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        int userBalance = 0;
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-        User user = null;
-        if(username != null && !username.isEmpty()) {
-            user = polygonUserDetailsService.getUserByUsername(username);
+        User user = polygonUserDetailsService.getUser();
+        if(user != null) {
+            modelAndView.addObject("user", user);
             modelAndView.addObject("transactions", transactionService.findByUser(user));
         }
-        modelAndView.addObject("user", user);
 
         return modelAndView;
     }
