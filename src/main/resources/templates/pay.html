@@ -9,10 +9,10 @@
 <body>
 <center>
     <div class="regpsage">
-        <div class = "buyHeader">
-            <a class = "exitCross" href = "/">&#10005;</a>
+        <div class = "buy-header">
+            <a class = "exit-cross" href = "/">&#10005;</a>
         </div>
-        <div class = "regform">
+        <div class = "reg-form">
             <form th:action="'/charge?id=' + ${id} + '&byBalance=0'" method='POST' id='checkout-form'>
                 <input type='hidden' th:value='${amount}' name='amount' />
                 <h1 class = "regcaption">Цена билетов: <span th:text="${amount} + 'Р'" /></h1>
@@ -29,7 +29,7 @@
             </form>
             <form sec:authorize = "isAuthenticated()" th:action="'/charge?id=' + ${id} + '&byBalance=1'" method='POST' id='byBalance'>
                 <input type='hidden' th:value='${amount}' name='amount' />
-                <p class="etext" th:text="'Бонусный баланс: ' + ${balance}"></p>
+                <p class="e-text" th:text="'Бонусный баланс: ' + ${balance}"></p>
                 <input type="submit" th:disabled="${balance < amount}" value="Купить за бонусы"/>
             </form>
         </div>

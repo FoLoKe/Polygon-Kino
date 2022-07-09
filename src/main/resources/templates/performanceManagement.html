@@ -10,58 +10,58 @@
 </head>
 <body>
     <center>
-        <div class="managementBox">
+        <div class="management-box">
             <p>Редактор фильма</p>
-        <form class="managementForm" th:attr = "action=@{/management/managePerformances/save}" method = "post" enctype="multipart/form-data">
+        <form class="management-form" th:attr = "action=@{/management/managePerformances/save}" method = "post" enctype="multipart/form-data">
             <input type="hidden" name="id" th:value="${id}">
-            <div class="managementLine">
-                <label class="managementLabel">Название фильма</label>
-                <div class="managementInput">
+            <div class="management-line">
+                <label class="management-label">Название фильма</label>
+                <div class="management-input">
                     <input type="text" name="name" th:value="${name}">
                 </div>
             </div>
-            <div class="managementLine">
-                <label  class="managementLabel">Ссылка на YouTube трейлер (Embed)</label>
-                <div class="managementInput">
+            <div class="management-line">
+                <label  class="management-label">Ссылка на YouTube трейлер (Embed)</label>
+                <div class="management-input">
                     <input type="text" name="link" th:value="${link}">
                 </div>
             </div>
-            <div class="managementLine">
-                <label class="managementLabel">IMDB ID</label>
-                <div class="managementInput">
+            <div class="management-line">
+                <label class="management-label">IMDB ID</label>
+                <div class="management-input">
                     <input type="text" name="imdb" th:value="${imdbID}">
                 </div>
             </div>
-            <div class="managementLine">
-                <label class="managementLabel">Описание</label>
-                <div class="managementInput">
+            <div class="management-line">
+                <label class="management-label">Описание</label>
+                <div class="management-input">
                     <input type="text" name="description" th:value="${description}">
                 </div>
             </div>
-            <div class="managementLine">
-                <label class="managementLabel">Постер</label>
-                <div class="managementInput">
+            <div class="management-line">
+                <label class="management-label">Постер</label>
+                <div class="management-input">
                     <input type="file" name="file">
                 </div>
             </div>
-            <div class="managementLine">
-                <label class="managementLabel">Превью</label>
-                <div class="managementInput">
+            <div class="management-line">
+                <label class="management-label">Превью</label>
+                <div class="management-input">
                     <input type="file" name="files" multiple>
                 </div>
             </div>
-            <div class="managementLine">
-                <label class="managementLabel">Премьера</label>
-                <div class="managementInput">
+            <div class="management-line">
+                <label class="management-label">Премьера</label>
+                <div class="management-input">
                     <input type="date" name="date" th:value="${date}">
                 </div>
             </div>
-            <div class="managementLine" th:each="instance : ${cats}">
+            <div class="management-line" th:each="instance : ${cats}">
                 <input type = "checkbox" th:text = "${instance.key.name}" id="cats" name="cats" th:value="${instance.key.id}" th:checked="${instance.value}" >
             </div>
-            <div class="managementControls">
-                <input class="managementText" type="submit" value="Сохранить">
-                <a class="managementText" onclick="history.back();"> Назад</a>
+            <div class="management-controls">
+                <input class="management-text" type="submit" value="Сохранить">
+                <a class="management-text" onclick="history.back();"> Назад</a>
             </div>
         </form>
     </center>

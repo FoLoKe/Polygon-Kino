@@ -8,26 +8,26 @@
 </head>
 <body>
     <center>
-        <div class="managementBox">
+        <div class="management-box">
             <p>Пользователи</p>
             <p th:if="${error != null}" th:text="${error}"></p>
-            <div class = "managementForm">
-                <table class="managementTable">
-                    <tr class="managementLine" th:each ="user : ${users}">
-                        <td class="managementLabel">
+            <div class = "management-form">
+                <table class="management-table">
+                    <tr class="management-line" th:each ="user : ${users}">
+                        <td class="management-label">
                             <p th:text = "${user.username}"></p>
                         </td>
-                        <td class="managementInput">
-                            <a class="managementText" th:href="'/management/manageUsers/manage?id=' + ${user.id}">&#9998;</a>
+                        <td class="management-input">
+                            <a class="management-text" th:href="'/management/manageUsers/manage?id=' + ${user.id}">&#9998;</a>
                         </td>
                         <td>
-                            <a class="managementText" th:href="'/management/manageUsers/delete?id=' + ${user.id}">&#128711;</a>
+                            <a class="management-text" th:href="'/management/manageUsers/delete?id=' + ${user.id}">&#128711;</a>
                         </td>
                     </tr>
                 </table>
-                <div class="managementControls">
-                    <a class="managementText" href="/management/manageUsers/manage"> Добавить </a>
-                    <a class="managementText" onclick="history.back();"> Назад</a>
+                <div class="management-controls">
+                    <a class="management-text" href="/management/manageUsers/manage"> Добавить </a>
+                    <a class="management-text" onclick="history.back();"> Назад</a>
                 </div>
             </div>
         </div>

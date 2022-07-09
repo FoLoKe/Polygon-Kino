@@ -11,11 +11,11 @@
 <body>
 <div th:fragment="head">
     <div id="refundsPopup" >
-        <div class="noSize" sec:authorize="isAuthenticated()">
-            <div class = "userWindow">
+        <div class="no-size" sec:authorize="isAuthenticated()">
+            <div class = "user-window">
                 <div class="login">
                     <div class="refunds">
-                        <div class = "refunds_table">
+                        <div class = "refunds-table">
                             <table>
                                 <caption>Билеты</caption>
                                 <tr>
@@ -51,32 +51,32 @@
     </div>
 
     <div id="loginPopup">
-    <div class="noSize">
-        <div class = "userWindow">
+    <div class="no-size">
+        <div class = "user-window">
             <div class="login">
-                <center sec:authorize="isAnonymous()" class = "loginLogin">
+                <center sec:authorize="isAnonymous()" class = "login-login">
                 <form  th:action="@{/login}" method="post">
-                    <center><div><label> User Name : <input class = "loginLoginInput" type="text" name="username"/> </label></div></center>
-                    <center><div><label> Password: <input class = "loginLoginInput" type="password" name="password"/> </label></div></center>
+                    <center><div><label> User Name : <input class = "login-loginInput" type="text" name="username"/> </label></div></center>
+                    <center><div><label> Password: <input class = "login-loginInput" type="password" name="password"/> </label></div></center>
                     <center><div><input type="submit" value="Войти"/></div></center>
-                    <center><div><a class="regbutton" th:href="@{/registration}">Регистрация</a></div></center>
+                    <center><div><a class="reg-button" th:href="@{/registration}">Регистрация</a></div></center>
 
                 </form>
                 </center>
 
                 <form class ="logged" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
                     <div class="logged">
-                        <div class = "loggedInfo">
-                            <p class = "loggedName" th:text="${user.username}"></p>
-                            <p class = "loggedEmail" th:text="${user.email}"></p>
+                        <div class = "logged-info">
+                            <p class = "logged-name" th:text="${user.username}"></p>
+                            <p class = "logged-email" th:text="${user.email}"></p>
                             <input type="button" value="Возврат билетов"
                                    onclick="rPopUpSwitch()"/>
                             <input type="submit" value="Выйти"/>
                         </div>
-                        <div class = "loggedBalance">
+                        <div class = "logged-balance">
                             <center>
-                            <p class = "balanceText"> Бонусные баллы</p>
-                            <p class = "balanceValue" th:text="${user.balance}"></p>
+                            <p class = "balance-text"> Бонусные баллы</p>
+                            <p class = "balance-value" th:text="${user.balance}"></p>
                             </center>
                         </div>
                     </div>
@@ -87,8 +87,8 @@
     </div>
     <div class = "header">
         <div class = "wrapper">
-            <div class = "upper_line">
-                <div class="first_column">
+            <div class = "upper-line">
+                <div class="first-column">
                     <a class="logo" th:href="@{/}">
                         <img src="images/polygon.png">
                     </a>
@@ -107,22 +107,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="second_column">
-                    <a class ="enterButton" href="javascript:lPopUpSwitch()">
+                <div class="second-column">
+                    <a class ="simple-body" href="javascript:lPopUpSwitch()">
                         <div class="enter">
-                            <p class = "etext" sec:authorize="isAnonymous()"> Вход</p>
-                            <p class = "etext" sec:authorize="isAuthenticated()">[[${#httpServletRequest.remoteUser}]] </p>
+                            <p class = "e-text" sec:authorize="isAnonymous()"> Вход</p>
+                            <p class = "e-text" sec:authorize="isAuthenticated()">[[${#httpServletRequest.remoteUser}]] </p>
                         </div>
                     </a>
                 </div>
             </div>
 
-            <div class="bottom_line">
+            <div class="bottom-line">
                 <div class="menu">
-                    <a class="menu_element" th:href="@{/films}">Фильмы</a>
-                    <a class="menu_element" th:href="@{/cinemas}">Кинотеатры</a>
-                    <a class="menu_element" th:href="@{/imax}">Фильмы в IMAX</a>
-                    <a sec:authorize="hasAuthority('ADMIN')" class="menu_element" th:href="@{/management}">Управление</a>
+                    <a class="menu-element" th:href="@{/films}">Фильмы</a>
+                    <a class="menu-element" th:href="@{/cinemas}">Кинотеатры</a>
+                    <a class="menu-element" th:href="@{/imax}">Фильмы в IMAX</a>
+                    <a sec:authorize="hasAuthority('ADMIN')" class="menu-element" th:href="@{/management}">Управление</a>
                 </div>
             </div>
         </div>

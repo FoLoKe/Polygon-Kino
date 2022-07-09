@@ -11,23 +11,23 @@
 <body>
 <div th:insert = "~{header :: head}"></div>
 
-<div class = "main_container">
-    <div class = "tabs_container">
-        <div class = "tabs_list">
+<div class = "main-container">
+    <div class = "tabs-container">
+        <div class = "tabs-list">
             <h1 class = "caption">
                 Кинотеатры
             </h1>
-            <div class = "tabs_scroller">
-                <a class = "noDeco" th:each="cinema : ${cinemasList}" th:href = "'/cinema?id=' + ${cinema.id}">
-                <div class="last_tablet_c">
-                    <p class="roboto_text">
+            <div class = "tabs-scroller">
+                <a class = "no-deco" th:each="cinema : ${cinemasList}" th:href = "'/cinema?id=' + ${cinema.id}">
+                <div class="city-tablet">
+                    <p class="roboto-text">
                         Залы по адресу:
                     </p>
-                    <p class = "roboto_text" th:text="${cinema.city.name}">
+                    <p class = "roboto-text" th:text="${cinema.city.name}">
                     </p>
-                    <p class = "roboto_text" th:text="${cinema.address}">
+                    <p class = "roboto-text" th:text="${cinema.address}">
                     </p>
-                    <p class = "roboto_text" th:text="'(' + ${cinema.type}+')'">
+                    <p class = "roboto-text" th:text="'(' + ${cinema.type}+')'">
                     </p>
                 </div>
                 </a>

@@ -8,27 +8,27 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
 </head>
-<body class="simpleBody">
+<body class="simple-body">
 <div th:insert = "~{header :: head}">
 
 </div>
 
-    <div class= "perfMainContainer">
+    <div class= "performance-main-container">
         <p  class = "caption" th:text = "'Фильмы на ' + ${cinema.address}"></p>
-        <div class = "performanceCard" th:each = "entry : ${orderedPerformances}">
-            <div class = "posterContainer">
+        <div class = "performance-card" th:each = "entry : ${orderedPerformances}">
+            <div class = "poster-container">
                 <a th:href = "'/performance?id=' + ${entry.key.id}">
                     <img class="poster" th:src="*{'/img/' + entry.key.id}">
                 </a>
             </div>
-            <div class = "performanceRightContainer">
-                <p  class = "performanceDescription" th:text = ${entry.key.restriction}></p>
-                <p  class = "performanceDescription" th:text = ${entry.key.description}></p>
-                <p  class = "performanceDescription" th:text = ${entry.key.date}></p>
+            <div class = "performance-right-container">
+                <p  class = "performance-description" th:text = ${entry.key.restriction}></p>
+                <p  class = "performance-description" th:text = ${entry.key.description}></p>
+                <p  class = "performance-description" th:text = ${entry.key.date}></p>
                 <div class = "tag" th:each = "tag : ${entry.key.categories}" th:text="${tag.name}">
                 </div>
             </div>
-            <a class = "session_tab" th:each = "s : ${entry.value}" th:href="@{/selectSeat(id = ${s.id})}">
+            <a class = "session-tab" th:each = "s : ${entry.value}" th:href="@{/selectSeat(id = ${s.id})}">
                 <p th:text = "${#dates.format(s.time, 'HH:mm')}  + ' ' + ${s.room.type}">
                 </p>
                 <p th:text = "${s.price} + '₽'">

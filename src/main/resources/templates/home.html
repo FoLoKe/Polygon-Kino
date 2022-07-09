@@ -12,33 +12,31 @@
     <body>
         <div th:insert = "~{header :: head}"></div>
 
-        <div class = "main_container">
-            <div class = "tabs_container">
-                <div class = "tabs_list">
+        <div class = "main-container">
+            <div class = "tabs-container">
+                <div class = "tabs-list">
                     <h1 class = "caption">
                         КИНО УЖЕ СЕГОДНЯ
                     </h1>
-                    <div class = "tabs_scroller">
-                        <a class="last_tablet" th:href="@{/performance(id = ${film.id})}" th:each="film : ${filmsList}" >
+                    <div class = "tabs-scroller">
+                        <a class="tablet" th:href="@{/performance(id = ${film.id})}" th:each="film : ${filmsList}" >
                             <img th:src="*{'/img/' + film.id}">
-                            <p class = "description" th:text="${film.name}">
-
-                            </p>
-                            <div>
-                            <div class = "tag" th:each="cat : ${film.categories}" th:text="${cat.name}"></div>
+                            <p class = "description" th:text="${film.name}"></p>
+                            <div class = "tags-wrapper">
+                                <div class = "tag" th:each="cat : ${film.categories}" th:text="${cat.name}"></div>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class = "tabs_container">
-                <div class = "tabs_list">
+            <div class = "tabs-container">
+                <div class = "tabs-list">
                     <h1 class = "caption">
                         УЖЕ СОВСЕМ СКОРО
                     </h1>
-                    <div class = "tabs_scroller">
-                        <a class="last_tablet" th:href="@{/performance(id = ${film.id})}" th:each="film : ${premiersList}" >
+                    <div class = "tabs-scroller">
+                        <a class="tablet" th:href="@{/performance(id = ${film.id})}" th:each="film : ${premiersList}" >
                             <img th:src="*{'/img/' + film.id}">
                             <p class = "description" th:text="${film.name}">
 

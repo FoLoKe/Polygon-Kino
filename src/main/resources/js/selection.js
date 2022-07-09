@@ -1,5 +1,3 @@
-
-
 //дожидаемся полной загрузки страницы
 window.onload = function () {
     PopUpHide();
@@ -14,12 +12,12 @@ window.onload = function () {
         //вешаем событие
         if (el.attributes.value.value == 'false') {
             el.onclick = function(e) {
-                var b = document.querySelectorAll('.sseat');
+                var b = document.querySelectorAll('.selected-seat');
 
                 if (this.attributes.value.value == 'false') {
                      if (b.length < 5) {
                          this.attributes.value.value = 'true';
-                         this.className = 'sseat';
+                         this.className = 'selected-seat';
 
                      } else {
                          alert('5 билетов в 1 руки');
@@ -28,40 +26,42 @@ window.onload = function () {
                     this.attributes.value.value = 'false';
                     this.className = 'seat';
                 }
-                var b = document.querySelectorAll('.sseat');
+                var b = document.querySelectorAll('.selected-seat');
                 price.textContent = "Цена: " + (b.length)*this.attributes.ticketPrice.value + "₽";
                 return false;
             }
         }
         else
-        el.className = 'hseat'
+        el.className = 'occupied-seat'
     });
 
     var a = document.getElementById('confirmBuy');
-
     var form = document.getElementById('infoForm');
-            //вешаем на него событие
-            a.onclick = function() {
-                var b = document.querySelectorAll('.sseat');
-                      if(b.length <= 5) {
-                           if(b.length >= 1) {
-                                var s = 'ticketsId=';
-                                [].forEach.call( b, function(el) {
-                                    s += el.attributes.ticket.value;
-                                    s += '%20';
-                                });
-                                //a.href = '/buy' + "?byBalance=0&" + s;
-                                form.action = '/selectSeat' + "?" + s;
-                                form.submit();
-                           } else {
-                                alert('выбирете места');
-                                return false;
-                           }
-                      } else {
-                            alert('перестаньте читерить');
-                            return false;
-                      }
+
+    //вешаем на него событие
+    a.onclick = function() {
+    var b = document.querySelectorAll('.selected-seat');
+
+    if(b.length <= 5) {
+        if(b.length >= 1) {
+            var s = 'ticketsId=';
+            [].forEach.call( b, function(el) {
+                s += el.attributes.ticket.value;
+                s += '%20';
+            });
+            //a.href = '/buy' + "?byBalance=0&" + s;
+            form.action = '/selectSeat' + "?" + s;
+            form.submit();
+
+            } else {
+                alert('выбирете места');
+                return false;
             }
+        } else {
+            alert('перестаньте читерить');
+            return false;
+        }
+    }
 }
 
 function PopUpSwitch(){
@@ -69,7 +69,8 @@ function PopUpSwitch(){
         $("#buyPopup").hide();
     else
         $("#buyPopup").show();
- }
- function PopUpHide(){
-     $("#buyPopup").hide();
- }
+}
+
+function PopUpHide(){
+    $("#buyPopup").hide();
+}

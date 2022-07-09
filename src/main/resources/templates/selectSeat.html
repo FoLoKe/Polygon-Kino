@@ -2,77 +2,77 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-        <link rel="stylesheet" href="styles.css">
-        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
-        <script type="text/javascript" th:src="@{js/selection.js}" src = "js/selection.js"></script>
-    </head>
-    <body class="buyRoot">
-    <img class = "background" src="images/bg.jpg">
-    <div class="buyBody">
-        <div class = "buyHeader">
-            <p class = "caption" th:text="${ssession.performance.name} + ' ' + ${#dates.format(ssession.time, 'dd-MM-yyyy HH:mm')} +
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript" th:src="@{js/geoPopup.js}" src="js/geoPopup.js"></script>
+  <script type="text/javascript" th:src="@{js/selection.js}" src = "js/selection.js"></script>
+</head>
+<body class="buy-root">
+<img class = "background" src="images/bg.jpg">
+<div class="buy-body">
+  <div class = "buy-header">
+    <p class = "caption" th:text="${ssession.performance.name} + ' ' + ${#dates.format(ssession.time, 'dd-MM-yyyy HH:mm')} +
             ' Зал №' +${ssession.room.number}"></p>
-            <a class = "exitCross" th:href = "@{/performance(id = ${ssession.performance.id})}">&#10005;</a>
-        </div>
-        <div class = "buyFooter">
-            <p class = "price" id="price">Цена</p>
-            <form class = "buyButton" id = "infoForm" th:object="${purchaseInfo}" method="POST">
-                    <a class="buyLink" href = # id = "confirmBuy">
-                        <p class = "buyCaption" th:text="Купить"></p>
-                    </a>
-            </form>
-        </div>
+    <a class = "exit-cross" th:href = "@{/performance(id = ${ssession.performance.id})}">&#10005;</a>
+  </div>
+  <div class = "buyFooter">
+    <p class = "price" id="price">Цена</p>
+    <form class = "buy-button" id = "infoForm" th:object="${purchaseInfo}" method="POST">
+      <a class="buy-link" href = # id = "confirmBuy">
+        <p class = "buy-caption" th:text="Купить"></p>
+      </a>
+    </form>
+  </div>
 
-        <div class="room">
-            <center>
-            <div class="screen">
-                <img class="screenImage" th:src = "*{'/preview/' + imgId}">
-            </div>
-                <div class = "bottom">
-                <table class = "seats_rows">
-                    <tr class = "seats_row"  th:each = "srow, iterStat : ${rowsList}">
-                        <td>
-                            <p th:text = ${iterStat.count} class = "rowNumber"></p>
-                        </td>
-                        <td class = "sseatsRow">
-                            <center class = "sseatsRow">
-                                <div th:each = "instance : ${srow}">
-                                    <center>
-                                        <div th:if="${instance.key.isSeat()}">
-                                        <div class = "seat" th:value= "${instance.value.occupied}" th:attr = "ticket = ${instance.value.id}" th:attrappend =  "ticketPrice = ${ssession.price}">
-                                            <p th:text = "${instance.key.seat}"></p>
-                                        </div>
-                                        </div>
-                                        <div th:if="${not instance.key.isSeat()}">
-                                            <div class = "void">
+  <div class="room">
+    <center>
+      <div class="screen">
+        <img class="screen-image" th:src = "*{'/preview/' + imgId}">
+      </div>
+      <div class = "bottom">
+        <table class = "seats-rows">
+          <tr class = "seats_row"  th:each = "srow, iterStat : ${rowsList}">
+            <td>
+              <p th:text = ${iterStat.count} class = "row-number"></p>
+            </td>
+            <td class = "selected-seatsRow">
+              <center class = "selected-seatsRow">
+                <div th:each = "instance : ${srow}">
+                  <center>
+                    <div th:if="${instance.key.isSeat()}">
+                      <div class = "seat" th:value= "${instance.value.occupied}" th:attr = "ticket = ${instance.value.id}" th:attrappend =  "ticketPrice = ${ssession.price}">
+                        <div th:text = "${instance.key.seat}"></div>
+                      </div>
+                    </div>
+                    <div th:if="${not instance.key.isSeat()}">
+                      <div class = "void">
 
-                                            </div>
-                                        </div>
-                                    </center>
-                                </div>
-                            </center>
-                        </td>
-                        <td>
-                            <p th:text = ${iterStat.count} class = "rowNumber"></p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            </center>
-        </div>
-        <div class="buyPopup" id="buyPopup">
-            <form class = "infoForm" id = "infoForms" th:object="${purchaseInfo}" method="POST">
-                <div class="element"><label> Email: <input type="text" th:value = "${email}" id = "email" name ="email"/> </label></div>
-
-                <div class="element" sec:authorize = "isAuthenticated()"><a class="confirmButton" href="#" id = "confirmBalance" >Купить за баллы</a>
-                    <p class="etext" th:text="${balance}"></p>
+                      </div>
+                    </div>
+                  </center>
                 </div>
-                <div class="element"><a class="confirmButton" href="javascript:PopUpSwitch()" id = "rejectBuy">Закрыть</a></div>
-            </form>
-        </div>
-    </div>
-    </body>
+              </center>
+            </td>
+            <td>
+              <p th:text = ${iterStat.count} class = "row-number"></p>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </center>
+  </div>
+  <div class="buy-popup" id="buyPopup">
+    <form class = "info-form" id = "infoForms" th:object="${purchaseInfo}" method="POST">
+      <div class="element"><label> Email: <input type="text" th:value = "${email}" id = "email" name ="email"/> </label></div>
+
+      <div class="element" sec:authorize = "isAuthenticated()"><a class="confirm-button" href="#" id = "confirmBalance" >Купить за баллы</a>
+        <p class="e-text" th:text="${balance}"></p>
+      </div>
+      <div class="element"><a class="confirm-button" href="javascript:PopUpSwitch()" id = "rejectBuy">Закрыть</a></div>
+    </form>
+  </div>
+</div>
+</body>
 </html>

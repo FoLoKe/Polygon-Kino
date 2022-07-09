@@ -8,21 +8,21 @@
 </head>
 <body>
     <center>
-        <div class="managementBox">
+        <div class="management-box">
             <p>Редактор города</p>
-                <form class="managementForm" th:attr = "action=@{/management/manageCategories/save}" method = "post">
+                <form class="management-form" th:attr = "action=@{/management/manageCategories/save}" method = "post">
                     <input type="hidden" name="id" th:value="${id}">
-                    <div class="managementTable">
-                        <div class="managementLine">
-                            <label class="managementLabel">Название категории</label>
-                            <div class="managementInput">
+                    <div class="management-table">
+                        <div class="management-line">
+                            <label class="management-label">Название категории</label>
+                            <div class="management-input">
                                 <input type="text" name="name" th:value="${name}">
                             </div>
                         </div>
                     </div>
-                    <div class="managementControls">
-                        <input class="managementText" type="submit" value="Сохранить">
-                        <a class="managementText" onclick="history.back();"> Назад</a>
+                    <div class="management-controls">
+                        <input class="management-text" type="submit" value="Сохранить">
+                        <a class="management-text" onclick="history.back();"> Назад</a>
                     </div>
                 </form>
         </div>

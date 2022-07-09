@@ -8,14 +8,14 @@
 </head>
 <body>
     <center>
-        <div class="managementBox">
+        <div class="management-box">
             <p>Редактор города</p>
-                <form class="managementForm" th:attr = "action=@{/management/manageBuildings/save}" method = "post">
+                <form class="management-form" th:attr = "action=@{/management/manageBuildings/save}" method = "post">
                     <input type="hidden" name="id" th:value="${id}">
-                    <div class="managementTable">
-                        <div class="managementLine">
-                            <label class="managementLabel">Город</label>
-                            <div class="managementInput">
+                    <div class="management-table">
+                        <div class="management-line">
+                            <label class="management-label">Город</label>
+                            <div class="management-input">
                                 <select name = "selectedCity" >
                                     <option th:each = "city : ${cities}"
                                         th:selected = "${defaultCity.id == city.id}"
@@ -25,21 +25,21 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="managementLine">
-                            <label class="managementLabel">Адрес</label>
-                            <div class="managementInput">
+                        <div class="management-line">
+                            <label class="management-label">Адрес</label>
+                            <div class="management-input">
                                 <input type="text" name="address" th:value="${address}">
                             </div>
                         </div>
-                        <div class="managementLine">
-                            <label class="managementLabel">Тип здания</label>
-                            <div class="managementInput">
+                        <div class="management-line">
+                            <label class="management-label">Тип здания</label>
+                            <div class="management-input">
                                 <input type="text" name="type" th:value="${type}">
                             </div>
                         </div>
 
-                        <div class="managementControls">
-                            <input class="managementText" type="submit" value="Сохранить">
+                        <div class="management-controls">
+                            <input class="management-text" type="submit" value="Сохранить">
                         </div>
                     </div>
                 </form>

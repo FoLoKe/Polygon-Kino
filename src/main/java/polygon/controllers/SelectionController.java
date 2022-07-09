@@ -53,6 +53,10 @@ public class SelectionController {
 
         Session session = sessionService.findById(id);
 
+        if(session == null) {
+            return new ModelAndView("failPayment"); //TODO: SomethingWentWrongPage
+        }
+
         Timestamp now = new Timestamp(new Date().getTime());
         if(session.getTime().before(now))
             return new ModelAndView("failPayment");

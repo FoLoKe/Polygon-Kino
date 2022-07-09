@@ -1,14 +1,11 @@
 package polygon.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -27,10 +24,9 @@ import static org.hibernate.cfg.AvailableSettings.*;
 @PropertySource(value = "classpath:db.properties")
 public class HibernateConfig {
 
-    private Environment environment;
+    private final Environment environment;
 
-    @Autowired
-    public void setEnvironment(Environment environment) {
+    public HibernateConfig(Environment environment) {
         this.environment = environment;
     }
 
@@ -40,7 +36,9 @@ public class HibernateConfig {
         properties.put(HBM2DDL_AUTO, environment.getRequiredProperty("hibernate.ddl-auto"));
         properties.put(SHOW_SQL, environment.getRequiredProperty("hibernate.show_sql"));
         properties.put(HBM2DDL_IMPORT_FILES, environment.getRequiredProperty("hibernate.import"));
+        properties.put(HBM2DDL_IMPORT_FILES_SQL_EXTRACTOR, environment.getRequiredProperty("hibernate.hbm2ddl.import_files_sql_extractor"));
         properties.put("hibernate.temp.use_jdbc_metadata_defaults", false);
+
         return properties;
     }
 
@@ -51,6 +49,7 @@ public class HibernateConfig {
         dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
         dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
         dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+
         return dataSource;
     }
 
@@ -60,6 +59,7 @@ public class HibernateConfig {
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan("polygon.models");
         sessionFactory.setHibernateProperties(hibernateProperties());
+
         return sessionFactory;
     }
 
@@ -68,6 +68,7 @@ public class HibernateConfig {
         JpaTransactionManager  transactionManager = new JpaTransactionManager ();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         //transactionManager.setSessionFactory(sessionFactory().getObject());
+
         return transactionManager;
     }
 
@@ -76,30 +77,12 @@ public class HibernateConfig {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "polygon.models" });
+        em.setPackagesToScan("polygon.models");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(hibernateProperties());
 
         return em;
-    }
-
-    @Bean
-    public JavaMailSender getJavaMailSender() {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
-
-        mailSender.setUsername(environment.getProperty("spring.mail.username"));
-        mailSender.setPassword(environment.getProperty("spring.mail.password"));
-
-        Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.debug", "true");
-
-        return mailSender;
     }
 }

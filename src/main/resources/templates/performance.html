@@ -1,76 +1,62 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="https://www.thymeleaf.org"
->
+      xmlns:th="https://www.thymeleaf.org">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
 
-<head>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-</head>
-<body class="simpleBody">
+  <div class="simple-body">
     <div th:insert = "~{header :: head}"></div>
-    <div class= "perfMainContainer">
-        <p  class = "caption" th:text = ${perf.name}></p>
-        <div class = "performanceCard">
-            <div class = "posterContainer">
-                <div class = "imdbContainer">
-                    <span class="imdbRatingPlugin" data-user="ur111314988" th:data-title=${perf.imdbRating} data-style="p4">
-                        <a href="https://www.imdb.com/title/tt0076759/?ref_=plg_rt_1"><img src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/images/imdb_31x14.png">
-                        </a>
-                    </span>
-                </div>
-                <script>(function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");</script>
-
-                <img class="poster" th:src="*{'/img/' + perf.id}">
-            </div>
-            <div class = "performanceRightContainer">
-                <p  class = "performanceDescription" th:text = ${perf.restriction}></p>
-                <p  class = "performanceDescription" th:text = ${perf.description}></p>
-                <p  class = "performanceDescription" th:text = ${perf.date}></p>
-                <a class="noDeco" th:each = "tag : ${perf.categories}" th:href="@{/films(cats = ${tag.id})}">
-                <div class = "tag"  th:text="${tag.name}">
-
-
-                </div>
-                </a>
-            </div>
+    <div class= "performance-main-container">
+      <p  class = "caption" th:text = ${perf.name}></p>
+      <div class = "performance-card">
+        <div class = "poster-container">
+          <div class = "imdb-container">
+            <span class="imdbRatingPlugin" data-user="ur111314988" th:data-title=${perf.imdbRating} data-style="p4">
+              <a href="https://www.imdb.com/title/tt0076759/?ref_=plg_rt_1"><img src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/images/imdb_31x14.png"></a>
+            </span>
+          </div>
+          <script>(function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");</script>
+          <img class="poster" th:src="*{'/img/' + perf.id}">
         </div>
-        <div class = "previewTab">
-            <iframe width="560" height="315" th:src="*{perf.trailerLink}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <div th:each = "preview : ${perf.previews}">
-                <img class = "previewImage" th:src="*{'/preview/' + preview.id}">
-            </div>
+        <div class = "performance-right-container">
+          <p  class = "performance-description" th:text = ${perf.restriction}></p>
+          <p  class = "performance-description" th:text = ${perf.description}></p>
+          <p  class = "performance-description" th:text = ${perf.date}></p>
+          <div class="tags-container">
+            <a class="no-deco" th:each = "tag : ${perf.categories}" th:href="@{/films(cats = ${tag.id})}">
+              <div class = "tag"  th:text="${tag.name}"></div>
+            </a>
+          </div>
         </div>
+      </div>
+      <div class = "preview-tab">
+        <iframe width="560" height="315" th:src="*{perf.trailerLink}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div th:each = "preview : ${perf.previews}">
+          <img class = "preview-image" th:src="*{'/preview/' + preview.id}">
+        </div>
+      </div>
     </div>
-    <div class = "performancesTabs">
-        <div th:if = "${schedule.size()}>0">
+    <div class = "performances-tabs">
+      <div th:if = "${schedule.size()}>0">
         <p class = "caption"> Сеансы </p>
-        </div>
-        <div th:unless = "${schedule.size()}>0">
-            <h1 class = "caption" th:text="'Нет запланированных сеансов'">
-
-            </h1>
-        </div>
-    <div class = "performance" th:each = "entry : ${schedule}">
+      </div>
+      <div th:unless = "${schedule.size()}>0">
+        <h1 class = "caption" th:text="'Нет запланированных сеансов'"></h1>
+      </div>
+      <div class = "performance" th:each = "entry : ${schedule}">
         <center>
-        <p class = "performanceDate" th:text="${#dates.format(entry.key, 'dd-MMM-yyyy')}">
-
-        </p>
-
-        <div class="buildingsTabs">
-        <div class = "buildingTab" th:each = "building : ${entry.value}">
-            <p th:text = "${building.key.address}">
-            <div class = "session_tab" th:each = "s : ${building.value}" th:href="@{/selectSeat(id = ${s.id})}">
-                <a th:text = "${#dates.format(s.time, 'HH:mm')}  + ' ' + ${s.room.type}" th:href="@{/selectSeat(id = ${s.id})}">
-
-                </a>
+          <p class = "performance-date" th:text="${#dates.format(entry.key, 'dd-MMM-yyyy')}"></p>
+          <div class="buildings-tabs">
+            <div class = "buildings-tab" th:each = "building : ${entry.value}">
+              <p th:text = "${building.key.address}"></p>
+              <div class = "session-tab" th:each = "s : ${building.value}" th:href="@{/selectSeat(id = ${s.id})}">
+                <a th:text = "${#dates.format(s.time, 'HH:mm')}  + ' ' + ${s.room.type}" th:href="@{/selectSeat(id = ${s.id})}"></a>
+              </div>
             </div>
-        </div>
-        </div>
+          </div>
         </center>
-
+      </div>
     </div>
-    </div>
-</body>
+  </div>
 </html>

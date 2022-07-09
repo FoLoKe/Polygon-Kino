@@ -16,11 +16,11 @@ function addRow()
     var td1 = d.createElement("TD");
 
     var b1 = d.createElement("a");
-    b1.className="managementText";
+    b1.className="management-text";
     b1.innerHTML="+";
 
     var b2 = d.createElement("a");
-    b2.className="managementText";
+    b2.className="management-text";
     b2.innerHTML="-";
 
     row.appendChild(td1);
@@ -35,7 +35,7 @@ function addRow()
                                  rc.id = "id";
     td1.appendChild(rc)
 
-    td1.rowNumber = (tbody.rows.length - 1);
+    td1.row-number = (tbody.rows.length - 1);
     b1.addEventListener("click", function(me) {
         rc.value = td1.childElementCount - 2;
         var first = b1;
@@ -44,7 +44,7 @@ function addRow()
         var checkbox = document.createElement('input');
                     checkbox.type = "checkbox";
                     checkbox.name = "seat";
-                    checkbox.value = td1.rowNumber + " " + (td1.childElementCount - 2);
+                    checkbox.value = td1.row-number + " " + (td1.childElementCount - 2);
                     checkbox.id = "id";
         var label = document.createElement('label');
         label.innerText  = "" + (td1.childElementCount - 2);

@@ -9,26 +9,26 @@
 </head>
 <body>
 <center>
-    <div class="managementBox">
+    <div class="management-box">
         <p> Города</p>
         <p th:if="${error != null}" th:text="${error}"></p>
-        <div class = "managementForm">
-                <table class="managementTable">
-                    <tr class="managementLine" th:each ="city : ${cities}">
-                        <td class="managementLabel">
+        <div class = "management-form">
+                <table class="management-table">
+                    <tr class="management-line" th:each ="city : ${cities}">
+                        <td class="management-label">
                             <p th:text = "${city.name}"></p>
                         </td>
-                        <td class="managementInput">
-                            <a class="managementText" th:href="'/management/manageCities/manage?id=' + ${city.id}">&#9998;</a>
+                        <td class="management-input">
+                            <a class="management-text" th:href="'/management/manageCities/manage?id=' + ${city.id}">&#9998;</a>
                         </td>
                         <td>
-                            <a  class="managementText" th:href="'/management/manageCities/delete?id=' + ${city.id}">&#128711;</a>
+                            <a  class="management-text" th:href="'/management/manageCities/delete?id=' + ${city.id}">&#128711;</a>
                         </td>
                     </tr>
                 </table>
-            <div class="managementControls">
-                <a class="managementText" href="/management/manageCities/manage"> Добавить </a>
-                <a class="managementText" onclick="history.back();"> Назад</a>
+            <div class="management-controls">
+                <a class="management-text" href="/management/manageCities/manage"> Добавить </a>
+                <a class="management-text" onclick="history.back();"> Назад</a>
             </div>
         </div>
     </div>

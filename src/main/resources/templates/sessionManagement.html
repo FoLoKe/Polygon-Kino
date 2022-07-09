@@ -8,14 +8,14 @@
 </head>
 <body>
     <center>
-        <div class="managementBox">
+        <div class="management-box">
             <p>Редактор сеанса</p>
-            <form class="managementForm" th:attr = "action=@{/management/manageSessions/save}" method = "post">
+            <form class="management-form" th:attr = "action=@{/management/manageSessions/save}" method = "post">
                 <input type="hidden" name="id" th:value="${id}">
-                <div class="managementTable">
-                    <div class="managementLine">
-                        <label class="managementLabel">Фильм</label>
-                        <div class="managementInput">
+                <div class="management-table">
+                    <div class="management-line">
+                        <label class="management-label">Фильм</label>
+                        <div class="management-input">
                             <select name = "selectedPerformance" >
                                 <option th:each = "performance : ${performances}"
                                     th:selected = "${defaultPerformance.id == performance.id}"
@@ -25,15 +25,15 @@
                             </select>
                         </div>
                     </div>
-                    <div class="managementLine">
-                        <label class="managementLabel">Цена билета</label>
-                        <div class="managementInput">
+                    <div class="management-line">
+                        <label class="management-label">Цена билета</label>
+                        <div class="management-input">
                             <input type="text" name="price" th:value="${price}">
                         </div>
                     </div>
-                    <div class="managementLine">
-                        <label class="managementLabel">Зал</label>
-                        <div class="managementInput">
+                    <div class="management-line">
+                        <label class="management-label">Зал</label>
+                        <div class="management-input">
                             <select name = "selectedRoom" >
                                 <option th:each = "room : ${rooms}"
                                     th:selected = "${defaultRoom.id == room.id}"
@@ -43,16 +43,16 @@
                             </select>
                         </div>
                     </div>
-                    <div class="managementLine">
-                        <label class="managementLabel">Дата и время</label>
-                        <div class="managementInput">
+                    <div class="management-line">
+                        <label class="management-label">Дата и время</label>
+                        <div class="management-input">
                             <input type="datetime-local" name="date" th:value="${date}">
                         </div>
                     </div>
                 </div>
-                <div class="managementControls">
-                    <input class="managementText" type="submit" value="Сохранить">
-                    <a class="managementText" onclick="history.back();"> Назад</a>
+                <div class="management-controls">
+                    <input class="management-text" type="submit" value="Сохранить">
+                    <a class="management-text" onclick="history.back();"> Назад</a>
                 </div>
             </form>
         </div>

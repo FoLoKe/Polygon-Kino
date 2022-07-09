@@ -8,12 +8,12 @@
 </head>
 <body>
     <center>
-        <div class="managementBox">
+        <div class="management-box">
             <div class="calendar">
-                <form class="calendarForm" th:attr = "action=@{/management/manageSessions}" method = "post">
+                <form class="calendar-form" th:attr = "action=@{/management/manageSessions}" method = "post">
                     Выберите дату:
-                    <input class="calendarCalendar" type="date" name="day" th:value="${day}"  >
-                    <input class="calendarButton" type="submit" value="Выбрать">
+                    <input class="calendar-main" type="date" name="day" th:value="${day}"  >
+                    <input class="calendar-button" type="submit" value="Выбрать">
                     <select name = "selectedBuilding" >
                         <option th:each = "building : ${buildings}" th:selected = "${defaultBuilding.id == building.id}" th:text = "${building.address}" th:value = "${building.id}">
                         </option>
@@ -21,25 +21,25 @@
                 </form>
             </div>
             <p th:if="${error != null}" th:text="${error}"></p>
-            <div class="managementForm">
-                <table class="managementTable">
+            <div class="management-form">
+                <table class="management-table">
                     <tr th:each ="instance : ${sessions}">
                     <td>
-                        <table class="managementSubTable">
-                            <tr class="managementLine" th:each = "ssession : ${instance.value}">
-                                <td class="managementLabel">
+                        <table class="management-sub-table">
+                            <tr class="management-line" th:each = "ssession : ${instance.value}">
+                                <td class="management-label">
                                     <p th:text = "${instance.key.name}"></p>
                                 </td>
-                                <td class="managementLabel">
+                                <td class="management-label">
                                     <p th:text = "${#dates.format(ssession.time, 'HH:mm')}">
 
                                     </p>
                                 </td>
-                                <td class="managementInput">
-                                    <a class="managementText" th:href="'/management/manageSessions/manage?id=' + ${ssession.id}"> &#9998;</a>
+                                <td class="management-input">
+                                    <a class="management-text" th:href="'/management/manageSessions/manage?id=' + ${ssession.id}"> &#9998;</a>
                                 </td>
                                 <td>
-                                    <a class="managementText" th:href="'/management/manageSessions/delete?id=' + ${ssession.id}"> &#128711;</a>
+                                    <a class="management-text" th:href="'/management/manageSessions/delete?id=' + ${ssession.id}"> &#128711;</a>
                                 </td>
                             </tr>
                         </table>
@@ -47,9 +47,9 @@
 
                     </tr>
                 </table>
-                <div class="managementControls">
-                    <a class="managementText" href="/management/manageSessions/manage"> Добавить </a>
-                    <a class="managementText" onclick="history.back();"> Назад</a>
+                <div class="management-controls">
+                    <a class="management-text" href="/management/manageSessions/manage"> Добавить </a>
+                    <a class="management-text" onclick="history.back();"> Назад</a>
                 </div>
             </div>
         </div>

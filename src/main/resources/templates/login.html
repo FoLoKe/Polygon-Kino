@@ -10,21 +10,21 @@
 <body>
     <center>
         <div class="regpage">
-            <form class = "regform" th:action="@{/login}" method="post">
+            <form class = "reg-form" th:action="@{/login}" method="post">
                 <p class="regcaption">Вход</p>
                 <div th:if="${param.error}">
                     Неверное имя пользователя или пароль.
                 </div>
-                <div class="regelem">
+                <div class="reg-elem">
                     <label> Имя пользователя:</label>
                     <input type="text" name="username"/>
                 </div>
-                <div class="regelem">
+                <div class="reg-elem">
                     <label> Пароль:</label>
                     <input type="password" name="password"/>
                 </div>
                 <div>
-                    <input class = regbutton type="submit" value="Войти"/>
+                    <input class = reg-button type="submit" value="Войти"/>
                 </div>
             </form>
         </div>
