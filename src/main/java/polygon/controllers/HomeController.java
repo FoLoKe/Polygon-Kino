@@ -69,4 +69,9 @@ public class HomeController {
 
         return modelAndView;
     }
+
+    @GetMapping("/changeLang")
+    public String home() {
+        return "redirect:welcome";
+    }
 }

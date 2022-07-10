@@ -7,7 +7,7 @@
     <script type="text/javascript" th:src="@{js/cpsw.js}" src="js/cpsw.js"></script>
 </head>
 <body>
-    <center>
+    <div>
         <div class = "registration-page">
             <form class = "reg-form" id = "reg" action="/registration" th:object="${user}" method="POST" enctype="utf8">
                 <p class="registration-caption">Регистрация</p>
@@ -37,6 +37,6 @@
                 <a class="reg-button" href="javascript:check()">Зарегистрироваться</a>
             </form>
         </div>
-    </center>
+    </div>
 </body>
 </html>

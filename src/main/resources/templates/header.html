@@ -2,131 +2,138 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{js/geo-popup.js}" src="js/geo-popup.js"></script>
-</head>
-<body>
+
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<script nomodule defer src="js/js.cookie.js"></script>
+<script type="module" src="/path/to/js.cookie.mjs"></script>
+
 <div th:fragment="head">
-    <div id="refundsPopup" >
-        <div class="no-size" sec:authorize="isAuthenticated()">
-            <div class = "user-window">
-                <div class="login">
-                    <div class="refunds">
-                        <div class = "refunds-table">
-                            <table>
-                                <caption>Билеты</caption>
-                                <tr>
-                                    <th>ID операции</th>
-                                    <th>Сеанс</th>
-                                    <th>Возврат</th>
-                                </tr>
-                                <tr th:each = "transaction : ${transactions}" th:if="${transaction.tickets.size() > 0}">
-                                    <td th:text="${transaction.id}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script th:src="@{js/geo-popup.js}" src="js/geo-popup.js"></script>
+  <script th:src="@{js/locale.js}" src="js/locale.js"></script>
+  <div id="refundsPopup" hidden>
+    <div class="no-size" sec:authorize="isAuthenticated()">
+      <div class="user-window">
+        <div class="login">
+          <div class="refunds">
+            <div class="refunds-table">
+              <table>
+                <caption>Билеты</caption>
+                <tr>
+                  <th>ID операции</th>
+                  <th>Сеанс</th>
+                  <th>Возврат</th>
+                </tr>
+                <tr th:each="transaction : ${transactions}" th:if="${transaction.tickets.size() > 0}">
+                  <td th:text="${transaction.id}">
 
-                                    </td>
-                                    <td th:text="${#dates.format(transaction.tickets.toArray()[0].session.time, 'dd-MMM-yyyy HH:mm')}">
+                  </td>
+                  <td th:text="${#dates.format(transaction.tickets.toArray()[0].session.time, 'dd-MMM-yyyy HH:mm')}">
 
-                                    </td>
-                                    <td>
-                                        <p th:if="${transaction.ended} == false">Операция не была завершена</p>
-                                        <p th:if="${transaction.ended == true && transaction.refunded == true}">Оформлен возврат</p>
-                                        <p th:if="${transaction.ended == true && transaction.tickets.toArray()[0].session.time.before(#dates.createNow()) }">Сеанс уже завершен</p>
-                                        <p th:if="${transaction.ended == true && transaction.tickets.toArray()[0].session.time.after(#dates.createNow()) && transaction.byBalance == true}">Оплачено бонусами</p>
-                                        <form th:action="@{'/refund?id=' + ${transaction.id}}" method="post">
-                                        <input th:if="${transaction.ended == true && transaction.tickets.toArray()[0].session.time.after(#dates.createNow()) && transaction.refunded == false && transaction.byBalance == false}"
-                                            type="submit" value="вернуть">
-                                        </form>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    <input type="button" value="Назад" onclick="rPopUpSwitch()">
-                    </div>
-                </div>
+                  </td>
+                  <td>
+                    <p th:if="${transaction.ended} == false">Операция не была завершена</p>
+                    <p th:if="${transaction.ended == true && transaction.refunded == true}">Оформлен возврат</p>
+                    <p th:if="${transaction.ended == true && transaction.tickets.toArray()[0].session.time.before(#dates.createNow()) }">
+                      Сеанс уже завершен</p>
+                    <p th:if="${transaction.ended == true && transaction.tickets.toArray()[0].session.time.after(#dates.createNow()) && transaction.byBalance == true}">
+                      Оплачено бонусами</p>
+                    <form th:action="@{'/refund?id=' + ${transaction.id}}" method="post">
+                      <input th:if="${transaction.ended == true && transaction.tickets.toArray()[0].session.time.after(#dates.createNow()) && transaction.refunded == false && transaction.byBalance == false}"
+                             type="submit" value="вернуть">
+                    </form>
+                  </td>
+                </tr>
+              </table>
             </div>
+            <input type="button" value="Назад" onclick="rPopUpSwitch()">
+          </div>
         </div>
+      </div>
     </div>
-
-    <div id="loginPopup">
+  </div>
+  <div id="loginPopup" hidden>
     <div class="no-size">
-        <div class = "user-window">
-            <div class="login">
-                <center sec:authorize="isAnonymous()" class = "login-login">
-                <form  th:action="@{/login}" method="post">
-                    <center><div><label> User Name : <input class = "login-loginInput" type="text" name="username"/> </label></div></center>
-                    <center><div><label> Password: <input class = "login-loginInput" type="password" name="password"/> </label></div></center>
-                    <center><div><input type="submit" value="Войти"/></div></center>
-                    <center><div><a class="reg-button" th:href="@{/registration}">Регистрация</a></div></center>
-
-                </form>
-                </center>
-
-                <form class ="logged" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-                    <div class="logged">
-                        <div class = "logged-info">
-                            <p class = "logged-name" th:text="${user.username}"></p>
-                            <p class = "logged-email" th:text="${user.email}"></p>
-                            <input type="button" value="Возврат билетов"
-                                   onclick="rPopUpSwitch()"/>
-                            <input type="submit" value="Выйти"/>
-                        </div>
-                        <div class = "logged-balance">
-                            <center>
-                            <p class = "balance-text"> Бонусные баллы</p>
-                            <p class = "balance-value" th:text="${user.balance}"></p>
-                            </center>
-                        </div>
-                    </div>
-                </form>
+      <div class="user-window">
+        <div class="login">
+          <div sec:authorize="isAnonymous()" class="login-login">
+            <form class="login-form" th:action="@{/login}" method="post">
+              <p class="login-caption" th:text="#{sign_in_caption}"></p>
+              <label th:text="#{username_label}"></label>
+              <input class="login-input" type="text" name="username"/>
+              <label th:text="#{password_label}"></label>
+              <input class="login-input" type="password" name="password"/>
+              <input class="login-button" type="submit" th:value="#{sign_in}"/>
+              <a class="reg-button" th:href="@{/registration}" th:text="#{sign_up}"></a>
+            </form>
+          </div>
+          <form class="logged" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+            <div class="logged">
+              <div class="logged-info">
+                <p class="logged-name" th:text="${user.username}"></p>
+                <p class="logged-email" th:text="${user.email}"></p>
+                <input type="button" value="Возврат билетов" onclick="rPopUpSwitch()"/>
+                <input type="submit" value="Выйти"/>
+              </div>
+              <div class="logged-balance">
+                <div>
+                  <p class="balance-text" th:text="#{bonus}"></p>
+                  <p class="balance-value" th:text="${user.balance}"></p>
+                </div>
+              </div>
             </div>
+          </form>
         </div>
-        </div>
+      </div>
     </div>
-    <div class = "header">
-        <div class = "wrapper">
-            <div class = "upper-line">
-                <div class="first-column">
-                    <a class="logo" th:href="@{/}">
-                        <img src="images/polygon.png">
-                    </a>
-                    <div class="geo">
-                        <a href="javascript:PopUpSwitch()" th:text="${geoCity}"></a>
-                        <div class="cities" id="geo-popup">
-                            <div class="wrapper">
-                                <ul class="list">
-                                    <li th:each="city : ${citiesList}">
-                                        <a th:href = "@{/setCity(id = ${city.id}, source = ${#httpServletRequest.requestURI})}" th:text="${city.name}">
-
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="second-column">
-                    <a class ="simple-body" href="javascript:lPopUpSwitch()">
-                        <div class="enter">
-                            <p class = "e-text" sec:authorize="isAnonymous()"> Вход</p>
-                            <p class = "e-text" sec:authorize="isAuthenticated()">[[${#httpServletRequest.remoteUser}]] </p>
-                        </div>
-                    </a>
-                </div>
+  </div>
+  <div class="header">
+    <div class="wrapper">
+      <div class="upper-line">
+        <div class="first-column">
+          <a class="logo" th:href="@{/}">
+            <img src="images/polygon.png">
+          </a>
+          <div class="geo">
+            <a href="javascript:PopUpSwitch()" th:text="${geoCity}"></a>
+            <div class="cities" id="geo-popup" hidden>
+              <div class="wrapper">
+                <ul class="list">
+                  <li th:each="city : ${citiesList}">
+                    <a th:href="@{/setCity(id = ${city.id}, source = ${#httpServletRequest.requestURI})}"
+                       th:text="${city.name}"></a>
+                  </li>
+                </ul>
+              </div>
             </div>
-
-            <div class="bottom-line">
-                <div class="menu">
-                    <a class="menu-element" th:href="@{/films}">Фильмы</a>
-                    <a class="menu-element" th:href="@{/cinemas}">Кинотеатры</a>
-                    <a class="menu-element" th:href="@{/imax}">Фильмы в IMAX</a>
-                    <a sec:authorize="hasAuthority('ADMIN')" class="menu-element" th:href="@{/management}">Управление</a>
-                </div>
-            </div>
+          </div>
         </div>
+        <select id="locales" class="locales">
+          <option value=""></option>
+          <option value="en" th:text="#{lang.eng}"></option>
+          <option value="fr" th:text="#{lang.ru}"></option>
+        </select>
+        <div class="second-column">
+          <a class="simple-body" href="javascript:lPopUpSwitch()">
+            <div class="enter">
+              <p class="e-text" sec:authorize="isAnonymous()" th:text="#{login_button}"></p>
+              <p class="e-text" sec:authorize="isAuthenticated()">[[${#httpServletRequest.remoteUser}]] </p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="bottom-line">
+        <div class="menu">
+          <a class="menu-element" th:href="@{/films}" th:text="#{films}"></a>
+          <a class="menu-element" th:href="@{/cinemas}" th:text="#{cinemas}"></a>
+          <a class="menu-element" th:href="@{/imax}" th:text="#{imax_films}"></a>
+          <a sec:authorize="hasAuthority('ADMIN')" class="menu-element" th:href="@{/management}" th:text="#{management}">Управление</a>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
-</body>
+
 </html>

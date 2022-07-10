@@ -66,21 +66,21 @@
   padding-right: 25px;
 }
 .header .wrapper .upper-line .second-column .enter {
+  border-radius: 8px;
   color: black;
   font-size: 18px;
   font-weight: 500;
   line-height: 1.33;
   margin-inline-start: auto;
+  margin-top: 6px;
   max-width: fit-content;
-  padding: 10px;
-  text-decoration: none;
+  padding: 4px 10px 2px 10px;
   transition: color .3s, background .3s;
   white-space: nowrap;
 }
 .header .wrapper .upper-line .enter:hover {
   background: orange;
   color: white;
-  text-decoration: none;
 }
 .header .wrapper .bottom-line {
   margin: 8px -20px 0 -10px;
@@ -94,6 +94,7 @@
   height: 34px;
   list-style: none;
   min-width: 700px;
+  overflow: hidden;
   padding: 0;
 }
 .header .wrapper .bottom-line .menu .menu-element {
@@ -101,7 +102,7 @@
   padding-left: 32px;
   padding-right: 32px;
   padding-top: 10px;
-  transition: background color .3s;
+  transition: background .3s, color .3s;
 }
 .header .wrapper .bottom-line .menu .menu-element:hover {
   background: white;
@@ -121,7 +122,7 @@
 }
 
 .e-text {
-  margin: 0px;
+  margin: 0;
   max-width: fit-content;
   padding: 2px;
   text-decoration: none;
@@ -152,15 +153,13 @@
 }
 
 .main-container {
-  background: #;
   margin-top: 105px;
 }
 .main-container .tabs-container {
-  padding: 35px 0 0 0;
+  padding: 0;
 }
 .main-container .tabs-container .tabs-list {
   display: inline-block;
-  left: 25px;
   position: relative;
   vertical-align: top;
   width: 100%;
@@ -238,7 +237,7 @@
   font-size: 18px;
   font-weight: 500;
   line-height: 1.33;
-  margin: 0px;
+  margin: 0;
   margin-left: 12px;
   text-decoration: none;
   transition: color .3s;
@@ -249,7 +248,7 @@
   font-size: 18px;
   font-weight: 500;
   line-height: 1.33;
-  margin: 0px;
+  margin: 0;
   margin-left: 12px;
   text-decoration: none;
   transition: color .3s;
@@ -264,22 +263,22 @@
   font-size: 18px;
   font-weight: 500;
   line-height: 1.33;
-  margin: 0px;
+  margin: 0;
   margin-left: 12px;
   text-decoration: none;
   white-space: nowrap;
 }
 
 .geo a {
+  border-radius: 8px;
   color: #000;
   font-size: 18px;
   font-weight: 500;
   line-height: 1.33;
-  margin: 0px;
-  margin-left: 12px;
-  padding: 5px;
+  margin: 12px 0 0 10px;
+  padding: 5px 10px 4px 10px;
   text-decoration: none;
-  transition: color .3s;
+  transition: background .3s, color .3s;
   white-space: nowrap;
 }
 .geo a:hover {
@@ -298,7 +297,7 @@
   font-size: 60px;
   font-weight: 500;
   line-height: 1.33;
-  margin: 0px;
+  margin: 0;
   margin-left: 12px;
   text-decoration: none;
   white-space: nowrap;
@@ -309,10 +308,10 @@
   font-size: 60px;
   font-weight: 500;
   line-height: 1.33;
-  margin: 0px;
-  margin-left: 12px;
+  margin: 0;
+  text-align: center;
   text-decoration: none;
-  text-shadow: 4px 4px 0px rgba(0,0,0,1);
+  text-shadow: 4px 4px 0 rgba(0,0,0,1);
   white-space: normal;
 }
 
@@ -320,7 +319,7 @@
   font-size: 60px;
   font-weight: 500;
   line-height: 1.33;
-  margin: 0px;
+  margin: 0;
   margin-left: 35%;
   text-decoration: none;
   transition: color .3s
@@ -416,28 +415,62 @@
   background: white;
   border-color: orange;
   border-bottom-style: solid;
-  border-width: thin;
   border-width: 20px;
+  border-radius: 40px;
   color: black;
   display: flex;
   font-size: 16px;
-  height: -webkit-fill-available;
+  height: min-content;
   line-height: 27px;
-  margin: 0px 0px 0 0px;
-  max-width: 410px;
-  padding: 10px;
+  padding: 5px 30px 10px;
   position: relative;
-  width: -webkit-fill-available;
+  width: min-content;
 }
-.login input {
+.login .login-caption {
+  font-family: ROBOTO;
+  font-size: x-large;
+  white-space: nowrap;
+}
+.login .login-input {
   background: white;
+  border-radius: 8px;
   border-style: none;
   border-style: solid;
   border-width: 0.5px;
   display: flex;
+  font-family: ROBOTO;
   font-size: 15px;
   margin-bottom: 5px;
   padding: 5px;
+}
+.login .login-button {
+  backface-visibility: hidden;
+  background: #3332;
+  border-radius: 25px;
+  border-style: none;
+  color: #333;
+  font-family: ROBOTO;
+  font-size: large;
+  margin-top: 5px;
+  padding: 5px 10px 4px 10px;
+  transition: color .3s, transform .3s;
+  -webkit-font-smoothing: subpixel-antialiased;
+  will-change: transform;
+}
+.login-button:hover {
+  backface-visibility: hidden;
+  color: #383;
+  transform: scale(1.2);
+  -webkit-font-smoothing: subpixel-antialiased;
+  will-change: transform;
+}
+.login .login-form {
+  align-content: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 
 .sessions {
@@ -532,11 +565,29 @@
 }
 
 .reg-button {
-  background: white;
+  backface-visibility: hidden;
+  background: transparent;
+  border-radius: 25px;
+  border-style: none;
   color: #333;
-  padding: 5px;
+  font-family: ROBOTO;
+  font-size: large;
+  margin-top: 5px;
+  padding: 5px 10px 4px 10px;
   text-decoration: none;
+  transition: color .3s, transform .3s, background .3s;
+  -webkit-font-smoothing: subpixel-antialiased;
+  will-change: transform;
 }
+.reg-button:hover {
+  backface-visibility: hidden;
+  background: #3332;
+  color: #383;
+  transform: scale(1.2);
+  -webkit-font-smoothing: subpixel-antialiased;
+  will-change: transform;
+}
+
 .reg-form {
   background: white;
   border-bottom-color: orange;
@@ -632,8 +683,34 @@
 }
 
 .tags-container-list {
-  display: inline-block;
+  align-content: center;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-left: 25px;
   width: 100%;
+}
+
+.locales {
+  align-self: center;
+  border: none;
+  border-radius: 8px;
+  font-family: ROBOTO;
+  font-size: medium;
+  height: min-content;
+  margin: 19px 0 0;
+  padding: 5px 12px 4px 10px;
+  text-decoration: none;
+  transition: color .3s, background .3s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+}
+
+.locales:hover {
+  color: white;
+  background: orange;
 }
 
 .calendar {
@@ -722,7 +799,7 @@
 
 .imdb-container {
   background: orange;
-  border-radius: 0px 5px 5px 0px;
+  border-radius: 0 5px 5px 0;
   padding-right: 5px;
   position: relative;
   top: 32px;
@@ -815,12 +892,10 @@
 }
 
 .user-window {
-  height: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: fixed;
   top: 50%;
-  width: 50%;
 }
 
 .logged {
@@ -932,7 +1007,7 @@
   left: 50%;
   margin: auto;
   position: absolute;
-  transform: translate(-50%, 0px);
+  transform: translate(-50%, 0);
 }
 
 .blocks {

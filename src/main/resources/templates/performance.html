@@ -45,7 +45,7 @@
         <h1 class = "caption" th:text="'Нет запланированных сеансов'"></h1>
       </div>
       <div class = "performance" th:each = "entry : ${schedule}">
-        <center>
+        <div>
           <p class = "performance-date" th:text="${#dates.format(entry.key, 'dd-MMM-yyyy')}"></p>
           <div class="buildings-tabs">
             <div class = "buildings-tab" th:each = "building : ${entry.value}">
@@ -55,7 +55,7 @@
               </div>
             </div>
           </div>
-        </center>
+        </div>
       </div>
     </div>
   </div>

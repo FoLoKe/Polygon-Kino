@@ -1,53 +1,45 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="https://www.thymeleaf.org"
->
-    <head>
-        <link rel="stylesheet" href="styles.css">
-        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script type="text/javascript" th:src="@{js/geo-popup.js}" src="js/geo-popup.js"></script>
-    </head>
-    <body>
-        <div th:insert = "~{header :: head}"></div>
+      xmlns:th="https://www.thymeleaf.org">
 
-        <div class = "main-container">
-            <div class = "tabs-container">
-                <div class = "tabs-list">
-                    <h1 class = "caption">
-                        КИНО УЖЕ СЕГОДНЯ
-                    </h1>
-                    <div class = "tabs-scroller">
-                        <a class="tablet" th:href="@{/performance(id = ${film.id})}" th:each="film : ${filmsList}" >
-                            <img th:src="*{'/img/' + film.id}">
-                            <p class = "description" th:text="${film.name}"></p>
-                            <div class = "tags-wrapper">
-                                <div class = "tag" th:each="cat : ${film.categories}" th:text="${cat.name}"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{js/geo-popup.js}" src="js/geo-popup.js"></script>
 
-            <div class = "tabs-container">
-                <div class = "tabs-list">
-                    <h1 class = "caption">
-                        УЖЕ СОВСЕМ СКОРО
-                    </h1>
-                    <div class = "tabs-scroller">
-                        <a class="tablet" th:href="@{/performance(id = ${film.id})}" th:each="film : ${premiersList}" >
-                            <img th:src="*{'/img/' + film.id}">
-                            <p class = "description" th:text="${film.name}">
+<body style="margin: 0">
+<div th:insert="~{header :: head}"></div>
+<div class="main-container">
+  <div class="tabs-container">
+    <div class="tabs-list">
+      <h1 class="caption">КИНО УЖЕ СЕГОДНЯ</h1>
+      <div class="tabs-scroller">
+        <a class="tablet" th:href="@{/performance(id = ${film.id})}" th:each="film : ${filmsList}">
+          <img th:src="*{'/img/' + film.id}">
+          <p class="description" th:text="${film.name}"></p>
+          <div class="tags-wrapper">
+            <div class="tag" th:each="cat : ${film.categories}" th:text="${cat.name}"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
 
-                            </p>
-                            <div>
-                                <div class = "tag" th:each="cat : ${film.categories}" th:text="${cat.name}"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
+  <div class="tabs-container">
+    <div class="tabs-list">
+      <h1 class="caption">УЖЕ СОВСЕМ СКОРО</h1>
+      <div class="tabs-scroller">
+        <a class="tablet" th:href="@{/performance(id = ${film.id})}" th:each="film : ${premiersList}">
+          <img th:src="*{'/img/' + film.id}">
+          <p class="description" th:text="${film.name}"></p>
+          <div>
+            <div class="tag" th:each="cat : ${film.categories}" th:text="${cat.name}"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
 </html>

@@ -1,33 +1,29 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
->
-<head>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{js/cpsw.js}" src="js/cpsw.js"></script>
-</head>
-<body>
-    <center>
-        <div class="registration-page">
-            <form class = "reg-form" th:action="@{/login}" method="post">
-                <p class="registration-caption">Вход</p>
-                <div th:if="${param.error}">
-                    Неверное имя пользователя или пароль.
-                </div>
-                <div class="reg-elem">
-                    <label> Имя пользователя:</label>
-                    <input type="text" name="username"/>
-                </div>
-                <div class="reg-elem">
-                    <label> Пароль:</label>
-                    <input type="password" name="password"/>
-                </div>
-                <div>
-                    <input class = reg-button type="submit" value="Войти"/>
-                </div>
-            </form>
-        </div>
-    </center>
-</body>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{js/cpsw.js}" src="js/cpsw.js"></script>
+
+<div>
+  <div class="registration-page">
+    <form class="reg-form" th:action="@{/login}" method="post">
+      <p class="registration-caption">Вход</p>
+      <div th:if="${param.error}">Неверное имя пользователя или пароль.</div>
+      <div class="reg-elem">
+        <label> Имя пользователя:</label>
+        <input type="text" name="username"/>
+      </div>
+      <div class="reg-elem">
+        <label> Пароль:</label>
+        <input type="password" name="password"/>
+      </div>
+      <div>
+        <input class=reg-button type="submit" value="Войти"/>
+      </div>
+    </form>
+  </div>
+</div>
+
 </html>
